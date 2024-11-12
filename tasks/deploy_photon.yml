@@ -1,23 +1,29 @@
 ---
 
-- name: Get Photon dataset size
-  when: dawarich_photon_country_code | length > 0
-  block:
-    - name: Get Photon dataset size
-      ansible.builtin.uri:
-        url: |
-          https://download1.graphhopper.com/public/extracts/by-country-code/{{
-            dawarich_photon_country_code }}/photon-db-{{ dawarich_photon_country_code }}-latest.tar.bz2
-        return_content: false
-      register: dataset_size
-
-    - name: Parse Photon dataset size
-      ansible.builtin.set_fact:
-        # Multiply by 2.5 to approximately account for compression ratio
-        dataset_size: "{{ dataset_size.content_length | int * 2.5 }}"
+- name: Check for existing Photon container
+  community.docker.docker_container_info:
+    name: "{{ dawarich_photon_container.name }}"
+  register: photon_container_info
 
 - name: Photo data path free space check
+  when: not photon_container_info.exists
   block:
+    - name: Get Photon dataset size
+      when: dawarich_photon_country_code | length > 0
+      block:
+        - name: Get Photon dataset size
+          ansible.builtin.uri:
+            url: |
+              https://download1.graphhopper.com/public/extracts/by-country-code/{{
+                dawarich_photon_country_code }}/photon-db-{{ dawarich_photon_country_code }}-latest.tar.bz2
+            return_content: false
+          register: dataset_size
+
+        - name: Parse Photon dataset size
+          ansible.builtin.set_fact:
+            # Multiply by 2.5 to approximately account for compression ratio
+            dataset_size: "{{ dataset_size.content_length | int * 2.5 }}"
+
     - name: Test Photon path components
       ansible.builtin.stat:
         path: "{{ item }}"
