@@ -120,7 +120,7 @@ dawarich_photon_container:
   healthcheck:
     test:
       - "CMD-SHELL"
-      - "curl -Gs 'http://localhost:2322/api' -d 'q=London'"
+      - "curl -Gs 'http://localhost:2322/api' -d 'q=London' | grep -q 'coordinates'"
     interval: 10s
     retries: 5
     start_period: 30s
