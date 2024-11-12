@@ -19,5 +19,5 @@
 
     - name: Assert dawarich-photon API responds
       ansible.builtin.uri:
-        url: "http://{{ photon_container_ip }}:2322/api/q=Speedwell+Island"
+        url: "http://{{ photon_container_ip }}:2322/api/?q=Speedwell+Island"
         status_code: 200
