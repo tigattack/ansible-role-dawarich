@@ -130,7 +130,7 @@ dawarich_photon_container:
   ports: ["{{ dawarich_photon_port }}:2322"]
   volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
   env: "{{ {'COUNTRY_CODE': dawarich_photon_country_code} if dawarich_photon_country_code | length > 0 else omit }}"
-  state: healthy
+  state: started
 
 dawarich_containers: |
   {% set additional_containers = [] -%}
