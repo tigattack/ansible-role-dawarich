@@ -47,6 +47,7 @@ dawarich_base_containers:
     volumes:
       - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_app"
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+      - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
     env: "{{ dawarich_app_env }}"
     state: healthy
 
