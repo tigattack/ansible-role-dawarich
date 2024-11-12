@@ -1,0 +1,191 @@
+---
+argument_specs:
+  main:
+    short_description: Deploy Dawarich in Docker
+    description:
+      - This role will deploy the Dawarich application and the services it depends upon in Docker.
+      - 'Prerequisites:'
+      - '  - Docker'
+      - '  - A chosen data storage path on the host'
+    version_added: '1.0.0'
+    author: tigattack
+    options:
+      dawarich_data_path:
+        type: path
+        default: /opt/dawarich
+        description: Dawarich data path on the host.
+
+      dawarich_docker_network_name:
+        type: str
+        default: dawarich
+        description: Name of the Docker network to connect the Dawarich containers to.
+
+      dawarich_version:
+        type: str
+        default: latest
+        description: Dawarich application Docker image version (tag).
+
+      dawarich_app_hosts:
+        type: str
+        default: localhost
+        description: Host of the Dawarich application (e.g., localhost or dawarich.example.com).
+
+      dawarich_port:
+        type: int
+        default: 3000
+        description: Dawarich application port.
+
+      dawarich_timezone:
+        type: str
+        default: Etc/UTC
+        description:
+          - Timezone for the Dawarich application.
+          - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List.
+
+      dawarich_min_minutes_spent_in_city:
+        type: int
+        default: 60
+        description: Minimum minutes spent in a city to be counted.
+
+      dawarich_distance_unit:
+        type: str
+        default: km
+        choices:
+          - km
+          - mi
+        description: Distance unit for the application.
+
+      dawarich_background_processing_concurrency:
+        type: int
+        default: 10
+        description: Number of background processing workers for the Sidekiq worker container.
+
+      dawarich_reverse_geocoding_enabled:
+        type: bool
+        default: true
+        description: Enable reverse geocoding.
+
+      dawarich_photon_api_host:
+        type: str
+        default: photon.komoot.io
+        description:
+          - API host for the Photon reverse geocoding service.
+          - If 'dawarich_deploy_photon' is 'true', this will default to 'dawarich-photon', which will be the name of the Photon container.
+
+      dawarich_photon_api_use_https:
+        type: bool
+        default: true
+        description: Use HTTPS for requests to the Photon API.
+
+      dawarich_app_extra_env:
+        type: dict
+        default: {}
+        description: Additional environment variables for the Dawarich application container.
+
+      dawarich_sidekiq_extra_env:
+        type: dict
+        default: {}
+        description: Additional environment variables for the Dawarich Sidekiq worker container.
+
+      dawarich_deploy_postgres:
+        type: bool
+        default: true
+        description:
+          - Deploy a PostgreSQL instance for Dawarich.
+          - Set to 'false' if using an external PostgreSQL instance.
+
+      dawarich_postgres_version:
+        type: str
+        default: 14.2-alpine
+        description:
+          - PostgreSQL Docker image version for Dawarich.
+          - Ignored if 'dawarich_deploy_postgres' is 'false'.
+
+      dawarich_postgres_host:
+        type: str
+        default: dawarich-db
+        description: PostgreSQL host for Dawarich.
+
+      dawarich_postgres_db_name:
+        type: str
+        default: dawarich
+        description: PostgreSQL database name for Dawarich.
+
+      dawarich_postgres_username:
+        type: str
+        default: dawarich
+        description: PostgreSQL username for Dawarich.
+
+      dawarich_postgres_password:
+        type: str
+        required: true
+        description:
+          - PostgreSQL password for Dawarich.
+          - Must be set by the user.
+
+      dawarich_deploy_redis:
+        type: bool
+        default: true
+        description:
+          - Deploy a Redis instance for Dawarich.
+          - Set to 'false' if using an external Redis instance.
+
+      dawarich_redis_version:
+        type: str
+        default: 7.0-alpine
+        description:
+          - Redis Docker image version for Dawarich.
+          - Ignored if 'dawarich_deploy_redis' is 'false'.
+
+      dawarich_redis_host:
+        type: str
+        default: dawarich-redis
+        description: Redis host for Dawarich.
+
+      dawarich_redis_port:
+        type: int
+        default: 6379
+        description: Redis port for Dawarich.
+
+      dawarich_redis_db_number:
+        type: int
+        default: 0
+        description: Redis database number for Dawarich.
+
+      dawarich_deploy_photon:
+        type: bool
+        default: false
+        description:
+          - Deploy a Photon instance for reverse geocoding.
+          - >-
+            NOTE: This requires at least 170GB of disk space and a significant
+            amount of RAM (16GB is recommended but not always required).
+          - This assumes you are not specifying
+            'dawarich_photon_country_code' to limit the downloaded dataset to a single country.
+
+      dawarich_photon_version:
+        type: str
+        default: latest
+        description:
+          - Photon Docker image version for reverse geocoding.
+          - Ignored if 'dawarich_deploy_photon' is 'false'.
+
+      dawarich_photon_data_path:
+        type: path
+        default: /opt/dawarich/photon
+        description: Photon data path on the host.
+
+      dawarich_photon_port:
+        type: int
+        default: 2322
+        description: Photon application port.
+
+      dawarich_photon_country_code:
+        type: str
+        default: ''
+        description:
+          - Photon reverse geocoding country code.
+          - Set to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for a single country, or leave empty to download the full dataset.
+          - >-
+            You can see available countries at https://download1.graphhopper.com/public/extracts/by-country-code/ and correlate
+            with the list of codes here https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes#Current_ISO_3166_country_codes

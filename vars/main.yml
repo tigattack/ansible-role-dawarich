@@ -1,0 +1,145 @@
+---
+
+dawarich_env_static:
+  TIME_ZONE: "{{ dawarich_timezone }}"
+  RAILS_ENV: development
+  REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}/{{ dawarich_redis_db_number }}
+  DATABASE_HOST: "{{ dawarich_postgres_host }}"
+  DATABASE_USERNAME: "{{ dawarich_postgres_username }}"
+  DATABASE_PASSWORD: "{{ dawarich_postgres_password }}"
+  DATABASE_NAME: "{{ dawarich_postgres_db_name }}"
+  APPLICATION_HOSTS: "{{ dawarich_app_hosts }}"
+  REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
+  PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
+  PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
+
+dawarich_app_env: |
+  {{ {
+        'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string,
+        'DISTANCE_UNIT': dawarich_distance_unit
+    } | combine(dawarich_env_static, dawarich_app_extra_env) }}
+
+dawarich_sidekiq_env: |
+  {{ {
+        'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string,
+        'DISTANCE_UNIT': dawarich_distance_unit
+    } | combine(dawarich_env_static, dawarich_sidekiq_extra_env)
+  }}
+
+dawarich_base_containers:
+  - name: dawarich-server
+    image: freikin/dawarich:{{ dawarich_version }}
+    restart_policy: unless-stopped
+    interactive: true
+    tty: true
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "wget -qO - http://127.0.0.1:3000/api/v1/health | grep -q 'ok'"
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    entrypoint: dev-entrypoint.sh
+    command: bin/dev
+    networks: [{name: "{{ dawarich_docker_network_name }}"}]
+    ports: ["{{ dawarich_port }}:3000"]
+    volumes:
+      - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_app"
+      - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+    env: "{{ dawarich_app_env }}"
+    state: healthy
+
+  - name: dawarich-sidekiq
+    image: freikin/dawarich:{{ dawarich_version }}
+    restart_policy: unless-stopped
+    interactive: true
+    tty: true
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "bundle exec sidekiqmon processes | grep ${HOSTNAME}"
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    entrypoint: dev-entrypoint.sh
+    command: sidekiq
+    networks: [{name: "{{ dawarich_docker_network_name }}"}]
+    volumes:
+      - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_sidekiq"
+      - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+    env: "{{ dawarich_sidekiq_env }}"
+    state: healthy
+
+dawarich_redis_container:
+  name: dawarich-redis
+  image: redis:{{ dawarich_redis_version }}
+  restart_policy: unless-stopped
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "redis-cli"
+      - "--raw"
+      - "incr"
+      - "ping"
+    interval: 10s
+    retries: 5
+    start_period: 30s
+    timeout: 10s
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  volumes:
+    - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared/redis"
+  state: healthy
+
+dawarich_postgres_container:
+  name: dawarich-db
+  image: postgres:{{ dawarich_postgres_version }}
+  restart_policy: unless-stopped
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "pg_isready -U postgres -d {{ dawarich_postgres_db_name }}"
+    interval: 10s
+    retries: 5
+    start_period: 30s
+    timeout: 10s
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  volumes:
+    - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
+    - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
+  env:
+    POSTGRES_USER: "{{ dawarich_postgres_username }}"
+    POSTGRES_PASSWORD: "{{ dawarich_postgres_password }}"
+  state: healthy
+
+dawarich_photon_container:
+  name: dawarich-photon
+  image: rtuszik/photon-docker:{{ dawarich_photon_version }}
+  restart_policy: unless-stopped
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "curl -Gs 'http://localhost:2322/api' -d 'q=London'"
+    interval: 10s
+    retries: 5
+    start_period: 30s
+    timeout: 10s
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  ports: ["{{ dawarich_photon_port }}:2322"]
+  volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
+  env: "{{ {'COUNTRY_CODE': dawarich_photon_country_code} if dawarich_photon_country_code | length > 0 else omit }}"
+  state: healthy
+
+dawarich_containers: |
+  {% set additional_containers = [] -%}
+  {% if dawarich_deploy_redis -%}
+    {% set additional_containers = [dawarich_redis_container] + additional_containers -%}
+  {% endif -%}
+  {% if dawarich_deploy_postgres -%}
+    {% set additional_containers = [dawarich_postgres_container] + additional_containers -%}
+  {% endif -%}
+  {{ additional_containers + dawarich_base_containers }}
+
+dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
+dawarich_photon_data_path_combinations: []

@@ -1,0 +1,18 @@
+---
+- name: Verify
+  hosts: all
+  pre_tasks:
+    - name: Get dawarich-server container info
+      community.docker.docker_container_info:
+        name: dawarich-server
+      register: container_info
+
+    - name: Parse dawarich-server container IP
+      ansible.builtin.set_fact:
+        dawarich_container_ip: "{{ container_info.container.NetworkSettings.Networks.values() | map(attribute='IPAddress') | list | first }}"
+
+  tasks:
+    - name: Assert dawarich-server is healthy
+      ansible.builtin.assert:
+        that: container_info.container.State.Health.Status == 'healthy'
+        success_msg: Dawarich container passed health check.

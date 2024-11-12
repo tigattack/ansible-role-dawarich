@@ -1,0 +1,69 @@
+---
+
+######## General deployment config ########
+dawarich_data_path: /opt/dawarich
+
+dawarich_docker_network_name: dawarich
+
+######## Dawarich config ########
+dawarich_version: latest
+# Host of the application, e.g. localhost or dawarich.example.com
+dawarich_app_hosts: localhost
+dawarich_port: 3000
+
+# App preferences
+dawarich_timezone: Etc/UTC # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+dawarich_min_minutes_spent_in_city: 60
+dawarich_distance_unit: km
+dawarich_background_processing_concurrency: 10
+dawarich_reverse_geocoding_enabled: true
+dawarich_photon_api_host: |
+  {{ 'dawarich-photon' if dawarich_deploy_photon else 'photon.komoot.io' }}
+dawarich_photon_api_use_https: true
+
+# Additional env vars to apply to the dawarich app container
+dawarich_app_extra_env: {}
+# Additional env vars to apply to the dawarich sidekiq container
+dawarich_sidekiq_extra_env: {}
+
+######## Postgres config ########
+# Only set false if you have your own postgresql instance running.
+dawarich_deploy_postgres: true
+
+# This is ignored if dawarich_deploy_postgres is false
+# renovate: datasource=docker depName=postgres
+dawarich_postgres_version: 14.2-alpine
+
+# If you have your own postgresql instance running, set the following variables according to your dawarich_deployment.
+dawarich_postgres_host: dawarich-db
+dawarich_postgres_db_name: dawarich
+dawarich_postgres_username: dawarich
+# This must be set by the user.
+# dawarich_postgres_password:
+
+######## Redis config ########
+# Only set false if you have your own redis instance running.
+dawarich_deploy_redis: true
+
+# This is ignored if dawarich_deploy_redis is false
+# renovate: datasource=docker depName=redis
+dawarich_redis_version: 7.0-alpine
+
+# If you have your own redis instance running, set the following variables according to your deployment.
+dawarich_redis_host: dawarich-redis
+dawarich_redis_port: 6379
+dawarich_redis_db_number: 0
+
+######## Photon config ########
+dawarich_deploy_photon: false
+
+# This is ignored if dawarich_deploy_photon is false
+# renovate: datasource=docker depName=rtuszik/photon-docker
+dawarich_photon_version: latest
+
+dawarich_photon_data_path: "{{ [dawarich_data_path, 'photon'] | path_join }}"
+dawarich_photon_port: 2322
+
+# Set this to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for a single country.
+# See available countries at https://download1.graphhopper.com/public/extracts/by-country-code/
+dawarich_photon_country_code: ''

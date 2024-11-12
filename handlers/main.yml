@@ -1,0 +1,7 @@
+---
+
+- name: Prune Docker images
+  community.docker.docker_prune:
+    images: true
+    images_filters:
+      dangling: false

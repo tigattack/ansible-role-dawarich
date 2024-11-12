@@ -1,0 +1,23 @@
+---
+- name: Verify
+  hosts: all
+  pre_tasks:
+    - name: Get dawarich-photon container info
+      community.docker.docker_container_info:
+        name: dawarich-photon
+      register: container_info
+
+    - name: Parse dawarich-photon container IP
+      ansible.builtin.set_fact:
+        photon_container_ip: "{{ container_info.container.NetworkSettings.Networks.values() | map(attribute='IPAddress') | list | first }}"
+
+  tasks:
+    - name: Assert dawarich-photon is healthy
+      ansible.builtin.assert:
+        that: container_info.container.State.Health.Status == 'healthy'
+        success_msg: Photon container passed health check.
+
+    - name: Assert dawarich-photon API responds
+      ansible.builtin.uri:
+        url: "http://{{ photon_container_ip }}:{{ dawarich_photon_port }}/api/q=Speedwell+Island"
+        status_code: 200
