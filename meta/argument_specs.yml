@@ -77,6 +77,16 @@ argument_specs:
         default: true
         description: Use HTTPS for requests to the Photon API.
 
+      dawarich_enable_prometheus_metrics:
+        type: bool
+        default: false
+        description: Enable Prometheus metrics endpoint.
+
+      dawarich_prometheus_port:
+        type: int
+        default: 9394
+        description: Prometheus metrics port for Dawarich.
+
       dawarich_app_extra_env:
         type: dict
         default: {}

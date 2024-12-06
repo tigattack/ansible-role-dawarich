@@ -124,6 +124,27 @@ Otherwise, if [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `true`, thi
 
 Use HTTPS for requests to the Photon API.
 
+### `dawarich_enable_prometheus_metrics`
+
+| Type | Default |
+|------|---------|
+| bool | `false` |
+
+Enable Prometheus metrics endpoint.
+
+Once enabled, Prometheus metrics will be available at `<host>:9394/metrics` (assuming [`dawarich_prometheus_port`](#dawarich_prometheus_port) is left default).
+
+### `dawarich_prometheus_port`
+
+| Type | Default |
+|------|---------|
+| int  | `9394`  |
+
+Prometheus metrics port for Dawarich.
+
+> [!NOTE]
+> This does nothing unless [`dawarich_enable_prometheus_metrics`](#dawarich_enable_prometheus_metrics) is set to `true`.
+
 ### `dawarich_app_extra_env`
 
 | Type | Default |

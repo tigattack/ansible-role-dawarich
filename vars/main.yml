@@ -12,18 +12,27 @@ dawarich_env_static:
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
+  PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
+  PROMETHEUS_EXPORTER_PORT: '9394'
 
 dawarich_app_env: |
   {{ {
         'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string,
         'DISTANCE_UNIT': dawarich_distance_unit
+        'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
     } | combine(dawarich_env_static, dawarich_app_extra_env) }}
 
 dawarich_sidekiq_env: |
   {{ {
         'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string,
         'DISTANCE_UNIT': dawarich_distance_unit
+        'PROMETHEUS_EXPORTER_HOST': 'dawarich-server',
     } | combine(dawarich_env_static, dawarich_sidekiq_extra_env)
+  }}
+
+dawarich_app_ports: |
+  {{
+    [dawarich_port ~ ':3000'] + [dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else []
   }}
 
 dawarich_base_containers:
@@ -43,7 +52,7 @@ dawarich_base_containers:
     entrypoint: dev-entrypoint.sh
     command: bin/dev
     networks: [{name: "{{ dawarich_docker_network_name }}"}]
-    ports: ["{{ dawarich_port }}:3000"]
+    ports: "{{ dawarich_app_ports }}"
     volumes:
       - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_app"
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
