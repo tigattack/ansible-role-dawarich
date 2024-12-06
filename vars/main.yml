@@ -9,6 +9,7 @@ dawarich_env_shared:
   DATABASE_PASSWORD: "{{ dawarich_postgres_password }}"
   DATABASE_NAME: "{{ dawarich_postgres_db_name }}"
   APPLICATION_HOSTS: "{{ dawarich_app_hosts }}"
+  DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
@@ -18,14 +19,12 @@ dawarich_env_shared:
 dawarich_app_env: |
   {{ {
         'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string,
-        'DISTANCE_UNIT': dawarich_distance_unit
         'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
     } | combine(dawarich_env_shared, dawarich_app_extra_env) }}
 
 dawarich_sidekiq_env: |
   {{ {
         'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string,
-        'DISTANCE_UNIT': dawarich_distance_unit
         'PROMETHEUS_EXPORTER_HOST': 'dawarich-server',
     } | combine(dawarich_env_shared, dawarich_sidekiq_extra_env)
   }}
