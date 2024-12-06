@@ -16,3 +16,8 @@
       ansible.builtin.assert:
         that: container_info.container.State.Health.Status == 'healthy'
         success_msg: Dawarich container passed health check.
+
+    - name: Assert dawarich-server is reachable
+      ansible.builtin.uri:
+        url: http://localhost:3000/api/v1/health
+        status_code: 200
