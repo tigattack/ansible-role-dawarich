@@ -1,6 +1,6 @@
 ---
 
-dawarich_env_static:
+dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
   RAILS_ENV: development
   REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}/{{ dawarich_redis_db_number }}
@@ -20,14 +20,14 @@ dawarich_app_env: |
         'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string,
         'DISTANCE_UNIT': dawarich_distance_unit
         'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
-    } | combine(dawarich_env_static, dawarich_app_extra_env) }}
+    } | combine(dawarich_env_shared, dawarich_app_extra_env) }}
 
 dawarich_sidekiq_env: |
   {{ {
         'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string,
         'DISTANCE_UNIT': dawarich_distance_unit
         'PROMETHEUS_EXPORTER_HOST': 'dawarich-server',
-    } | combine(dawarich_env_static, dawarich_sidekiq_extra_env)
+    } | combine(dawarich_env_shared, dawarich_sidekiq_extra_env)
   }}
 
 dawarich_app_ports: |
