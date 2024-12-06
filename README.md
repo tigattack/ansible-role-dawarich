@@ -52,6 +52,14 @@ Dawarich application Docker image version (tag).
 
 Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 
+### `dawarich_app_protocol`
+
+| Type   | Default |
+|--------|---------|
+| string | `http`  |
+
+Protocol for the Dawarich application. Set to `https` if accessing Dawarich through a SSL-terminating reverse proxy.
+
 ### `dawarich_port`
 
 | Type | Default |
@@ -144,6 +152,14 @@ Prometheus metrics port for Dawarich.
 
 > [!NOTE]
 > This does nothing unless [`dawarich_enable_prometheus_metrics`](#dawarich_enable_prometheus_metrics) is set to `true`.
+
+### `dawarich_disable_telemetry`
+
+| Type | Default |
+|------|---------|
+| bool | `false` |
+
+Disable telemetry. See <https://dawarich.app/docs/tutorials/telemetry>.
 
 ### `dawarich_app_extra_env`
 

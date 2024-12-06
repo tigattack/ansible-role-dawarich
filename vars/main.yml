@@ -9,12 +9,14 @@ dawarich_env_shared:
   DATABASE_PASSWORD: "{{ dawarich_postgres_password }}"
   DATABASE_NAME: "{{ dawarich_postgres_db_name }}"
   APPLICATION_HOSTS: "{{ dawarich_app_hosts }}"
+  APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
   DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
+  DISABLE_TELEMETRY: "{{ dawarich_disable_telemetry | string | lower }}"
 
 dawarich_app_env: |
   {{ {

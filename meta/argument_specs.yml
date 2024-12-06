@@ -30,6 +30,16 @@ argument_specs:
         default: localhost
         description: Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 
+      dawarich_app_protocol:
+        type: string
+        choices:
+          - http
+          - https
+        default: http
+        description:
+          - Protocol for the Dawarich application.
+          - Set to 'https' if accessing Dawarich through a SSL-terminating reverse proxy.
+
       dawarich_port:
         type: int
         default: 3000
@@ -86,6 +96,11 @@ argument_specs:
         type: int
         default: 9394
         description: Prometheus metrics port for Dawarich.
+
+      dawarich_disable_telemetry:
+        type: bool
+        default: false
+        description: Disable telemetry. See https://dawarich.app/docs/tutorials/telemetry
 
       dawarich_app_extra_env:
         type: dict
