@@ -16,12 +16,12 @@ dawarich_env_shared:
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
-  DISABLE_TELEMETRY: "{{ dawarich_disable_telemetry | string | lower }}"
 
 dawarich_app_env: |
   {{ {
         'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string | lower,
         'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
+        'DISABLE_TELEMETRY': dawarich_disable_telemetry | string | lower,
     } | combine(dawarich_env_shared, dawarich_app_extra_env) }}
 
 dawarich_sidekiq_env: |
