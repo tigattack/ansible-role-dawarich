@@ -1,0 +1,25 @@
+---
+
+- name: Get Dawarich containers
+  community.docker.docker_host_info:
+    containers: true
+    containers_all: true
+    containers_filters:
+      label:
+        - deployment_name=dawarich
+  register: dawarich_containers
+
+- name: Identify Dawarich workers
+  ansible.builtin.set_fact:
+    existing_workers: >-
+      {{ dawarich_containers.containers | selectattr('Names', 'search', 'sidekiq') |
+      map(attribute='Names') | map('first') | map('replace', '/', '') | list | sort }}
+
+- name: Cleanup excess workers
+  when: existing_workers | length > dawarich_workers_count
+  block:
+    - name: Remove excess workers
+      community.docker.docker_container:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ existing_workers[dawarich_workers_count:] }}"

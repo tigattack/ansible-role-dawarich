@@ -14,5 +14,9 @@
 
 - name: Include deploy_photon.yml
   ansible.builtin.include_tasks:
-    file: tasks/deploy_photon.yml
+    file: deploy_photon.yml
   when: dawarich_deploy_photon
+
+- name: Include cleanup_workers.yml
+  ansible.builtin.include_tasks:
+    file: cleanup_workers.yml
