@@ -1,5 +1,10 @@
 ---
 
+- name: Assert dawarich_workers_count is at least 1
+  ansible.builtin.assert:
+    that: dawarich_workers_count >= 1
+    fail_msg: dawarich_workers_count must be at least 1
+
 - name: Create Dawarich Docker network
   community.docker.docker_network:
     name: "{{ dawarich_docker_network_name }}"
