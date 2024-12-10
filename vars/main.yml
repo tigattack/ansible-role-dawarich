@@ -37,7 +37,7 @@ dawarich_app_ports: |
     [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [])
   }}
 
-dawarich_server_container:
+dawarich_app_container:
   - name: dawarich-server
     image: freikin/dawarich:{{ dawarich_version }}
     restart_policy: unless-stopped
@@ -51,6 +51,8 @@ dawarich_server_container:
       retries: 30
       start_period: 30s
       timeout: 10s
+    labels:
+      deployment_name: dawarich
     entrypoint: dev-entrypoint.sh
     command: bin/dev
     networks: [{name: "{{ dawarich_docker_network_name }}"}]
@@ -76,6 +78,8 @@ dawarich_worker_container:
     retries: 30
     start_period: 30s
     timeout: 10s
+  labels:
+    deployment_name: dawarich
   entrypoint: dev-entrypoint.sh
   command: sidekiq
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
@@ -107,6 +111,8 @@ dawarich_redis_container:
     retries: 5
     start_period: 30s
     timeout: 10s
+  labels:
+    deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   volumes:
     - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared/redis"
@@ -124,6 +130,8 @@ dawarich_postgres_container:
     retries: 5
     start_period: 30s
     timeout: 10s
+  labels:
+    deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   volumes:
     - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
@@ -145,6 +153,8 @@ dawarich_photon_container:
     retries: 5
     start_period: 30s
     timeout: 10s
+  labels:
+    deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   ports: ["{{ dawarich_photon_port }}:2322"]
   volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
@@ -159,7 +169,7 @@ dawarich_containers: |
   {% if dawarich_deploy_postgres -%}
     {% set additional_containers = [dawarich_postgres_container] + additional_containers -%}
   {% endif -%}
-  {{ additional_containers + dawarich_server_container + dawarich_workers }}
+  {{ additional_containers + dawarich_app_container + dawarich_workers }}
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
