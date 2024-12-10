@@ -17,17 +17,25 @@ dawarich_timezone: Etc/UTC # See https://en.wikipedia.org/wiki/List_of_tz_databa
 dawarich_min_minutes_spent_in_city: 60
 dawarich_distance_unit: km
 
+# Workers & background processing preferences
 ## Number of background processing workers per Sidekiq worker
 dawarich_background_processing_concurrency: 10
 
 ## Number of Sidekiq workers to deploy
 dawarich_workers_count: 1
 
+# Reverse geocoding preferences
 dawarich_reverse_geocoding_enabled: true
+
+## The default value below will set the API host to photon.komoot.io if you do NOT choose to deploy a Photon instance.
+## If you DO choose to deploy a Photon instance, the API host will be set to 'dawarich-photon' (the name of the Photon container).
+## You will only need to change this if you wish to use a different Photon instance, whether self-hosted or public.
 dawarich_photon_api_host: |
   {{ 'dawarich-photon' if dawarich_deploy_photon else 'photon.komoot.io' }}
+
 dawarich_photon_api_use_https: true
 
+# Prometheus preferences
 dawarich_enable_prometheus_metrics: false
 dawarich_prometheus_port: 9394
 

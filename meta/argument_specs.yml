@@ -85,7 +85,9 @@ argument_specs:
         default: photon.komoot.io
         description:
           - API host for the Photon reverse geocoding service.
-          - If 'dawarich_deploy_photon' is 'true', this will default to 'dawarich-photon', which will be the name of the Photon container.
+          - The default value will be photon.komoot.io if you do NOT choose to deploy a Photon instance ('dawarich_deploy_photon' is 'false').
+          - If you DO choose to deploy a Photon instance, the API host will be set to 'dawarich-photon' (the name of the Photon container).
+          - You will only need to change this if you wish to use a different Photon instance, whether self-hosted or public.
 
       dawarich_photon_api_use_https:
         type: bool

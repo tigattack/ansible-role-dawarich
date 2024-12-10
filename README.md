@@ -122,15 +122,17 @@ Enable reverse geocoding.
 
 ### `dawarich_photon_api_host`
 
-| Type   | Default                                |
-|--------|----------------------------------------|
-| string | `photon.komoot.io` / `dawarich-photon` |
+| Type   | Default                                            |
+|--------|----------------------------------------------------|
+| string | `photon.komoot.io` / `dawarich-photon` (see below) |
 
 API host for the Photon reverse geocoding service.
 
 If [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `false`, this will default to `photon.komoot.io`, the default public Photon API host.
 
 Otherwise, if [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `true`, this will default to `dawarich-photon` (the name of the Photon container).
+
+You will only need to change this if you wish to use a different Photon instance, whether self-hosted or public.
 
 ### `dawarich_photon_api_use_https`
 
