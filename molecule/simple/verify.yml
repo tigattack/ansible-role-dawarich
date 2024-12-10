@@ -7,10 +7,6 @@
         name: dawarich-server
       register: container_info
 
-    - name: Parse dawarich-server container IP
-      ansible.builtin.set_fact:
-        dawarich_container_ip: "{{ container_info.container.NetworkSettings.Networks.values() | map(attribute='IPAddress') | list | first }}"
-
   tasks:
     - name: Assert dawarich-server is healthy
       ansible.builtin.assert:
