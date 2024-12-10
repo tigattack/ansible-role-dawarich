@@ -31,7 +31,7 @@ argument_specs:
         description: Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 
       dawarich_app_protocol:
-        type: string
+        type: str
         choices:
           - http
           - https
