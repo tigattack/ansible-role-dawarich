@@ -16,7 +16,13 @@ dawarich_port: 3000
 dawarich_timezone: Etc/UTC # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 dawarich_min_minutes_spent_in_city: 60
 dawarich_distance_unit: km
+
+## Number of background processing workers per Sidekiq worker
 dawarich_background_processing_concurrency: 10
+
+## Number of Sidekiq workers to deploy
+dawarich_workers_count: 1
+
 dawarich_reverse_geocoding_enabled: true
 dawarich_photon_api_host: |
   {{ 'dawarich-photon' if dawarich_deploy_photon else 'photon.komoot.io' }}

@@ -102,7 +102,15 @@ Must be one of: `km`, `mi`.
 |------|---------|
 | int  | `10`    |
 
-Number of background processing workers for the Sidekiq worker container.
+Number of background processing workers per Sidekiq worker.
+
+### `dawarich_workers_count`
+
+| Type | Default |
+|------|---------|
+| int  | `1`     |
+
+Number of Sidekiq workers to deploy.
 
 ### `dawarich_reverse_geocoding_enabled`
 

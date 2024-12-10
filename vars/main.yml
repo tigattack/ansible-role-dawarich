@@ -16,6 +16,7 @@ dawarich_env_shared:
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
+  RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
 
 dawarich_app_env: |
   {{ {
@@ -36,7 +37,7 @@ dawarich_app_ports: |
     [dawarich_port ~ ':3000'] + [dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else []
   }}
 
-dawarich_base_containers:
+dawarich_server_container:
   - name: dawarich-server
     image: freikin/dawarich:{{ dawarich_version }}
     restart_policy: unless-stopped
@@ -61,27 +62,35 @@ dawarich_base_containers:
     env: "{{ dawarich_app_env }}"
     state: healthy
 
-  - name: dawarich-sidekiq
-    image: freikin/dawarich:{{ dawarich_version }}
-    restart_policy: unless-stopped
-    interactive: true
-    tty: true
-    healthcheck:
-      test:
-        - "CMD-SHELL"
-        - "bundle exec sidekiqmon processes | grep ${HOSTNAME}"
-      interval: 10s
-      retries: 30
-      start_period: 30s
-      timeout: 10s
-    entrypoint: dev-entrypoint.sh
-    command: sidekiq
-    networks: [{name: "{{ dawarich_docker_network_name }}"}]
-    volumes:
-      - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_sidekiq"
-      - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
-    env: "{{ dawarich_sidekiq_env }}"
-    state: healthy
+dawarich_worker_container:
+  name: dawarich-sidekiq
+  image: freikin/dawarich:{{ dawarich_version }}
+  restart_policy: unless-stopped
+  interactive: true
+  tty: true
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "bundle exec sidekiqmon processes | grep ${HOSTNAME}"
+    interval: 10s
+    retries: 30
+    start_period: 30s
+    timeout: 10s
+  entrypoint: dev-entrypoint.sh
+  command: sidekiq
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  volumes:
+    - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_sidekiq"
+    - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+  env: "{{ dawarich_sidekiq_env }}"
+  state: healthy
+
+dawarich_workers: |
+  {%- set workers = [] %}
+  {%- for i in range(1, dawarich_workers_count + 1) %}
+    {%- set _ = workers.append(dawarich_worker_container | combine({'name': 'dawarich-sidekiq-' ~ i})) %}
+  {%- endfor %}
+  {{ workers }}
 
 dawarich_redis_container:
   name: dawarich-redis
@@ -150,7 +159,7 @@ dawarich_containers: |
   {% if dawarich_deploy_postgres -%}
     {% set additional_containers = [dawarich_postgres_container] + additional_containers -%}
   {% endif -%}
-  {{ additional_containers + dawarich_base_containers }}
+  {{ additional_containers + dawarich_server_container + dawarich_workers }}
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
