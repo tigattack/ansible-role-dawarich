@@ -34,7 +34,7 @@ dawarich_sidekiq_env: |
 
 dawarich_app_ports: |
   {{
-    [dawarich_port ~ ':3000'] + [dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else []
+    [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [])
   }}
 
 dawarich_server_container:
