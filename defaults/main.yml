@@ -40,7 +40,7 @@ dawarich_enable_prometheus_metrics: false
 dawarich_prometheus_port: 9394
 
 # See https://dawarich.app/docs/tutorials/telemetry
-dawarich_disable_telemetry: false
+dawarich_enable_telemetry: false
 
 # Additional env vars to apply to the dawarich app container
 dawarich_app_extra_env: {}
