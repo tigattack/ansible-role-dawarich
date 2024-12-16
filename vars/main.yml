@@ -58,7 +58,7 @@ dawarich_app_container:
     networks: [{name: "{{ dawarich_docker_network_name }}"}]
     ports: "{{ dawarich_app_ports }}"
     volumes:
-      - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_app"
+      - "{{ [dawarich_data_path, 'gem_cache_app'] | path_join }}:/usr/local/bundle/gems"
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
     env: "{{ dawarich_app_env }}"
@@ -84,7 +84,7 @@ dawarich_worker_container:
   command: sidekiq
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   volumes:
-    - "{{ [dawarich_data_path, 'gem_cache'] | path_join }}:/usr/local/bundle/gems_sidekiq"
+    - "{{ [dawarich_data_path, 'gem_cache_sidekiq'] | path_join }}:/usr/local/bundle/gems"
     - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
   env: "{{ dawarich_sidekiq_env }}"
   state: healthy
