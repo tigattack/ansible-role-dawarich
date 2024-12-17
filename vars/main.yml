@@ -13,7 +13,7 @@ dawarich_env_shared:
   DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
-  PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string }}"
+  PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string | lower }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
   RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
