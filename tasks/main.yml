@@ -30,3 +30,8 @@
   ansible.builtin.file:
     path: "{{ [dawarich_data_path, 'gem_cache'] | path_join }}"
     state: absent
+
+- name: Remove old sidekiq container
+  community.docker.docker_container:
+    name: dawarich-sidekiq
+    state: absent
