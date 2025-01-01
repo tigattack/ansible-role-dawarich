@@ -5,3 +5,4 @@
     images: true
     images_filters:
       dangling: false
+  when: dawarich_prune_docker_images

@@ -338,6 +338,14 @@ Set to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for
 
 You can see available countries at <https://download1.graphhopper.com/public/extracts/by-country-code/> and correlate with the list of codes here <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes#Current_ISO_3166_country_codes>.
 
+### `dawarich_prune_docker_images`
+
+| Type | Default |
+|------|---------|
+| bool | `true`  |
+
+Prune *all* Docker images after deployment if any container has changed.
+
 ## Example Playbooks
 
 **Bare Minimum:**

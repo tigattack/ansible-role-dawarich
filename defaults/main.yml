@@ -88,3 +88,9 @@ dawarich_photon_port: 2322
 # Set this to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for a single country.
 # See available countries at https://download1.graphhopper.com/public/extracts/by-country-code/
 dawarich_photon_country_code: ''
+
+
+######## Miscellaneous ########
+
+# Prune *all* Docker images after deployment if any container has changed.
+dawarich_prune_docker_images: true
