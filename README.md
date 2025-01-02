@@ -400,9 +400,9 @@ Prune *all* Docker images after deployment if any container has changed.
 ```
 
 > [!WARNING]
-> This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
+> Photon requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
 > 
-> This assumes you are not specifying [`dawarich_photon_country_code`](#dawarich_photon_country_code) to limit the downloaded dataset to a single country.
+> Refer to [`dawarich_photon_country_code`](#dawarich_photon_country_code) to restrict the downloaded dataset to a single country to significantly reduce these requirements.
 
 ## License
 
