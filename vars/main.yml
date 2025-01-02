@@ -40,7 +40,6 @@ dawarich_app_ports: |
 dawarich_postgres_volumes_static:
   - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
   - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
-  # - "{{ dawarich_postgres_config_host_path }}:/etc/postgresql/postgres.conf"
 
 dawarich_postgres_volumes: |
   {{ ([dawarich_postgres_config_host_path + ':/etc/postgresql/postgres.conf:ro']
