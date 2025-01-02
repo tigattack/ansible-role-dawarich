@@ -62,6 +62,14 @@ dawarich_postgres_username: dawarich
 # This must be set by the user.
 # dawarich_postgres_password:
 
+# Set to true if you want to use a custom config file
+dawarich_postgres_use_custom_config: false
+
+# This is ignored if dawarich_postgres_use_custom_config is false.
+# Path to the postgres config file on the Ansible controller.
+# If undefined, config will be downloaded from the Dawarich repository.
+dawarich_postgres_conf_file: ''
+
 ######## Redis config ########
 # Only set false if you have your own redis instance running.
 dawarich_deploy_redis: true

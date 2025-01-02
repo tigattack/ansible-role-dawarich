@@ -244,6 +244,27 @@ PostgreSQL password for Dawarich.
 
 Must be set by the user.
 
+### `dawarich_postgres_use_custom_config`
+
+| Type | Default |
+|------|---------|
+| bool | `false` |
+
+Set to `true` if you want to use a custom config file.
+
+### `dawarich_postgres_conf_file`
+
+| Type   | Default |
+|--------|---------|
+| string |         |
+
+Path to the PostgreSQL config file on the Ansible controller.
+
+If left default (empty) and  [`dawarich_postgres_use_custom_config`](#dawarich_postgres_use_custom_config) is `true`, the example config will be downloaded from the [Dawarich repository](https://github.com/Freika/dawarich/blob/master/postgresql.conf.example).
+
+> [!NOTE]
+> This does nothing unless [`dawarich_postgres_use_custom_config`](#dawarich_postgres_use_custom_config) is `true`.
+
 ### `dawarich_deploy_redis`
 
 | Type | Default |

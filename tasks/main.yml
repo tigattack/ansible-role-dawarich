@@ -5,6 +5,40 @@
     that: dawarich_workers_count >= 1
     fail_msg: dawarich_workers_count must be at least 1
 
+- name: Ensure Dawarich data directory exists
+  ansible.builtin.file:
+    path: "{{ dawarich_data_path }}"
+    mode: '0755'
+    owner: root
+    group: root
+    state: directory
+
+- name: PostgreSQL config file
+  when:
+    - dawarich_deploy_postgres
+    - dawarich_postgres_use_custom_config
+  notify: Restart dawarich-db
+  block:
+    - name: Copy PostgreSQL config file
+      ansible.builtin.copy:
+        src: "{{ dawarich_postgres_conf_file }}"
+        dest: "{{ dawarich_postgres_config_host_path }}"
+        mode: '0600'
+        owner: root
+        group: root
+      when: dawarich_postgres_conf_file | length > 0
+      notify: Restart dawarich-db
+
+    - name: Download Dawarich's default PostgreSQL config
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/Freika/dawarich/refs/heads/master/postgresql.conf.example
+        dest: "{{ dawarich_postgres_config_host_path }}"
+        mode: '0600'
+        owner: root
+        group: root
+      when: dawarich_postgres_conf_file | length == 0
+      notify: Restart dawarich-db
+
 - name: Create Dawarich Docker network
   community.docker.docker_network:
     name: "{{ dawarich_docker_network_name }}"

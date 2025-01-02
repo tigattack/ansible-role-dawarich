@@ -37,6 +37,15 @@ dawarich_app_ports: |
     [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [])
   }}
 
+dawarich_postgres_volumes_static:
+  - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
+  - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
+  # - "{{ dawarich_postgres_config_host_path }}:/etc/postgresql/postgres.conf"
+
+dawarich_postgres_volumes: |
+  {{ ([dawarich_postgres_config_host_path + ':/etc/postgresql/postgres.conf:ro']
+    if dawarich_postgres_use_custom_config else []) + dawarich_postgres_volumes_static }}
+
 dawarich_app_container:
   - name: dawarich-server
     image: freikin/dawarich:{{ dawarich_version }}
@@ -121,7 +130,9 @@ dawarich_redis_container:
 dawarich_postgres_container:
   name: dawarich-db
   image: postgres:{{ dawarich_postgres_version }}
+  command: "{{ 'postgres -c config_file=/etc/postgresql/postgres.conf' if dawarich_postgres_use_custom_config else 'postgres' }}"
   restart_policy: unless-stopped
+  shm_size: 1G
   healthcheck:
     test:
       - "CMD-SHELL"
@@ -133,9 +144,7 @@ dawarich_postgres_container:
   labels:
     deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
-  volumes:
-    - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
-    - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
+  volumes: "{{ dawarich_postgres_volumes }}"
   env:
     POSTGRES_USER: "{{ dawarich_postgres_username }}"
     POSTGRES_PASSWORD: "{{ dawarich_postgres_password }}"
@@ -173,3 +182,5 @@ dawarich_containers: |
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
+
+dawarich_postgres_config_host_path: "{{ [dawarich_data_path, 'postgres.conf'] | path_join }}"

@@ -6,3 +6,11 @@
     images_filters:
       dangling: false
   when: dawarich_prune_docker_images
+
+- name: Restart dawarich-db
+  community.docker.docker_container:
+    name: dawarich-db
+    restart: true
+    state: started
+    comparisons:
+      '*': ignore

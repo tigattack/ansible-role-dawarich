@@ -155,6 +155,19 @@ argument_specs:
           - PostgreSQL password for Dawarich.
           - Must be set by the user.
 
+      dawarich_postgres_use_custom_config:
+        type: bool
+        default: false
+        description: Set to true if you want to use a custom config file.
+
+      dawarich_postgres_conf_file:
+        type: str
+        default: ''
+        description:
+          - Path to the PostgreSQL config file on the Ansible controller.
+          - If undefined, config will be downloaded from the Dawarich repository.
+          - Ignored unless 'dawarich_postgres_use_custom_config' is 'true'.
+
       dawarich_deploy_redis:
         type: bool
         default: true
