@@ -208,7 +208,8 @@ Set to `false` if using an external PostgreSQL instance.
 
 PostgreSQL Docker image version for Dawarich.
 
-Ignored if [`dawarich_deploy_postgres`](#dawarich_deploy_postgres) is `false`.
+> [!NOTE]
+> This is ignored if [`dawarich_deploy_postgres`](#dawarich_deploy_postgres) is `false`.
 
 ### `dawarich_postgres_host`
 
@@ -264,6 +265,7 @@ If left default (empty) and  [`dawarich_postgres_use_custom_config`](#dawarich_p
 
 > [!NOTE]
 > This does nothing unless [`dawarich_postgres_use_custom_config`](#dawarich_postgres_use_custom_config) is `true`.
+> Additionally, it will be ignored if [`dawarich_deploy_postgres`](#dawarich_deploy_postgres) is `false`.
 
 ### `dawarich_deploy_redis`
 
@@ -283,7 +285,8 @@ Set to `false` if using an external Redis instance.
 
 Redis Docker image version for Dawarich.
 
-Ignored if [`dawarich_deploy_redis`](#dawarich_deploy_redis) is `false`.
+> [!NOTE]
+> Ignored if [`dawarich_deploy_redis`](#dawarich_deploy_redis) is `false`.
 
 ### `dawarich_redis_host`
 
@@ -329,7 +332,8 @@ This assumes you are not specifying [`dawarich_photon_country_code`](#dawarich_p
 
 Photon Docker image version for reverse geocoding.
 
-Ignored if `dawarich_deploy_photon` is `false`.
+> [!NOTE]
+> Ignored unless `dawarich_deploy_photon` is `true`.
 
 ### `dawarich_photon_data_path`
 
