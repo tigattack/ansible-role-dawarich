@@ -52,7 +52,6 @@ dawarich_sidekiq_extra_env: {}
 dawarich_deploy_postgres: true
 
 # This is ignored if dawarich_deploy_postgres is false
-# renovate: datasource=docker depName=postgres
 dawarich_postgres_version: 14.2-alpine
 
 # If you have your own postgresql instance running, set the following variables according to your dawarich_deployment.
@@ -75,7 +74,6 @@ dawarich_postgres_conf_file: ''
 dawarich_deploy_redis: true
 
 # This is ignored if dawarich_deploy_redis is false
-# renovate: datasource=docker depName=redis
 dawarich_redis_version: 7.0-alpine
 
 # If you have your own redis instance running, set the following variables according to your deployment.
@@ -87,7 +85,6 @@ dawarich_redis_db_number: 0
 dawarich_deploy_photon: false
 
 # This is ignored if dawarich_deploy_photon is false
-# renovate: datasource=docker depName=rtuszik/photon-docker
 dawarich_photon_version: latest
 
 dawarich_photon_data_path: "{{ [dawarich_data_path, 'photon'] | path_join }}"
@@ -97,8 +94,6 @@ dawarich_photon_port: 2322
 # See available countries at https://download1.graphhopper.com/public/extracts/by-country-code/
 dawarich_photon_country_code: ''
 
-
 ######## Miscellaneous ########
-
 # Prune *all* Docker images after deployment if any container has changed.
 dawarich_prune_docker_images: true
