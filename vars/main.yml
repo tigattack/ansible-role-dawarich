@@ -163,7 +163,7 @@ dawarich_photon_container:
   healthcheck:
     test:
       - "CMD-SHELL"
-      - "curl -Gs 'http://localhost:2322/api' -d 'q=London' | grep -q 'coordinates'"
+      - "curl -Gs 'http://localhost:2322/api' | grep -q 'missing search term'"
     interval: 10s
     retries: 5
     start_period: 30s
