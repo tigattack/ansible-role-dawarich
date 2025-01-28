@@ -20,3 +20,11 @@ repos:
         pass_filenames: false
       - id: ansible_role_find_unquoted_values
         pass_filenames: false
+  - repo: local
+    hooks:
+      - id: supported_version_patch
+        name: Patch minimum supported Dawarich version in README
+        language: system
+        entry: .github/patch_version.sh
+        pass_filenames: false
+        files: min_dawarich_version.txt

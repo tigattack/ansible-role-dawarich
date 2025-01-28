@@ -19,5 +19,14 @@
       "matchUpdateTypes": ["patch"],
       "automerge": true
     }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^min_dawarich_version.txt$"],
+      "matchStrings": ["^(?<currentValue>.+)"],
+      "depNameTemplate": "Freika/dawarich",
+      "datasourceTemplate": "github-tags"
+    }
   ]
 }
