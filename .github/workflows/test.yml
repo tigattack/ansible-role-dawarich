@@ -39,6 +39,7 @@ jobs:
             sort | \
             jq -R -s -c 'split("\n") | map(select(length > 0))'
           )
+          echo "$tests"
           echo "tests=$tests" >> $GITHUB_OUTPUT
 
   test:
