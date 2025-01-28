@@ -16,6 +16,10 @@
       ansible.builtin.assert:
         that: container_info.container.State.Health.Status == 'healthy'
         success_msg: Photon container passed health check.
+      register: _result
+      until: _result is not failed
+      retries: 120 # 120 * 5 seconds = 10min
+      delay: 5
 
     - name: Assert dawarich-photon API responds
       ansible.builtin.uri:
