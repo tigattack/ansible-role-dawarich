@@ -18,7 +18,7 @@
         success_msg: Photon container passed health check.
       register: _result
       until: _result is not failed
-      retries: 120 # 120 * 5 seconds = 10min
+      retries: 60 # 60 * 5 seconds = 5min
       delay: 5
       ignore_errors: true
 
