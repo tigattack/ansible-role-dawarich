@@ -40,6 +40,10 @@
           ansible.builtin.debug:
             msg: "{{ logs.stdout }}"
 
+        - name: Dump dawarich-photon container healthcheck info
+          ansible.builtin.debug:
+            msg: "{{ container_info.container.State.Health }}"
+
         - name: Fail
           ansible.builtin.fail:
             msg: Photon container did not reach a healthy state before timeout.
