@@ -21,7 +21,7 @@ jobs:
           requirements_file: requirements.yml
           args: "--exclude molecule"
 
-  pre_test:
+  gather_tests:
     runs-on: ubuntu-latest
     outputs:
       tests: ${{ steps.tests.outputs.tests }}
@@ -43,12 +43,12 @@ jobs:
           echo "$tests"
           echo "tests=$tests" >> $GITHUB_OUTPUT
 
-  test:
+  molecule_test:
     runs-on: ubuntu-latest
-    needs: [pre_test]
+    needs: [gather_tests]
     strategy:
       matrix:
-        test: ${{ fromJSON(needs.pre_test.outputs.tests) }}
+        test: ${{ fromJSON(needs.gather_tests.outputs.tests) }}
     steps:
       - uses: actions/checkout@v4
 
