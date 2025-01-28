@@ -8,7 +8,7 @@ dawarich_docker_network_name: dawarich
 ######## Dawarich config ########
 dawarich_version: latest
 # Host of the application, e.g. localhost or dawarich.example.com
-dawarich_app_hosts: localhost
+dawarich_app_hosts: localhost,::1,127.0.0.1
 dawarich_app_protocol: http
 dawarich_port: 3000
 
@@ -21,17 +21,21 @@ dawarich_distance_unit: km
 ## Number of background processing workers per Sidekiq worker
 dawarich_background_processing_concurrency: 10
 
+# Dawarich encryption salt/secret key (Rails' secret_key_base)
+# This must be set by the user.
+# dawarich_encryption_secret_key:
+
 ## Number of Sidekiq workers to deploy
 dawarich_workers_count: 1
 
 # Reverse geocoding preferences
 dawarich_reverse_geocoding_enabled: true
 
-## The default value below will set the API host to photon.komoot.io if you do NOT choose to deploy a Photon instance.
+## The default value below will set the API host to an empty string if you do NOT choose to deploy a Photon instance.
 ## If you DO choose to deploy a Photon instance, the API host will be set to 'dawarich-photon' (the name of the Photon container).
 ## You will only need to change this if you wish to use a different Photon instance, whether self-hosted or public.
 dawarich_photon_api_host: |
-  {{ 'dawarich-photon' if dawarich_deploy_photon else 'photon.komoot.io' }}
+  {{ 'dawarich-photon' if dawarich_deploy_photon else '' }}
 
 dawarich_photon_api_use_https: true
 
@@ -52,7 +56,7 @@ dawarich_sidekiq_extra_env: {}
 dawarich_deploy_postgres: true
 
 # This is ignored if dawarich_deploy_postgres is false
-dawarich_postgres_version: '14.2-alpine'
+dawarich_postgres_version: '14.15-alpine'
 
 # If you have your own postgresql instance running, set the following variables according to your dawarich_deployment.
 dawarich_postgres_host: dawarich-db
@@ -74,7 +78,7 @@ dawarich_postgres_conf_file: ''
 dawarich_deploy_redis: true
 
 # This is ignored if dawarich_deploy_redis is false
-dawarich_redis_version: '7.0-alpine'
+dawarich_redis_version: '7.4-alpine'
 
 # If you have your own redis instance running, set the following variables according to your deployment.
 dawarich_redis_host: dawarich-redis

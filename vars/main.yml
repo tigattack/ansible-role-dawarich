@@ -2,7 +2,7 @@
 
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
-  RAILS_ENV: development
+  RAILS_ENV: production
   REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}/{{ dawarich_redis_db_number }}
   DATABASE_HOST: "{{ dawarich_postgres_host }}"
   DATABASE_USERNAME: "{{ dawarich_postgres_username }}"
@@ -17,6 +17,8 @@ dawarich_env_shared:
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
   RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
+  SECRET_KEY_BASE: "{{ dawarich_encryption_secret_key | string }}"
+  RAILS_LOG_TO_STDOUT: "true"
 
 dawarich_app_env: |
   {{ {
@@ -61,12 +63,11 @@ dawarich_app_container:
       timeout: 10s
     labels:
       deployment_name: dawarich
-    entrypoint: dev-entrypoint.sh
-    command: bin/dev
+    entrypoint: web-entrypoint.sh
+    command: ['bin/rails', 'server', '-p', '3000', '-b', '::']
     networks: [{name: "{{ dawarich_docker_network_name }}"}]
     ports: "{{ dawarich_app_ports }}"
     volumes:
-      - "{{ [dawarich_data_path, 'gem_cache_app'] | path_join }}:/usr/local/bundle/gems"
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
     env: "{{ dawarich_app_env }}"
@@ -88,11 +89,10 @@ dawarich_worker_container:
     timeout: 10s
   labels:
     deployment_name: dawarich
-  entrypoint: dev-entrypoint.sh
+  entrypoint: sidekiq-entrypoint.sh
   command: sidekiq
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   volumes:
-    - "{{ [dawarich_data_path, 'gem_cache_sidekiq'] | path_join }}:/usr/local/bundle/gems"
     - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
   env: "{{ dawarich_sidekiq_env }}"
   state: healthy

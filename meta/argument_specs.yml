@@ -27,7 +27,7 @@ argument_specs:
 
       dawarich_app_hosts:
         type: str
-        default: localhost
+        default: localhost,::1,127.0.0.1
         description: Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 
       dawarich_app_protocol:
@@ -70,6 +70,13 @@ argument_specs:
         default: 10
         description: Number of background processing workers per Sidekiq worker.
 
+      dawarich_encryption_secret_key:
+        type: str
+        required: true
+        description:
+          - The Dawarich encryption salt/secret key (Rails' secret_key_base).
+          - Must be set by the user.
+
       dawarich_workers_count:
         type: int
         default: 1
@@ -82,10 +89,10 @@ argument_specs:
 
       dawarich_photon_api_host:
         type: str
-        default: photon.komoot.io
+        default: ''
         description:
           - API host for the Photon reverse geocoding service.
-          - The default value will be photon.komoot.io if you do NOT choose to deploy a Photon instance ('dawarich_deploy_photon' is 'false').
+          - The default value will be an empty string if you do NOT choose to deploy a Photon instance ('dawarich_deploy_photon' is 'false').
           - If you DO choose to deploy a Photon instance, the API host will be set to 'dawarich-photon' (the name of the Photon container).
           - You will only need to change this if you wish to use a different Photon instance, whether self-hosted or public.
 
@@ -128,7 +135,7 @@ argument_specs:
 
       dawarich_postgres_version:
         type: str
-        default: 14.2-alpine
+        default: 14.15-alpine
         description:
           - PostgreSQL Docker image version for Dawarich.
           - Ignored if 'dawarich_deploy_postgres' is 'false'.
@@ -177,7 +184,7 @@ argument_specs:
 
       dawarich_redis_version:
         type: str
-        default: 7.0-alpine
+        default: 7.4-alpine
         description:
           - Redis Docker image version for Dawarich.
           - Ignored if 'dawarich_deploy_redis' is 'false'.

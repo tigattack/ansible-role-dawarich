@@ -56,11 +56,6 @@
     file: deploy_photon.yml
   when: dawarich_deploy_photon
 
-- name: Include cleanup_workers.yml
+- name: Include cleanup.yml
   ansible.builtin.include_tasks:
-    file: cleanup_workers.yml
-
-- name: Remove old sidekiq container
-  community.docker.docker_container:
-    name: dawarich-sidekiq
-    state: absent
+    file: cleanup.yml

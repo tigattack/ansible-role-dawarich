@@ -49,9 +49,9 @@ Dawarich application Docker image version (tag).
 
 ### `dawarich_app_hosts`
 
-| Type   | Default     |
-|--------|-------------|
-| string | `localhost` |
+| Type   | Default                   |
+|--------|---------------------------|
+| string | `localhost,::1,127.0.0.1` |
 
 Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 
@@ -61,7 +61,11 @@ Host of the Dawarich application (e.g., localhost or dawarich.example.com).
 |--------|---------|
 | string | `http`  |
 
-Protocol for the Dawarich application. Set to `https` if accessing Dawarich through a SSL-terminating reverse proxy.
+Protocol for the Dawarich application.
+
+Set to `https` if accessing Dawarich through a SSL-terminating reverse proxy.
+
+Must be one of: `http`, `https`.
 
 ### `dawarich_port`
 
@@ -107,6 +111,17 @@ Must be one of: `km`, `mi`.
 
 Number of background processing workers per Sidekiq worker.
 
+### `dawarich_encryption_secret_key`
+
+| Type   | Default |
+|--------|---------|
+| string | None    |
+
+The Dawarich encryption salt/secret key (Rails' secret_key_base).
+
+> [!WARNING]
+> Must be set by the user.
+
 ### `dawarich_workers_count`
 
 | Type | Default |
@@ -127,11 +142,11 @@ Enable reverse geocoding.
 
 | Type   | Default                                            |
 |--------|----------------------------------------------------|
-| string | `photon.komoot.io` / `dawarich-photon` (see below) |
+| string | `''` or `dawarich-photon` (see below) |
 
 API host for the Photon reverse geocoding service.
 
-If [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `false`, this will default to `photon.komoot.io`, the default public Photon API host.
+If [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `false`, this will default to an empty string.
 
 Otherwise, if [`dawarich_deploy_photon`](#dawarich_deploy_photon) is `true`, this will default to `dawarich-photon` (the name of the Photon container).
 
@@ -202,9 +217,9 @@ Set to `false` if using an external PostgreSQL instance.
 
 ### `dawarich_postgres_version`
 
-| Type   | Default       |
-|--------|---------------|
-| string | `14.2-alpine` |
+| Type   | Default        |
+|--------|----------------|
+| string | `14.15-alpine` |
 
 PostgreSQL Docker image version for Dawarich.
 
@@ -243,7 +258,8 @@ PostgreSQL username for Dawarich.
 
 PostgreSQL password for Dawarich.
 
-Must be set by the user.
+> [!WARNING]
+> Must be set by the user.
 
 ### `dawarich_postgres_use_custom_config`
 
@@ -281,7 +297,7 @@ Set to `false` if using an external Redis instance.
 
 | Type   | Default      |
 |--------|--------------|
-| string | `7.0-alpine` |
+| string | `7.4-alpine` |
 
 Redis Docker image version for Dawarich.
 
@@ -320,7 +336,8 @@ Redis database number for Dawarich.
 
 Deploy a Photon instance for reverse geocoding.
 
-NOTE: This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
+> [!NOTE]
+> This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
 
 This assumes you are not specifying [`dawarich_photon_country_code`](#dawarich_photon_country_code) to limit the downloaded dataset to a single country.
 

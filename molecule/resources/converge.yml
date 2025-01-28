@@ -5,3 +5,4 @@
     - role: ansible-role-dawarich
       vars:
         dawarich_postgres_password: _!CHANGEME!_
+        dawarich_encryption_secret_key: 1234567890
