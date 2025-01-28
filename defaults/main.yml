@@ -98,6 +98,9 @@ dawarich_photon_port: 2322
 # See available countries at https://download1.graphhopper.com/public/extracts/by-country-code/
 dawarich_photon_country_code: ''
 
+# Additional env vars to apply to the Photon container
+dawarich_photon_extra_env: {}
+
 ######## Miscellaneous ########
 # Prune *all* Docker images after deployment if any container has changed.
 dawarich_prune_docker_images: true

@@ -34,6 +34,13 @@ dawarich_sidekiq_env: |
     } | combine(dawarich_env_shared, dawarich_sidekiq_extra_env)
   }}
 
+dawarich_photon_env: |
+  {{ ({
+        'COUNTRY_CODE': dawarich_photon_country_code
+      } if dawarich_photon_country_code | length > 0 else omit)
+    | combine(dawarich_photon_extra_env)
+  }}
+
 dawarich_app_ports: |
   {{
     [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [] )
@@ -166,7 +173,7 @@ dawarich_photon_container:
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   ports: ["{{ dawarich_photon_port }}:2322"]
   volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
-  env: "{{ {'COUNTRY_CODE': dawarich_photon_country_code} if dawarich_photon_country_code | length > 0 else omit }}"
+  env: "{{ dawarich_photon_env }}"
   state: started
 
 dawarich_containers: |
