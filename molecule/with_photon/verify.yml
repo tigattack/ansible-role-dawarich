@@ -20,8 +20,26 @@
       until: _result is not failed
       retries: 120 # 120 * 5 seconds = 10min
       delay: 5
+      ignore_errors: true
 
     - name: Assert dawarich-photon API responds
       ansible.builtin.uri:
         url: "http://{{ photon_container_ip }}:2322/api/?q=Speedwell+Island"
         status_code: 200
+
+    - name: Handle healthcheck failure
+      when: _result is failed
+      block:
+        - name: Get dawarich-photon container logs
+          ansible.builtin.command:
+            cmd: "docker logs dawarich-photon"
+          register: logs
+          changed_when: false
+
+        - name: Dump logs
+          ansible.builtin.debug:
+            msg: "{{ logs.stdout }}"
+
+        - name: Fail
+          ansible.builtin.fail:
+            msg: Photon container did not reach a healthy state before timeout.
