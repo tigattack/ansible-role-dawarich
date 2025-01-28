@@ -13,7 +13,7 @@ dawarich_app_protocol: http
 dawarich_port: 3000
 
 # App preferences
-dawarich_timezone: Etc/UTC # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+dawarich_timezone: 'Etc/UTC' # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 dawarich_min_minutes_spent_in_city: 60
 dawarich_distance_unit: km
 
@@ -52,7 +52,7 @@ dawarich_sidekiq_extra_env: {}
 dawarich_deploy_postgres: true
 
 # This is ignored if dawarich_deploy_postgres is false
-dawarich_postgres_version: 14.2-alpine
+dawarich_postgres_version: '14.2-alpine'
 
 # If you have your own postgresql instance running, set the following variables according to your dawarich_deployment.
 dawarich_postgres_host: dawarich-db
@@ -74,7 +74,7 @@ dawarich_postgres_conf_file: ''
 dawarich_deploy_redis: true
 
 # This is ignored if dawarich_deploy_redis is false
-dawarich_redis_version: 7.0-alpine
+dawarich_redis_version: '7.0-alpine'
 
 # If you have your own redis instance running, set the following variables according to your deployment.
 dawarich_redis_host: dawarich-redis
