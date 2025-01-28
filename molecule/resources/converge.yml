@@ -3,3 +3,5 @@
   hosts: all
   roles:
     - role: ansible-role-dawarich
+      vars:
+        dawarich_postgres_password: _!CHANGEME!_

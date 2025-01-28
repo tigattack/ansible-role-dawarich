@@ -23,3 +23,16 @@
         name: "{{ item }}"
         state: absent
       loop: "{{ existing_workers[dawarich_workers_count:] }}"
+
+- name: Remove old sidekiq container
+  community.docker.docker_container:
+    name: dawarich-sidekiq
+    state: absent
+
+- name: Cleanup unused gem_cache directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ [dawarich_data_path, 'gem_cache_app'] | path_join }}"
+    - "{{ [dawarich_data_path, 'gem_cache_sidekiq'] | path_join }}"

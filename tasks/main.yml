@@ -60,11 +60,6 @@
   ansible.builtin.include_tasks:
     file: cleanup_workers.yml
 
-- name: Remove old gem_cache directory
-  ansible.builtin.file:
-    path: "{{ [dawarich_data_path, 'gem_cache'] | path_join }}"
-    state: absent
-
 - name: Remove old sidekiq container
   community.docker.docker_container:
     name: dawarich-sidekiq

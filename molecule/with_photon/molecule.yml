@@ -27,7 +27,6 @@ provisioner:
     group_vars:
       all:
         project_dir: ${MOLECULE_PROJECT_DIRECTORY}
-        dawarich_postgres_password: _!CHANGEME!_
         dawarich_deploy_photon: true
         dawarich_photon_api_use_https: false
         dawarich_photon_country_code: 'fk'

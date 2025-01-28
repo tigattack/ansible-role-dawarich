@@ -27,5 +27,4 @@ provisioner:
     group_vars:
       all:
         project_dir: ${MOLECULE_PROJECT_DIRECTORY}
-        dawarich_postgres_password: _!CHANGEME!_
         dawarich_enable_prometheus_metrics: true
