@@ -55,10 +55,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: |
-            ~/.cache/pip
             ~/.ansible/roles
             ~/.ansible/collections
-          key: ${{ runner.os }}-test-deps
+          key: ${{ runner.os }}-ansible-test-deps
 
       - uses: actions/setup-python@v5
         with:
