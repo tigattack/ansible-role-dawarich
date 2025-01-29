@@ -2,7 +2,7 @@
 
 dawarich_default_app_hosts: ['localhost', '::1', '127.0.0.1']
 dawarich_combined_app_hosts: >-
-  {{ ((dawarich_app_hosts | split(',') if dawarich_app_hosts else [] ) + dawarich_default_app_hosts) | join(',') }}
+  {{ ((dawarich_app_hosts | split(',') if dawarich_app_hosts else []) + dawarich_default_app_hosts) | join(',') }}
 
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
