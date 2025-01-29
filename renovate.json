@@ -3,6 +3,9 @@
   "extends": [
     "config:recommended"
   ],
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "matchManagers": ["ansible-galaxy", "github-actions"],
