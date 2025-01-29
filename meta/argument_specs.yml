@@ -27,8 +27,10 @@ argument_specs:
 
       dawarich_app_hosts:
         type: str
-        default: localhost,::1,127.0.0.1
-        description: Host of the Dawarich application (e.g., localhost or dawarich.example.com).
+        default: null
+        description:
+          - Host of the Dawarich application (e.g., localhost or dawarich.example.com).
+          - Regardless of the user-specified value, 'localhost,::1,127.0.0.1' will always be added to Dawarich's 'APPLICATION_HOSTS'.
 
       dawarich_app_protocol:
         type: str

@@ -1,5 +1,9 @@
 ---
 
+dawarich_default_app_hosts: ['localhost', '::1', '127.0.0.1']
+dawarich_combined_app_hosts: >-
+  {{ ((dawarich_app_hosts | split(',') if dawarich_app_hosts else [] ) + dawarich_default_app_hosts) | join(',') }}
+
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
   RAILS_ENV: production
@@ -8,7 +12,7 @@ dawarich_env_shared:
   DATABASE_USERNAME: "{{ dawarich_postgres_username }}"
   DATABASE_PASSWORD: "{{ dawarich_postgres_password }}"
   DATABASE_NAME: "{{ dawarich_postgres_db_name }}"
-  APPLICATION_HOSTS: "{{ dawarich_app_hosts }}"
+  APPLICATION_HOSTS: "{{ dawarich_combined_app_hosts }}"
   APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
   DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"

@@ -49,11 +49,16 @@ Dawarich application Docker image version (tag).
 
 ### `dawarich_app_hosts`
 
-| Type   | Default                   |
-|--------|---------------------------|
-| string | `localhost,::1,127.0.0.1` |
+| Type   | Default |
+|--------|---------|
+| string | None    |
 
-Host of the Dawarich application (e.g., localhost or dawarich.example.com).
+Host of the Dawarich application (e.g. dawarich.example.com).
+
+> [!NOTE]
+> Regardless of the user-specified value, `localhost,::1,127.0.0.1` will always be added to Dawarich's `APPLICATION_HOSTS`.  
+> Example: If you set the value as `dawarich.example.com`, it will be set to `dawarich.example.com,localhost,::1,127.0.0.1`  
+> If left default (`None`), Dawarich's `APPLICATION_HOSTS` will be `localhost,::1,127.0.0.1`.
 
 ### `dawarich_app_protocol`
 
