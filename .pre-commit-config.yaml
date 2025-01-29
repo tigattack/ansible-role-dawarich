@@ -7,8 +7,6 @@ repos:
         pass_filenames: false
       - id: ansible_role_find_empty_directories
         pass_filenames: false
-      - id: ansible_role_fix_readability
-        pass_filenames: false
       - id: ansible_role_find_undefined_handlers
         pass_filenames: false
       - id: ansible_role_find_horizontal_when
