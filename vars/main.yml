@@ -41,7 +41,7 @@ dawarich_sidekiq_env: |
 dawarich_photon_env: |
   {{ ({
         'COUNTRY_CODE': dawarich_photon_country_code
-      } if dawarich_photon_country_code | length > 0 else omit)
+      } if dawarich_photon_country_code | length > 0 else {})
     | combine(dawarich_photon_extra_env)
   }}
 
