@@ -27,6 +27,6 @@ repos:
         pass_filenames: false
         files: min_dawarich_version.txt
   - repo: https://github.com/ansible/ansible-lint
-    rev: v25.1.1
+    rev: v25.1.2
     hooks:
       - id: ansible-lint
