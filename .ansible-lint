@@ -6,3 +6,4 @@ profile: production
 exclude_paths:
   - .cache/ # implicit unless exclude_paths is defined in config
   - molecule/
+  - .ansible

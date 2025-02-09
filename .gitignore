@@ -4,6 +4,7 @@ __pycache__
 *.pyc
 *.retry
 *.venv
+.ansible
 
 compose.yml
 gen_vars_md.py
