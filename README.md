@@ -10,7 +10,7 @@ Install the role: `ansible-galaxy role install tigattack.dawarich`
 See [Example Playbooks](#example-playbooks) below.
 
 > [!IMPORTANT]
-> **Supported Dawarich version(s):** >=0.22.1
+> **Supported Dawarich version(s):** >=0.23.6
 
 ## Prerequisites
 
@@ -210,63 +210,63 @@ Additional environment variables for the Dawarich application container.
 
 Additional environment variables for the Dawarich Sidekiq worker container.
 
-### `dawarich_deploy_postgres`
+### `dawarich_deploy_postgis`
 
 | Type | Default |
 |------|---------|
 | bool | `true`  |
 
-Deploy a PostgreSQL instance for Dawarich.
+Deploy a PostGIS instance for Dawarich.
 
-Set to `false` if using an external PostgreSQL instance.
+Set to `false` if using an external PostGIS instance.
 
-### `dawarich_postgres_version`
+### `dawarich_postgis_version`
 
 | Type   | Default        |
 |--------|----------------|
-| string | `14.15-alpine` |
+| string | `14-3.5-alpine` |
 
-PostgreSQL Docker image version for Dawarich.
+PostGIS Docker image version for Dawarich.
 
 > [!NOTE]
-> This is ignored if [`dawarich_deploy_postgres`](#dawarich_deploy_postgres) is `false`.
+> This is ignored if [`dawarich_deploy_postgis`](#dawarich_deploy_postgis) is `false`.
 
-### `dawarich_postgres_host`
+### `dawarich_postgis_host`
 
 | Type   | Default       |
 |--------|---------------|
 | string | `dawarich-db` |
 
-PostgreSQL host for Dawarich.
+PostGIS host for Dawarich.
 
-### `dawarich_postgres_db_name`
-
-| Type   | Default    |
-|--------|------------|
-| string | `dawarich` |
-
-PostgreSQL database name for Dawarich.
-
-### `dawarich_postgres_username`
+### `dawarich_postgis_db_name`
 
 | Type   | Default    |
 |--------|------------|
 | string | `dawarich` |
 
-PostgreSQL username for Dawarich.
+PostGIS database name for Dawarich.
 
-### `dawarich_postgres_password`
+### `dawarich_postgis_username`
+
+| Type   | Default    |
+|--------|------------|
+| string | `dawarich` |
+
+PostGIS username for Dawarich.
+
+### `dawarich_postgis_password`
 
 | Type   | Default |
 |--------|---------|
 | string | None    |
 
-PostgreSQL password for Dawarich.
+PostGIS password for Dawarich.
 
 > [!WARNING]
 > Must be set by the user.
 
-### `dawarich_postgres_use_custom_config`
+### `dawarich_postgis_use_custom_config`
 
 | Type | Default |
 |------|---------|
@@ -274,7 +274,7 @@ PostgreSQL password for Dawarich.
 
 Set to `true` if you want to use a custom config file.
 
-### `dawarich_postgres_conf_file`
+### `dawarich_postgis_conf_file`
 
 | Type   | Default |
 |--------|---------|
@@ -282,11 +282,11 @@ Set to `true` if you want to use a custom config file.
 
 Path to the PostgreSQL config file on the Ansible controller.
 
-If left default (empty) and  [`dawarich_postgres_use_custom_config`](#dawarich_postgres_use_custom_config) is `true`, the example config will be downloaded from the [Dawarich repository](https://github.com/Freika/dawarich/blob/master/postgresql.conf.example).
+If left default (empty) and  [`dawarich_postgis_use_custom_config`](#dawarich_postgis_use_custom_config) is `true`, the example config will be downloaded from the [Dawarich repository](https://github.com/Freika/dawarich/blob/master/postgisql.conf.example).
 
 > [!NOTE]
-> This does nothing unless [`dawarich_postgres_use_custom_config`](#dawarich_postgres_use_custom_config) is `true`.
-> Additionally, it will be ignored if [`dawarich_deploy_postgres`](#dawarich_deploy_postgres) is `false`.
+> This does nothing unless [`dawarich_postgis_use_custom_config`](#dawarich_postgis_use_custom_config) is `true`.
+> Additionally, it will be ignored if [`dawarich_deploy_postgis`](#dawarich_deploy_postgis) is `false`.
 
 ### `dawarich_deploy_redis`
 
@@ -412,7 +412,7 @@ Prune *all* Docker images after deployment if any container has changed.
   roles:
     - role: tigattack.dawarich
       vars:
-        dawarich_postgres_password: _!CHANGEME!_
+        dawarich_postgis_password: _!CHANGEME!_
 ```
 
 **With self-hosted Photon instance:**
@@ -424,7 +424,7 @@ Prune *all* Docker images after deployment if any container has changed.
   roles:
     - role: tigattack.dawarich
       vars:
-        dawarich_postgres_password: _!CHANGEME!_
+        dawarich_postgis_password: _!CHANGEME!_
         dawarich_deploy_photon: true
         dawarich_photon_api_use_https: false
 ```

@@ -1,0 +1,24 @@
+---
+
+- name: Asset dawarich_version is supported
+  ansible.builtin.assert:
+    that: >-
+      dawarich_version in ['latest', 'prod', 'rc'] or
+      dawarich_version | split('-') | first >= lookup('ansible.builtin.file', 'min_dawarich_version.txt')
+    success_msg: Dawarich version '{{ dawarich_version }}' supported.
+    fail_msg: |
+      Dawarich version '{{ dawarich_version }}' is not supported.
+      Try specifying a newer Dawarich version or, if using a named/text tag (e.g. latest, though this is supported), open an issue on GitHub to request support:
+      https://github.com/tigattack/ansible-role-dawarich
+
+- name: Assert dawarich_workers_count is at least 1
+  ansible.builtin.assert:
+    that: dawarich_workers_count >= 1
+    fail_msg: dawarich_workers_count must be at least 1
+
+- name: Assert PostgreSQL variables are not defined
+  ansible.builtin.assert:
+    that: query('varnames', 'dawarich_postgres', 'dawarich_deploy_postgres') | length == 0
+    fail_msg: >-
+      PostgreSQL is no longer supported due to breaking changes in Dawarich.
+      Please see the updated information in the tigattack.dawarich role documentation.

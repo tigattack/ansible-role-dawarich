@@ -128,54 +128,54 @@ argument_specs:
         default: {}
         description: Additional environment variables for the Dawarich Sidekiq worker container.
 
-      dawarich_deploy_postgres:
+      dawarich_deploy_postgis:
         type: bool
         default: true
         description:
-          - Deploy a PostgreSQL instance for Dawarich.
-          - Set to 'false' if using an external PostgreSQL instance.
+          - Deploy a PostGIS instance for Dawarich.
+          - Set to 'false' if using an external PostGIS instance.
 
-      dawarich_postgres_version:
+      dawarich_postgis_version:
         type: str
-        default: 14.15-alpine
+        default: 14-3.5-alpine
         description:
-          - PostgreSQL Docker image version for Dawarich.
-          - Ignored if 'dawarich_deploy_postgres' is 'false'.
+          - PostGIS Docker image version for Dawarich.
+          - Ignored if 'dawarich_deploy_postgis' is 'false'.
 
-      dawarich_postgres_host:
+      dawarich_postgis_host:
         type: str
         default: dawarich-db
-        description: PostgreSQL host for Dawarich.
+        description: PostGIS host for Dawarich.
 
-      dawarich_postgres_db_name:
+      dawarich_postgis_db_name:
         type: str
         default: dawarich
-        description: PostgreSQL database name for Dawarich.
+        description: PostGIS database name for Dawarich.
 
-      dawarich_postgres_username:
+      dawarich_postgis_username:
         type: str
         default: dawarich
-        description: PostgreSQL username for Dawarich.
+        description: PostGIS username for Dawarich.
 
-      dawarich_postgres_password:
+      dawarich_postgis_password:
         type: str
         required: true
         description:
-          - PostgreSQL password for Dawarich.
+          - PostGIS password for Dawarich.
           - Must be set by the user.
 
-      dawarich_postgres_use_custom_config:
+      dawarich_postgis_use_custom_config:
         type: bool
         default: false
         description: Set to true if you want to use a custom config file.
 
-      dawarich_postgres_conf_file:
+      dawarich_postgis_conf_file:
         type: str
         default: ''
         description:
           - Path to the PostgreSQL config file on the Ansible controller.
           - If undefined, config will be downloaded from the Dawarich repository.
-          - Ignored unless 'dawarich_postgres_use_custom_config' is 'true'.
+          - Ignored unless 'dawarich_postgis_use_custom_config' is 'true'.
 
       dawarich_deploy_redis:
         type: bool

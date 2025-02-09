@@ -8,10 +8,10 @@ dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
   RAILS_ENV: production
   REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}/{{ dawarich_redis_db_number }}
-  DATABASE_HOST: "{{ dawarich_postgres_host }}"
-  DATABASE_USERNAME: "{{ dawarich_postgres_username }}"
-  DATABASE_PASSWORD: "{{ dawarich_postgres_password }}"
-  DATABASE_NAME: "{{ dawarich_postgres_db_name }}"
+  DATABASE_HOST: "{{ dawarich_postgis_host }}"
+  DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
+  DATABASE_PASSWORD: "{{ dawarich_postgis_password }}"
+  DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
   APPLICATION_HOSTS: "{{ dawarich_combined_app_hosts }}"
   APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
   DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
@@ -50,13 +50,13 @@ dawarich_app_ports: |
     [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [] )
   }}
 
-dawarich_postgres_volumes_static:
+dawarich_postgis_volumes_static:
   - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
   - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
 
-dawarich_postgres_volumes: |
-  {{ ([dawarich_postgres_config_host_path + ':/etc/postgresql/postgres.conf:ro']
-    if dawarich_postgres_use_custom_config else [] ) + dawarich_postgres_volumes_static }}
+dawarich_postgis_volumes: |
+  {{ ([dawarich_postgis_config_host_path + ':/etc/postgresql/postgres.conf:ro']
+    if dawarich_postgis_use_custom_config else [] ) + dawarich_postgis_volumes_static }}
 
 dawarich_app_container:
   - name: dawarich-server
@@ -137,16 +137,16 @@ dawarich_redis_container:
     - "{{ [dawarich_data_path, 'redis'] | path_join }}:/data"
   state: healthy
 
-dawarich_postgres_container:
+dawarich_postgis_container:
   name: dawarich-db
-  image: postgres:{{ dawarich_postgres_version }}
-  command: "{{ 'postgres -c config_file=/etc/postgresql/postgres.conf' if dawarich_postgres_use_custom_config else 'postgres' }}"
+  image: postgis/postgis:{{ dawarich_postgis_version }}
+  command: "{{ 'postgres -c config_file=/etc/postgresql/postgres.conf' if dawarich_postgis_use_custom_config else 'postgres' }}"
   restart_policy: unless-stopped
   shm_size: 1G
   healthcheck:
     test:
       - "CMD-SHELL"
-      - "pg_isready -U postgres -d {{ dawarich_postgres_db_name }}"
+      - "pg_isready -U postgres -d {{ dawarich_postgis_db_name }}"
     interval: 10s
     retries: 5
     start_period: 30s
@@ -154,10 +154,10 @@ dawarich_postgres_container:
   labels:
     deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
-  volumes: "{{ dawarich_postgres_volumes }}"
+  volumes: "{{ dawarich_postgis_volumes }}"
   env:
-    POSTGRES_USER: "{{ dawarich_postgres_username }}"
-    POSTGRES_PASSWORD: "{{ dawarich_postgres_password }}"
+    POSTGRES_USER: "{{ dawarich_postgis_username }}"
+    POSTGRES_PASSWORD: "{{ dawarich_postgis_password }}"
   state: healthy
 
 dawarich_photon_container:
@@ -185,12 +185,12 @@ dawarich_containers: |
   {% if dawarich_deploy_redis -%}
     {% set additional_containers = [dawarich_redis_container] + additional_containers -%}
   {% endif -%}
-  {% if dawarich_deploy_postgres -%}
-    {% set additional_containers = [dawarich_postgres_container] + additional_containers -%}
+  {% if dawarich_deploy_postgis -%}
+    {% set additional_containers = [dawarich_postgis_container] + additional_containers -%}
   {% endif -%}
   {{ additional_containers + dawarich_app_container + dawarich_workers }}
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
 
-dawarich_postgres_config_host_path: "{{ [dawarich_data_path, 'postgres.conf'] | path_join }}"
+dawarich_postgis_config_host_path: "{{ [dawarich_data_path, 'postgres.conf'] | path_join }}"

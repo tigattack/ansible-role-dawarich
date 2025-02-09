@@ -51,27 +51,27 @@ dawarich_app_extra_env: {}
 # Additional env vars to apply to the dawarich sidekiq container
 dawarich_sidekiq_extra_env: {}
 
-######## Postgres config ########
-# Only set false if you have your own postgresql instance running.
-dawarich_deploy_postgres: true
+######## PostGIS config ########
+# Only set false if you have your own PostGIS instance running.
+dawarich_deploy_postgis: true
 
-# This is ignored if dawarich_deploy_postgres is false
-dawarich_postgres_version: '14.15-alpine'
+# This is ignored if dawarich_deploy_postgis is false
+dawarich_postgis_version: '14-3.5-alpine'
 
-# If you have your own postgresql instance running, set the following variables according to your dawarich_deployment.
-dawarich_postgres_host: dawarich-db
-dawarich_postgres_db_name: dawarich
-dawarich_postgres_username: dawarich
+# If you have your own PostGIS instance running, set the following variables according to your dawarich_deployment.
+dawarich_postgis_host: dawarich-db
+dawarich_postgis_db_name: dawarich
+dawarich_postgis_username: dawarich
 # This must be set by the user.
-# dawarich_postgres_password:
+# dawarich_postgis_password:
 
 # Set to true if you want to use a custom config file
-dawarich_postgres_use_custom_config: false
+dawarich_postgis_use_custom_config: false
 
-# This is ignored if dawarich_postgres_use_custom_config is false.
-# Path to the postgres config file on the Ansible controller.
+# This is ignored if dawarich_postgis_use_custom_config is false.
+# Path to the PostgreSQL config file on the Ansible controller.
 # If undefined, config will be downloaded from the Dawarich repository.
-dawarich_postgres_conf_file: ''
+dawarich_postgis_conf_file: ''
 
 ######## Redis config ########
 # Only set false if you have your own redis instance running.
