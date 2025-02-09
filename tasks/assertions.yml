@@ -6,9 +6,10 @@
       dawarich_version in ['latest', 'prod', 'rc'] or
       dawarich_version | split('-') | first >= lookup('ansible.builtin.file', 'min_dawarich_version.txt')
     success_msg: Dawarich version '{{ dawarich_version }}' supported.
-    fail_msg: |
+    fail_msg: >-
       Dawarich version '{{ dawarich_version }}' is not supported.
-      Try specifying a newer Dawarich version or, if using a named/text tag (e.g. latest, though this is supported), open an issue on GitHub to request support:
+      Version must be >={{ lookup('ansible.builtin.file', 'min_dawarich_version.txt') }} or a named/text tag (e.g. latest).
+      If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
 
 - name: Assert dawarich_workers_count is at least 1
