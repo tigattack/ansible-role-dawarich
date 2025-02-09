@@ -146,7 +146,7 @@ dawarich_postgis_container:
   healthcheck:
     test:
       - "CMD-SHELL"
-      - "pg_isready -U postgres -d {{ dawarich_postgis_db_name }}"
+      - "pg_isready -U {{ dawarich_postgis_username }} -d {{ dawarich_postgis_db_name }}"
     interval: 10s
     retries: 5
     start_period: 30s
