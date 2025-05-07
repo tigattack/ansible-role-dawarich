@@ -10,16 +10,24 @@
   },
   "packageRules": [
     {
-      "matchManagers": ["pip_requirements"],
-      "matchUpdateTypes": ["patch"],
+      "matchManagers": [
+        "pip_requirements"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "automerge": true
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^min_dawarich_version.txt$"],
-      "matchStrings": ["^(?<currentValue>.+)"],
+      "managerFilePatterns": [
+        "/^min_dawarich_version.txt$/"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>.+)"
+      ],
       "depNameTemplate": "Freika/dawarich",
       "datasourceTemplate": "github-tags"
     }
