@@ -23,6 +23,7 @@ dawarich_env_shared:
   RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
   SECRET_KEY_BASE: "{{ dawarich_encryption_secret_key | string }}"
   RAILS_LOG_TO_STDOUT: "true"
+  SELF_HOSTED: "true"
 
 dawarich_app_env: |
   {{ {
