@@ -113,11 +113,6 @@ argument_specs:
         default: 9394
         description: Prometheus metrics port for Dawarich.
 
-      dawarich_enable_telemetry:
-        type: bool
-        default: false
-        description: Enable telemetry. See https://dawarich.app/docs/tutorials/telemetry
-
       dawarich_app_extra_env:
         type: dict
         default: {}

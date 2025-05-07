@@ -186,14 +186,6 @@ Prometheus metrics port for Dawarich.
 > [!NOTE]
 > This does nothing unless [`dawarich_enable_prometheus_metrics`](#dawarich_enable_prometheus_metrics) is set to `true`.
 
-### `dawarich_enable_telemetry`
-
-| Type | Default |
-|------|---------|
-| bool | `false` |
-
-Enable telemetry. See <https://dawarich.app/docs/tutorials/telemetry>.
-
 ### `dawarich_app_extra_env`
 
 | Type | Default |
