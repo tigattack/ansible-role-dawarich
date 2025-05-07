@@ -104,6 +104,7 @@ dawarich_worker_container:
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   volumes:
     - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+    - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
   env: "{{ dawarich_sidekiq_env }}"
   state: healthy
 
