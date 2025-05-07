@@ -21,8 +21,9 @@
 
         - name: Parse Photon dataset size
           ansible.builtin.set_fact:
+            # Divide by 1024 for B->KB
             # Multiply by 2.5 to approximately account for compression ratio
-            dataset_size: "{{ dataset_size.content_length | int * 2.5 }}"
+            dataset_size: "{{ ((dataset_size.content_length | int / 1024) * 2.5) | round(0) }}"
 
     - name: Test Photon path components
       ansible.builtin.stat:
