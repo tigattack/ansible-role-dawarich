@@ -80,6 +80,7 @@ dawarich_app_container:
     volumes:
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
+      - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
     env: "{{ dawarich_app_env }}"
     state: healthy
 
@@ -105,6 +106,7 @@ dawarich_worker_container:
   volumes:
     - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
     - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
+    - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
   env: "{{ dawarich_sidekiq_env }}"
   state: healthy
 
