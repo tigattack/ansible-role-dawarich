@@ -23,3 +23,34 @@
     fail_msg: >-
       PostgreSQL is no longer supported due to breaking changes in Dawarich.
       Please see the updated information in the tigattack.dawarich role documentation.
+
+- name: Ensure DB major update isn't pending
+  when: dawarich_postgis_host == 'dawarich-db'
+  block:
+    - name: Get dawarich-db container info
+      community.docker.docker_container_info:
+        name: dawarich-db
+      register: dawarich_postgis_container_info
+
+    - name: Compare versions if container found
+      when: dawarich_postgis_container_info.container
+      block:
+        - name: Parse current and target DB major versions
+          ansible.builtin.set_fact:
+            db_major_version_target: >-
+              {{ dawarich_postgis_version | regex_search('^(\d+)', '\1') | first | int }}
+            db_major_version_current: >-
+              {{ dawarich_postgis_container_info.container.Config.Image | regex_search('^postgis/postgis:(\d+)', '\1') | first | int }}
+
+        - name: Determine if DB major update is pending
+          ansible.builtin.set_fact:
+            db_major_update_pending: >-
+              {{ db_major_version_target != db_major_version_current }}
+
+        - name: Confirm DB major update
+          ansible.builtin.pause:
+            prompt: >-
+              IMPORTANT: A major update to the database is pending.
+              Please follow the instructions in the Dawarich documentation before proceeding:
+              https://dawarich.app/docs/tutorials/update-postgresql/
+          when: db_major_update_pending

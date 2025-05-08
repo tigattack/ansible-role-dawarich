@@ -53,7 +53,7 @@ dawarich_sidekiq_extra_env: {}
 dawarich_deploy_postgis: true
 
 # This is ignored if dawarich_deploy_postgis is false
-dawarich_postgis_version: '14-3.5-alpine'
+dawarich_postgis_version: '17-3.5-alpine'
 
 # If you have your own PostGIS instance running, set the following variables according to your dawarich_deployment.
 dawarich_postgis_host: dawarich-db
