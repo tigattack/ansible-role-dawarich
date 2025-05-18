@@ -105,6 +105,11 @@ argument_specs:
         default: 9394
         description: Prometheus metrics port for Dawarich.
 
+      dawarich_shared_extra_env:
+        type: dict
+        default: {}
+        description: Additional environment variables to apply to both the Dawarich application and the Sidekiq worker(s) containers.
+
       dawarich_app_extra_env:
         type: dict
         default: {}

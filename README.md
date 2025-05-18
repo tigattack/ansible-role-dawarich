@@ -177,6 +177,14 @@ Prometheus metrics port for Dawarich.
 > [!NOTE]
 > This does nothing unless [`dawarich_enable_prometheus_metrics`](#dawarich_enable_prometheus_metrics) is set to `true`.
 
+### `dawarich_shared_extra_env`
+
+| Type | Default |
+|------|---------|
+| dict | `{}`    |
+
+Additional environment variables to apply to both the Dawarich application and the Sidekiq worker(s) containers.
+
 ### `dawarich_app_extra_env`
 
 | Type | Default |

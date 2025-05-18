@@ -42,9 +42,11 @@ dawarich_photon_api_use_https: true
 dawarich_enable_prometheus_metrics: false
 dawarich_prometheus_port: 9394
 
+# Additional environment variables to apply to both the dawarich app and sidekiq worker(s) containers
+dawarich_shared_extra_env: {}
 # Additional env vars to apply to the dawarich app container
 dawarich_app_extra_env: {}
-# Additional env vars to apply to the dawarich sidekiq container
+# Additional env vars to apply to the dawarich sidekiq container(s)
 dawarich_sidekiq_extra_env: {}
 
 ######## PostGIS config ########
