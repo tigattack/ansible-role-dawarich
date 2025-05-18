@@ -53,4 +53,23 @@
               IMPORTANT: A major update to the database is pending.
               Please follow the instructions in the Dawarich documentation before proceeding:
               https://dawarich.app/docs/tutorials/update-postgresql/
+              Press enter to continue, Ctrl+C to interrupt
           when: db_major_update_pending
+
+- name: Detect usage of removed variables
+  ansible.builtin.set_fact:
+    removed_vars_used: >-
+      {{ removed_vars_used | default([]) + [item] if (lookup('vars', item, default='varnotfound') != 'varnotfound') else removed_vars_used | default([]) }}
+  loop:
+    - dawarich_enable_telemetry
+    - dawarich_distance_unit
+
+- name: Warn if using removed variables
+  ansible.builtin.pause:
+    prompt: >-
+      IMPORTANT: The following variable(s) have been set, but have been removed due to recent changes in this role and/or the Dawarich project:
+      {{ removed_vars_used | join(', ') }}.
+      Please confirm that you have read the warning above and that you are aware of the changes.
+      If you are unsure, please refer to the documentation for Dawarich and this role, or open an issue on GitHub.
+      Press enter to continue, Ctrl+C to interrupt
+  when: removed_vars_used is defined and removed_vars_used | length > 0
