@@ -7,7 +7,7 @@
       dawarich_version | split('-') | first >= lookup('ansible.builtin.file', 'min_dawarich_version.txt')
     success_msg: Dawarich version '{{ dawarich_version }}' supported.
     fail_msg: >-
-      Dawarich version '{{ dawarich_version }}' is not supported.
+      Dawarich version '{{ dawarich_version }}' is not supported by the current version of this role.
       Version must be >={{ lookup('ansible.builtin.file', 'min_dawarich_version.txt') }} or a named/text tag (e.g. latest).
       If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
