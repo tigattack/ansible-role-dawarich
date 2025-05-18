@@ -1,6 +1,11 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Dawarich version notice
+      ansible.builtin.debug:
+        msg: "Testing with Dawarich version '{{ dawarich_version }}'"
+
   roles:
     - role: ansible-role-dawarich
       vars:

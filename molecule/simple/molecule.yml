@@ -23,3 +23,7 @@ provisioner:
   playbooks:
     prepare: ../resources/prepare.yml
     converge: ../resources/converge.yml
+  inventory:
+    group_vars:
+      all:
+        dawarich_version: ${DAWARICH_TEST_VERSION:-latest}

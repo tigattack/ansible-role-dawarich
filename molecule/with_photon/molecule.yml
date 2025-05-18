@@ -26,6 +26,7 @@ provisioner:
   inventory:
     group_vars:
       all:
+        dawarich_version: ${DAWARICH_TEST_VERSION:-latest}
         dawarich_deploy_photon: true
         dawarich_photon_api_use_https: false
         dawarich_photon_country_code: 'fk'

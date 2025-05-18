@@ -26,4 +26,5 @@ provisioner:
   inventory:
     group_vars:
       all:
+        dawarich_version: ${DAWARICH_TEST_VERSION:-latest}
         dawarich_workers_count: 2
