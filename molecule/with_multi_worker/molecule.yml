@@ -26,5 +26,4 @@ provisioner:
   inventory:
     group_vars:
       all:
-        project_dir: ${MOLECULE_PROJECT_DIRECTORY}
         dawarich_workers_count: 2
