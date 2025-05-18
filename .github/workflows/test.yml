@@ -59,7 +59,7 @@ jobs:
           path: |
             ~/.ansible/roles
             ~/.ansible/collections
-          key: ${{ runner.os }}-ansible-test-deps
+          key: ${{ runner.os }}-ansible-deps-${{ hashFiles('requirements.yml', 'molecule/resources/requirements.yml') }}
 
       - uses: actions/setup-python@v5
         with:
