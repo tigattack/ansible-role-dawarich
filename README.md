@@ -191,7 +191,7 @@ Additional environment variables for the Dawarich application container.
 |------|---------|
 | dict | `{}`    |
 
-Additional environment variables for the Dawarich Sidekiq worker container.
+Additional environment variables for the Dawarich Sidekiq worker container(s).
 
 ### `dawarich_deploy_postgis`
 
@@ -205,8 +205,8 @@ Set to `false` if using an external PostGIS instance.
 
 ### `dawarich_postgis_version`
 
-| Type   | Default        |
-|--------|----------------|
+| Type   | Default         |
+|--------|-----------------|
 | string | `14-3.5-alpine` |
 
 PostGIS Docker image version for Dawarich.
@@ -325,9 +325,7 @@ Redis database number for Dawarich.
 Deploy a Photon instance for reverse geocoding.
 
 > [!NOTE]
-> This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
-
-This assumes you are not specifying [`dawarich_photon_country_code`](#dawarich_photon_country_code) to limit the downloaded dataset to a single country.
+> This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required), assuming you are not specifying [`dawarich_photon_country_code`](#dawarich_photon_country_code) to limit the downloaded dataset to a single country.
 
 ### `dawarich_photon_version`
 
