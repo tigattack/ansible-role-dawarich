@@ -15,7 +15,6 @@ dawarich_port: 3000
 # App preferences
 dawarich_timezone: 'Etc/UTC' # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 dawarich_min_minutes_spent_in_city: 60
-dawarich_distance_unit: km
 
 # Workers & background processing preferences
 ## Number of background processing workers per Sidekiq worker

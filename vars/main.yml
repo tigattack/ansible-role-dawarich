@@ -14,7 +14,6 @@ dawarich_env_shared:
   DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
   APPLICATION_HOSTS: "{{ dawarich_combined_app_hosts }}"
   APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
-  DISTANCE_UNIT: "{{ dawarich_distance_unit }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string | lower }}"

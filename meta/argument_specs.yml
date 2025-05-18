@@ -59,14 +59,6 @@ argument_specs:
         default: 60
         description: Minimum minutes spent in a city to be counted.
 
-      dawarich_distance_unit:
-        type: str
-        default: km
-        choices:
-          - km
-          - mi
-        description: Distance unit for the application.
-
       dawarich_background_processing_concurrency:
         type: int
         default: 10

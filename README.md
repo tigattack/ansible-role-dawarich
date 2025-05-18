@@ -98,16 +98,6 @@ See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>.
 
 Minimum minutes spent in a city to be counted.
 
-### `dawarich_distance_unit`
-
-| Type   | Default |
-|--------|---------|
-| string | `km`    |
-
-Distance unit for the application.
-
-Must be one of: `km`, `mi`.
-
 ### `dawarich_background_processing_concurrency`
 
 | Type | Default |
