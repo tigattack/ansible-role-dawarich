@@ -66,7 +66,7 @@ dawarich_app_container:
     healthcheck:
       test:
         - "CMD-SHELL"
-        - "ruby -r net/http -r uri -e \"res = Net::HTTP.get(URI('http://127.0.0.1:3000/api/v1/health')); exit(res.include?('ok') ? 0 : 1)\""
+        - "wget -qO - http://127.0.0.1:3000/api/v1/health | grep -q 'ok'"
       interval: 10s
       retries: 30
       start_period: 30s
