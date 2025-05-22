@@ -160,6 +160,7 @@ dawarich_postgis_container:
   env:
     POSTGRES_USER: "{{ dawarich_postgis_username }}"
     POSTGRES_PASSWORD: "{{ dawarich_postgis_password }}"
+    POSTGRES_DB: "{{ dawarich_postgis_db_name }}"
   state: healthy
 
 dawarich_photon_container:
