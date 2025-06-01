@@ -28,6 +28,9 @@ dawarich_app_env: |
   {{ {
         'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string | lower,
         'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
+        'QUEUE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_queue.sqlite3',
+        'CACHE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_cache.sqlite3',
+        'CABLE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_cable.sqlite3',
     } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_sidekiq_env: |
@@ -49,8 +52,10 @@ dawarich_app_ports: |
     [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [] )
   }}
 
+dawarich_postgis_host_path: "{{ [dawarich_data_path, 'db'] | path_join }}"
+
 dawarich_postgis_volumes_static:
-  - "{{ [dawarich_data_path, 'db'] | path_join }}:/var/lib/postgresql/data"
+  - "{{ dawarich_postgis_host_path }}:/var/lib/postgresql/data"
   - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
 
 dawarich_postgis_volumes: |
@@ -81,6 +86,7 @@ dawarich_app_container:
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
       - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
+      - "{{ dawarich_postgis_host_path }}:/dawarich_db_data"
     env: "{{ dawarich_app_env }}"
     state: healthy
 
