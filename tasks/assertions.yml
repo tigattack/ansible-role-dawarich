@@ -12,11 +12,6 @@
       If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
 
-- name: Assert dawarich_workers_count is at least 1
-  ansible.builtin.assert:
-    that: dawarich_workers_count >= 1
-    fail_msg: dawarich_workers_count must be at least 1
-
 - name: Assert PostgreSQL variables are not defined
   ansible.builtin.assert:
     that: query('varnames', 'dawarich_postgres', 'dawarich_deploy_postgres') | length == 0
