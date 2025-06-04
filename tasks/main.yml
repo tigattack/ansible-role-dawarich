@@ -4,6 +4,10 @@
   ansible.builtin.include_tasks:
     file: assertions.yml
 
+- name: Include migrations.yml
+  ansible.builtin.include_tasks:
+    file: migrations.yml
+
 - name: Ensure Dawarich data directory exists
   ansible.builtin.file:
     path: "{{ dawarich_data_path }}"

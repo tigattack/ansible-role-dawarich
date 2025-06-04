@@ -11,9 +11,9 @@ dawarich_env_shared:
   DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
   DATABASE_PASSWORD: "{{ dawarich_postgis_password }}"
   DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
-  QUEUE_DATABASE_PATH: "/dawarich_db_data/{{ dawarich_postgis_db_name }}_queue.sqlite3"
-  CACHE_DATABASE_PATH: "/dawarich_db_data/{{ dawarich_postgis_db_name }}_cache.sqlite3"
-  CABLE_DATABASE_PATH: "/dawarich_db_data/{{ dawarich_postgis_db_name }}_cable.sqlite3"
+  QUEUE_DATABASE_PATH: "/dawarich_db_data/dawarich_queue.sqlite3"
+  CACHE_DATABASE_PATH: "/dawarich_db_data/dawarich_cache.sqlite3"
+  CABLE_DATABASE_PATH: "/dawarich_db_data/dawarich_cable.sqlite3"
   APPLICATION_HOSTS: "{{ dawarich_combined_app_hosts }}"
   APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
@@ -76,10 +76,9 @@ dawarich_app_container:
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
       - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
-      - "{{ dawarich_postgis_host_path }}:/dawarich_db_data"
+      - "{{ [dawarich_data_path, 'worker_db'] | path_join }}:/dawarich_db_data"
     env: "{{ dawarich_app_env }}"
     state: healthy
-
 
 dawarich_postgis_container:
   name: dawarich-db
