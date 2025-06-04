@@ -124,7 +124,7 @@ dawarich_photon_container:
   env: "{{ dawarich_photon_env }}"
   state: started
 
-dawarich_containers: "{{ [dawarich_postgis_container] if dawarich_deploy_postgis else [] + dawarich_app_container }}"
+dawarich_containers: "{{ ([dawarich_postgis_container] if dawarich_deploy_postgis else []) + dawarich_app_container }}"
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
