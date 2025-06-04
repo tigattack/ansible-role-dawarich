@@ -82,7 +82,7 @@ dawarich_app_container:
 
 dawarich_postgis_container:
   name: dawarich-db
-  image: postgis/postgis:{{ dawarich_postgis_version }}
+  image: imresamu/postgis:{{ dawarich_postgis_version }}
   command: "{{ 'postgres -c config_file=/etc/postgresql/postgres.conf' if dawarich_postgis_use_custom_config else 'postgres' }}"
   restart_policy: unless-stopped
   shm_size: 1G
