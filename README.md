@@ -107,6 +107,14 @@ Minimum minutes spent in a city to be counted.
 
 Background processing concurrency.
 
+### `dawarich_rails_max_threads`
+
+| Type | Default |
+|------|---------|
+| int  | `10`    |
+
+Connection pool size for the Dawarich database.
+
 ### `dawarich_encryption_secret_key`
 
 | Type   | Default |

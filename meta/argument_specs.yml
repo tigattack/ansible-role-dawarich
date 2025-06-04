@@ -64,6 +64,11 @@ argument_specs:
         default: 10
         description: Background processing concurrency.
 
+      dawarich_rails_max_threads:
+        type: int
+        default: 10
+        description: Connection pool size for the Dawarich database
+
       dawarich_encryption_secret_key:
         type: str
         required: true

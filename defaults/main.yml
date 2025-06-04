@@ -20,6 +20,9 @@ dawarich_min_minutes_spent_in_city: 60
 ## Background processing concurrency.
 dawarich_background_processing_concurrency: 10
 
+# Connection pool size for the Dawarich database
+dawarich_rails_max_threads: 10
+
 # Dawarich encryption salt/secret key (Rails' secret_key_base)
 # This must be set by the user.
 # dawarich_encryption_secret_key:
