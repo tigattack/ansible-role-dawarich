@@ -81,6 +81,16 @@ Must be one of: `http`, `https`.
 
 Dawarich application port.
 
+### `dawarich_rails_env`
+
+| Type   | Default       |
+|--------|---------------|
+| string | `development` |
+
+Rails environment for the Dawarich application.
+
+This should ideally be `production`, but some bugs have been observed in production mode that are not present in development mode.
+
 ### `dawarich_timezone`
 
 | Type   | Default   |

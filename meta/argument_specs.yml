@@ -47,6 +47,13 @@ argument_specs:
         default: 3000
         description: Dawarich application port.
 
+      dawarich_rails_env:
+        type: str
+        default: development
+        description:
+          - Rails environment for the Dawarich application.
+          - This should ideally be 'production', but some bugs have been observed in production mode that are not present in development mode.
+
       dawarich_timezone:
         type: str
         default: Etc/UTC

@@ -11,6 +11,8 @@ dawarich_version: latest
 dawarich_app_hosts: null
 dawarich_app_protocol: http
 dawarich_port: 3000
+# This should ideally be production, but I've seen some bugs in production mode that are not present in development mode.
+dawarich_rails_env: development
 
 # App preferences
 dawarich_timezone: 'Etc/UTC' # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
