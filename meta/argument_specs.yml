@@ -29,7 +29,7 @@ argument_specs:
         type: str
         default: null
         description:
-          - Host of the Dawarich application (e.g., dawarich.example.com).
+          - Host of the Dawarich application (e.g. dawarich.example.com).
           - Regardless of the user-specified value, 'localhost,::1,127.0.0.1' will always be added to Dawarich's 'APPLICATION_HOSTS'.
 
       dawarich_app_protocol:
@@ -74,7 +74,7 @@ argument_specs:
       dawarich_rails_max_threads:
         type: int
         default: 10
-        description: Connection pool size for the Dawarich database
+        description: Connection pool size for the Dawarich database.
 
       dawarich_encryption_secret_key:
         type: str
