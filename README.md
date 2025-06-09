@@ -334,14 +334,6 @@ Redis host for Dawarich.
 
 Redis port for Dawarich.
 
-### `dawarich_redis_db_number`
-
-| Type | Default |
-|------|---------|
-| int  | `0`     |
-
-Redis database number for Dawarich.
-
 ### `dawarich_deploy_photon`
 
 | Type | Default |

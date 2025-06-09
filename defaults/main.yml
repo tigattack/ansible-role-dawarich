@@ -86,7 +86,6 @@ dawarich_redis_version: '7.4-alpine'
 # If you have your own redis instance running, set the following variables according to your deployment.
 dawarich_redis_host: dawarich-redis
 dawarich_redis_port: 6379
-dawarich_redis_db_number: 0
 
 ######## Photon config ########
 dawarich_deploy_photon: false

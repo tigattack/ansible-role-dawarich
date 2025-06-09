@@ -205,11 +205,6 @@ argument_specs:
         default: 6379
         description: Redis port for Dawarich.
 
-      dawarich_redis_db_number:
-        type: int
-        default: 0
-        description: Redis database number for Dawarich.
-
       dawarich_deploy_photon:
         type: bool
         default: false
