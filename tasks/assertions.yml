@@ -35,7 +35,7 @@
             db_major_version_target: >-
               {{ dawarich_postgis_version | regex_search('^(\d+)', '\1') | first | int }}
             db_major_version_current: >-
-              {{ dawarich_postgis_container_info.container.Config.Image | regex_search('^imresamu/postgis:(\d+)', '\1') | first | int }}
+              {{ dawarich_postgis_container_info.container.Config.Image | regex_search('^\w+/postgis:(\d+)', '\1') | first | int }}
 
         - name: Determine if DB major update is pending
           ansible.builtin.set_fact:
