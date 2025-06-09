@@ -14,7 +14,7 @@
   block:
     - name: Check if dawarich_queue DB exists
       community.docker.docker_container_exec:
-        name: "{{ dawarich_postgis_container.name }}"
+        container: "{{ dawarich_postgis_container.name }}"
         command: >-
           psql -U {{ dawarich_postgis_username }} -lqt |
           grep -q {{ dawarich_queue_db_name | default('dawarich_queue') }}
