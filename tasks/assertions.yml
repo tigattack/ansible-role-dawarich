@@ -67,6 +67,7 @@
     - dawarich_queue_db_name
     - dawarich_queue_db_username
     - dawarich_queue_db_password
+    - dawarich_redis_db_number
 
 - name: Warn if using removed variables
   ansible.builtin.pause:
