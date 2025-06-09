@@ -1,12 +1,8 @@
 ---
 
-- name: Include assertions.yml
+- name: Include pre_deploy.yml
   ansible.builtin.include_tasks:
-    file: assertions.yml
-
-- name: Include migrations.yml
-  ansible.builtin.include_tasks:
-    file: migrations.yml
+    file: pre_deploy.yml
 
 - name: Ensure Dawarich data directory exists
   ansible.builtin.file:
@@ -59,6 +55,6 @@
     file: deploy_photon.yml
   when: dawarich_deploy_photon
 
-- name: Include cleanup.yml
+- name: Include post_deploy.yml
   ansible.builtin.include_tasks:
-    file: cleanup.yml
+    file: post_deploy.yml

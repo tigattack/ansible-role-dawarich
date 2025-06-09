@@ -1,0 +1,7 @@
+---
+
+# Pre-deployment checks, migrations, etc. for Dawarich deployment
+
+- name: Include assertions.yml
+  ansible.builtin.include_tasks:
+    file: assertions.yml

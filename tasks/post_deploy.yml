@@ -1,5 +1,7 @@
 ---
 
+# Post-deployment cleanup, migrations, etc. for Dawarich deployment
+
 - name: Get Dawarich containers
   community.docker.docker_host_info:
     containers: true
