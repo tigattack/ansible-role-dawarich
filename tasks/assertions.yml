@@ -12,6 +12,11 @@
       If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
 
+- name: Assert dawarich_workers_count is at least 1
+  ansible.builtin.assert:
+    that: dawarich_workers_count >= 1
+    fail_msg: dawarich_workers_count must be at least 1
+
 - name: Assert PostgreSQL variables are not defined
   ansible.builtin.assert:
     that: query('varnames', 'dawarich_postgres', 'dawarich_deploy_postgres') | length == 0
@@ -58,14 +63,10 @@
   loop:
     - dawarich_enable_telemetry
     - dawarich_distance_unit
-    - dawarich_workers_count
-    - dawarich_shared_extra_env
-    - dawarich_sidekiq_extra_env
-    - dawarich_deploy_redis
-    - dawarich_redis_version
-    - dawarich_redis_host
-    - dawarich_redis_port
-    - dawarich_redis_db_number
+    - dawarich_queue_db_host
+    - dawarich_queue_db_name
+    - dawarich_queue_db_username
+    - dawarich_queue_db_password
 
 - name: Warn if using removed variables
   ansible.builtin.pause:

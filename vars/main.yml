@@ -6,33 +6,39 @@ dawarich_combined_app_hosts: >-
 
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
-  RAILS_ENV: "{{ dawarich_rails_env }}"
+  RAILS_ENV: production
+  REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}
   DATABASE_HOST: "{{ dawarich_postgis_host }}"
   DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
   DATABASE_PASSWORD: "{{ dawarich_postgis_password }}"
   DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
-  QUEUE_DATABASE_HOST: "{{ dawarich_queue_db_host }}"
-  QUEUE_DATABASE_PORT: "5432"
-  QUEUE_DATABASE_USERNAME: "{{ dawarich_queue_db_username }}"
-  QUEUE_DATABASE_PASSWORD: "{{ dawarich_queue_db_password }}"
-  QUEUE_DATABASE_NAME: "{{ dawarich_queue_db_name }}"
-  CACHE_DATABASE_PATH: "/dawarich_db_data/dawarich_cache.sqlite3"
-  CABLE_DATABASE_PATH: "/dawarich_db_data/dawarich_cable.sqlite3"
   APPLICATION_HOSTS: "{{ dawarich_combined_app_hosts }}"
   APPLICATION_PROTOCOL: "{{ dawarich_app_protocol }}"
   REVERSE_GEOCODING_ENABLED: "{{ dawarich_reverse_geocoding_enabled | string | lower }}"
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string | lower }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
-  PROMETHEUS_EXPORTER_HOST: '0.0.0.0'
   PROMETHEUS_EXPORTER_PORT: '9394'
-  RAILS_MAX_THREADS: "{{ dawarich_rails_max_threads | string }}"
+  RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
   SECRET_KEY_BASE: "{{ dawarich_encryption_secret_key | string }}"
   RAILS_LOG_TO_STDOUT: "true"
   SELF_HOSTED: "true"
-  MIN_MINUTES_SPENT_IN_CITY: "{{ dawarich_min_minutes_spent_in_city | string | lower }}"
 
-dawarich_app_env: "{{ dawarich_env_shared | combine(dawarich_app_extra_env, recursive=true) }}"
+dawarich_app_env: |
+  {{ {
+        'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string | lower,
+        'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
+        'QUEUE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_queue.sqlite3',
+        'CACHE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_cache.sqlite3',
+        'CABLE_DATABASE_PATH': '/dawarich_db_data/' + dawarich_postgis_db_name + '_cable.sqlite3',
+    } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
+
+dawarich_sidekiq_env: |
+  {{ {
+        'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string | lower,
+        'PROMETHEUS_EXPORTER_HOST': 'dawarich-server',
+    } | combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true)
+  }}
 
 dawarich_photon_env: |
   {{ ({
@@ -48,13 +54,13 @@ dawarich_app_ports: |
 
 dawarich_postgis_host_path: "{{ [dawarich_data_path, 'db'] | path_join }}"
 
+dawarich_postgis_volumes_static:
+  - "{{ dawarich_postgis_host_path }}:/var/lib/postgresql/data"
+  - "{{ [dawarich_data_path, 'redis'] | path_join }}:/var/shared"
+
 dawarich_postgis_volumes: |
-  {{
-    (
-      [dawarich_postgis_config_host_path + ':/etc/postgresql/postgres.conf:ro']
-      if dawarich_postgis_use_custom_config else []
-    ) + [dawarich_postgis_host_path + ':/var/lib/postgresql/data']
-  }}
+  {{ ([dawarich_postgis_config_host_path + ':/etc/postgresql/postgres.conf:ro']
+    if dawarich_postgis_use_custom_config else [] ) + dawarich_postgis_volumes_static }}
 
 dawarich_app_container:
   - name: dawarich-server
@@ -80,9 +86,63 @@ dawarich_app_container:
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
       - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
-      - "{{ [dawarich_data_path, 'worker_db'] | path_join }}:/dawarich_db_data"
     env: "{{ dawarich_app_env }}"
     state: healthy
+
+dawarich_worker_container:
+  name: dawarich-sidekiq
+  image: freikin/dawarich:{{ dawarich_version }}
+  restart_policy: unless-stopped
+  interactive: true
+  tty: true
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "pgrep -f sidekiq"
+    interval: 10s
+    retries: 30
+    start_period: 30s
+    timeout: 10s
+  labels:
+    deployment_name: dawarich
+  entrypoint: sidekiq-entrypoint.sh
+  command: sidekiq
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  volumes:
+    - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+    - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
+    - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
+  env: "{{ dawarich_sidekiq_env }}"
+  state: healthy
+
+dawarich_workers: |
+  {%- set workers = [] %}
+  {%- for i in range(1, dawarich_workers_count + 1) %}
+    {%- set _ = workers.append(dawarich_worker_container | combine({'name': 'dawarich-sidekiq-' ~ i})) %}
+  {%- endfor %}
+  {{ workers }}
+
+dawarich_redis_container:
+  name: dawarich-redis
+  image: redis:{{ dawarich_redis_version }}
+  restart_policy: unless-stopped
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "redis-cli"
+      - "--raw"
+      - "incr"
+      - "ping"
+    interval: 10s
+    retries: 5
+    start_period: 30s
+    timeout: 10s
+  labels:
+    deployment_name: dawarich
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  volumes:
+    - "{{ [dawarich_data_path, 'redis'] | path_join }}:/data"
+  state: healthy
 
 dawarich_postgis_container:
   name: dawarich-db
@@ -128,7 +188,15 @@ dawarich_photon_container:
   env: "{{ dawarich_photon_env }}"
   state: started
 
-dawarich_containers: "{{ ([dawarich_postgis_container] if dawarich_deploy_postgis else []) + dawarich_app_container }}"
+dawarich_containers: |
+  {% set additional_containers = [] -%}
+  {% if dawarich_deploy_redis -%}
+    {% set additional_containers = [dawarich_redis_container] + additional_containers -%}
+  {% endif -%}
+  {% if dawarich_deploy_postgis -%}
+    {% set additional_containers = [dawarich_postgis_container] + additional_containers -%}
+  {% endif -%}
+  {{ additional_containers + dawarich_app_container + dawarich_workers }}
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
