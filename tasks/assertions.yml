@@ -63,14 +63,6 @@
   loop:
     - dawarich_enable_telemetry
     - dawarich_distance_unit
-    - dawarich_workers_count
-    - dawarich_shared_extra_env
-    - dawarich_sidekiq_extra_env
-    - dawarich_deploy_redis
-    - dawarich_redis_version
-    - dawarich_redis_host
-    - dawarich_redis_port
-    - dawarich_redis_db_number
 
 - name: Warn if using removed variables
   ansible.builtin.pause:
