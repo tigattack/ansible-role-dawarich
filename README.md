@@ -251,6 +251,47 @@ PostGIS password for Dawarich.
 > [!WARNING]
 > Must be set by the user.
 
+### `dawarich_queue_db_host`
+
+| Type   | Default                          |
+|--------|----------------------------------|
+| string | Value of `dawarich_postgis_host` |
+
+Queue database host for Dawarich.
+
+> [!TIP]
+> This defaults to the value of `dawarich_postgis_host`.
+
+### `dawarich_queue_db_name`
+
+| Type   | Default          |
+|--------|------------------|
+| string | `dawarich_queue` |
+
+Queue database name for Dawarich.
+
+### `dawarich_queue_db_username`
+
+| Type   | Default                              |
+|--------|--------------------------------------|
+| string | Value of `dawarich_postgis_username` |
+
+Queue database username for Dawarich.
+
+> [!TIP]
+> This defaults to the value of `dawarich_postgis_username`.
+
+### `dawarich_queue_db_password`
+
+| Type   | Default                              |
+|--------|-------------------------------------|
+| string | Value of `dawarich_postgis_password` |
+
+Queue database password for Dawarich.
+
+> [!TIP]
+> This defaults to the value of `dawarich_postgis_password`.
+
 ### `dawarich_postgis_use_custom_config`
 
 | Type | Default |

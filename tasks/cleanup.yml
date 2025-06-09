@@ -42,3 +42,20 @@
   ansible.builtin.file:
     path: "{{ [dawarich_data_path, 'redis'] | path_join }}"
     state: absent
+
+- name: Remove old queue SQLite database
+  block:
+    - name: Find old queue SQLite database files
+      ansible.builtin.find:
+        paths: "{{ [dawarich_data_path, 'worker_db'] | path_join }}"
+        patterns: "dawarich_queue.sqlite*"
+      register: old_queue_sqlite_files
+
+    - name: Remove old queue SQLite database files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop_control:
+        label: "{{ item.path | basename }}"
+      when: old_queue_sqlite_files.matched > 0
+      loop: "{{ old_queue_sqlite_files.files }}"
