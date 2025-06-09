@@ -99,7 +99,7 @@ dawarich_worker_container:
   healthcheck:
     test:
       - "CMD-SHELL"
-      - "bundle exec sidekiqmon processes | grep ${HOSTNAME}"
+      - "pgrep -f sidekiq"
     interval: 10s
     retries: 30
     start_period: 30s
