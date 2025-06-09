@@ -168,32 +168,6 @@ argument_specs:
           - PostGIS password for Dawarich.
           - Must be set by the user.
 
-      dawarich_queue_db_host:
-        type: str
-        default: "{{ dawarich_postgis_host }}"
-        description:
-          - Queue database host for Dawarich.
-          - This defaults to the same value as 'dawarich_postgis_host'.
-
-      dawarich_queue_db_name:
-        type: str
-        default: dawarich_queue
-        description: Queue database name for Dawarich.
-
-      dawarich_queue_db_username:
-        type: str
-        default: "{{ dawarich_postgis_username }}"
-        description:
-          - Queue database username for Dawarich.
-          - This defaults to the same value as 'dawarich_postgis_username'.
-
-      dawarich_queue_db_password:
-        type: str
-        default: "{{ dawarich_postgis_password }}"
-        description:
-          - Queue database password for Dawarich.
-          - This defaults to the same value as 'dawarich_postgis_password'.
-
       dawarich_postgis_use_custom_config:
         type: bool
         default: false

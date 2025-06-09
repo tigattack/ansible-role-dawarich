@@ -62,18 +62,11 @@ dawarich_deploy_postgis: true
 dawarich_postgis_version: '17-3.5-alpine'
 
 # If you have your own PostGIS instance running, set the following variables according to your dawarich_deployment.
-## Dawarich app database connection settings
 dawarich_postgis_host: dawarich-db
 dawarich_postgis_db_name: dawarich
 dawarich_postgis_username: dawarich
 # This must be set by the user.
 # dawarich_postgis_password:
-
-## Dawarich queue database connection settings
-dawarich_queue_db_host: "{{ dawarich_postgis_host }}"
-dawarich_queue_db_name: dawarich_queue
-dawarich_queue_db_username: "{{ dawarich_postgis_username }}"
-dawarich_queue_db_password: "{{ dawarich_postgis_password }}"
 
 # Set to true if you want to use a custom config file
 dawarich_postgis_use_custom_config: false
