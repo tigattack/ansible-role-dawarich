@@ -115,7 +115,7 @@ Minimum minutes spent in a city to be counted.
 |------|---------|
 | int  | `10`    |
 
-Background processing concurrency.
+Number of background processing workers per Sidekiq worker.
 
 ### `dawarich_rails_max_threads`
 
@@ -135,6 +135,14 @@ The Dawarich encryption salt/secret key (Rails' secret_key_base).
 
 > [!WARNING]
 > Must be set by the user.
+
+### `dawarich_workers_count`
+
+| Type | Default |
+|------|---------|
+| int  | `1`     |
+
+Number of Sidekiq workers to deploy.
 
 ### `dawarich_reverse_geocoding_enabled`
 
@@ -187,6 +195,14 @@ Prometheus metrics port for Dawarich.
 > [!NOTE]
 > This does nothing unless [`dawarich_enable_prometheus_metrics`](#dawarich_enable_prometheus_metrics) is set to `true`.
 
+### `dawarich_shared_extra_env`
+
+| Type | Default |
+|------|---------|
+| dict | `{}`    |
+
+Additional environment variables to apply to both the Dawarich application and the Sidekiq worker(s) containers.
+
 ### `dawarich_app_extra_env`
 
 | Type | Default |
@@ -194,6 +210,14 @@ Prometheus metrics port for Dawarich.
 | dict | `{}`    |
 
 Additional environment variables for the Dawarich application container.
+
+### `dawarich_sidekiq_extra_env`
+
+| Type | Default |
+|------|---------|
+| dict | `{}`    |
+
+Additional environment variables for the Dawarich Sidekiq worker container(s).
 
 ### `dawarich_deploy_postgis`
 
@@ -313,6 +337,51 @@ If left default (empty) and  [`dawarich_postgis_use_custom_config`](#dawarich_po
 > [!NOTE]
 > This does nothing unless [`dawarich_postgis_use_custom_config`](#dawarich_postgis_use_custom_config) is `true`.
 > Additionally, it will be ignored if [`dawarich_deploy_postgis`](#dawarich_deploy_postgis) is `false`.
+
+### `dawarich_deploy_redis`
+
+| Type | Default |
+|------|---------|
+| bool | `true`  |
+
+Deploy a Redis instance for Dawarich.
+
+Set to `false` if using an external Redis instance.
+
+### `dawarich_redis_version`
+
+| Type   | Default      |
+|--------|--------------|
+| string | `7.4-alpine` |
+
+Redis Docker image version for Dawarich.
+
+> [!NOTE]
+> Ignored if [`dawarich_deploy_redis`](#dawarich_deploy_redis) is `false`.
+
+### `dawarich_redis_host`
+
+| Type   | Default          |
+|--------|------------------|
+| string | `dawarich-redis` |
+
+Redis host for Dawarich.
+
+### `dawarich_redis_port`
+
+| Type | Default |
+|------|---------|
+| int  | `6379`  |
+
+Redis port for Dawarich.
+
+### `dawarich_redis_db_number`
+
+| Type | Default |
+|------|---------|
+| int  | `0`     |
+
+Redis database number for Dawarich.
 
 ### `dawarich_deploy_photon`
 
