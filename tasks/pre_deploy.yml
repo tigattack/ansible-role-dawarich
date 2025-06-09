@@ -32,4 +32,5 @@
           community.docker.docker_container_exec:
             name: "{{ dawarich_postgis_container.name }}"
             command: >-
-              psql -U {{ dawarich_postgis_username }} -c "DROP DATABASE {{ dawarich_queue_db_name | default('dawarich_queue') }}"
+              psql -U {{ dawarich_postgis_username }} -c "DROP DATABASE
+              {{ dawarich_queue_db_name | default('dawarich_queue') }}"
