@@ -15,7 +15,7 @@
     - name: Check if Dawarich PostGIS container exists
       community.docker.docker_container_info:
         name: "{{ dawarich_postgis_container.name }}"
-      register: dawarich_postgis_container
+      register: check_pg_container_exists
 
     - name: Check if dawarich_queue DB exists
       community.docker.docker_container_exec:
@@ -23,12 +23,12 @@
         command: >-
           psql -U {{ dawarich_postgis_username }} -lqt |
           grep -q {{ dawarich_queue_db_name | default('dawarich_queue') }}
-      when: dawarich_postgis_container.exists
+      when: check_pg_container_exists.exists
       register: queue_db_exists
 
     - name: Stop Dawarich & drop queue DB
       when:
-        - dawarich_postgis_container.exists
+        - check_pg_container_exists.exists
         - queue_db_exists.rc == 0
       block:
         - name: Stop Dawarich
