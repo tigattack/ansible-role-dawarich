@@ -37,3 +37,8 @@
     - "{{ [dawarich_data_path, 'gem_cache_app'] | path_join }}"
     - "{{ [dawarich_data_path, 'gem_cache_sidekiq'] | path_join }}"
   diff: false # Hide huge output
+
+- name: Remove old queue SQLite database files
+  ansible.builtin.file:
+    path: "{{ [dawarich_data_path, 'worker_db'] | path_join }}"
+    state: absent

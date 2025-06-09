@@ -86,7 +86,6 @@ dawarich_app_container:
       - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
       - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
       - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
-      - "{{ [dawarich_data_path, 'worker_db'] | path_join }}:/dawarich_db_data"
     env: "{{ dawarich_app_env }}"
     state: healthy
 
