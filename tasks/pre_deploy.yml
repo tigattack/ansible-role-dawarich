@@ -22,6 +22,7 @@
         container: "{{ dawarich_postgis_container.name }}"
         command: bash -c "psql -U {{ dawarich_postgis_username }} -lqt | grep -q {{ dawarich_queue_db_name | default('dawarich_queue') }}"
       when: check_pg_container_exists.exists
+      check_mode: false
       changed_when: false
       register: queue_db_exists
       failed_when:
