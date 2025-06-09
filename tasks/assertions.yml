@@ -63,6 +63,10 @@
   loop:
     - dawarich_enable_telemetry
     - dawarich_distance_unit
+    - dawarich_queue_db_host
+    - dawarich_queue_db_name
+    - dawarich_queue_db_username
+    - dawarich_queue_db_password
 
 - name: Warn if using removed variables
   ansible.builtin.pause:
