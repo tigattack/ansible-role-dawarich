@@ -12,16 +12,24 @@
     # Ensure we don't accidentally drop the main database:
     - dawarich_queue_db_name | default('dawarich_queue') != dawarich_postgis_db_name
   block:
+    - name: Check if Dawarich PostGIS container exists
+      community.docker.docker_container_info:
+        name: "{{ dawarich_postgis_container.name }}"
+      register: dawarich_postgis_container
+
     - name: Check if dawarich_queue DB exists
       community.docker.docker_container_exec:
         container: "{{ dawarich_postgis_container.name }}"
         command: >-
           psql -U {{ dawarich_postgis_username }} -lqt |
           grep -q {{ dawarich_queue_db_name | default('dawarich_queue') }}
+      when: dawarich_postgis_container.exists
       register: queue_db_exists
 
     - name: Stop Dawarich & drop queue DB
-      when: queue_db_exists.rc == 0
+      when:
+        - dawarich_postgis_container.exists
+        - queue_db_exists.rc == 0
       block:
         - name: Stop Dawarich
           community.docker.docker_container:
