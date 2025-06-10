@@ -73,8 +73,10 @@ argument_specs:
 
       dawarich_rails_max_threads:
         type: int
-        default: 10
-        description: Connection pool size for the Dawarich database.
+        default: 0
+        description:
+          - Connection pool size for the Dawarich database.
+          - If undefined or set to 0, the value will be calculated as 'dawarich_workers_count * dawarich_background_processing_concurrency'.
 
       dawarich_encryption_secret_key:
         type: str

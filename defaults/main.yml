@@ -23,7 +23,8 @@ dawarich_min_minutes_spent_in_city: 60
 dawarich_background_processing_concurrency: 10
 
 # Connection pool size for the Dawarich database
-dawarich_rails_max_threads: 10
+# If left zero, the pool size will be set to the number of Sidekiq workers multiplied by the concurrency (above).
+dawarich_rails_max_threads: 0
 
 # Dawarich encryption salt/secret key (Rails' secret_key_base)
 # This must be set by the user.

@@ -121,9 +121,13 @@ Number of background processing workers per Sidekiq worker.
 
 | Type | Default |
 |------|---------|
-| int  | `10`    |
+| int  | `dawarich_workers_count * dawarich_background_processing_concurrency`    |
 
 Connection pool size for the Dawarich database.
+
+> [!TIP]
+> The default value, if undefined, is the number of workers ([`dawarich_workers_count`](#dawarich_workers_count)) multiplied by the background processing concurrecy ([`dawarich_background_processing_concurrency`](#dawarich_background_processing_concurrency)).  
+> For example, with 1 worker (default) and 10 background workers (default), this would be 10.
 
 ### `dawarich_encryption_secret_key`
 

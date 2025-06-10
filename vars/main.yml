@@ -19,7 +19,9 @@ dawarich_env_shared:
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string | lower }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
   PROMETHEUS_EXPORTER_PORT: '9394'
-  RAILS_MAX_THREADS: "{{ dawarich_workers_count * dawarich_background_processing_concurrency }}"
+  RAILS_MAX_THREADS: >-
+    {{ dawarich_rails_max_threads if dawarich_rails_max_threads | int > 0
+        else (dawarich_workers_count * dawarich_background_processing_concurrency) }}
   SECRET_KEY_BASE: "{{ dawarich_encryption_secret_key | string }}"
   RAILS_LOG_TO_STDOUT: "true"
   SELF_HOSTED: "true"
