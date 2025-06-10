@@ -40,6 +40,8 @@
           community.docker.docker_container:
             name: "{{ dawarich_app_container.name }}"
             state: stopped
+            comparisons:
+              '*': ignore
 
         - name: Drop dawarich_queue DB if it exists
           community.docker.docker_container_exec:
