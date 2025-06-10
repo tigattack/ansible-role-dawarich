@@ -6,7 +6,7 @@ dawarich_combined_app_hosts: >-
 
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
-  RAILS_ENV: production
+  RAILS_ENV: "{{ dawarich_rails_env }}"
   REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}
   DATABASE_HOST: "{{ dawarich_postgis_host }}"
   DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
