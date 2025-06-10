@@ -60,31 +60,31 @@ dawarich_postgis_volumes: |
     if dawarich_postgis_use_custom_config else [] ) + dawarich_postgis_volumes_static }}
 
 dawarich_app_container:
-  - name: dawarich-server
-    image: freikin/dawarich:{{ dawarich_version }}
-    restart_policy: unless-stopped
-    interactive: true
-    tty: true
-    healthcheck:
-      test:
-        - "CMD-SHELL"
-        - "wget -qO - http://127.0.0.1:3000/api/v1/health | grep -q 'ok'"
-      interval: 10s
-      retries: 30
-      start_period: 30s
-      timeout: 10s
-    labels:
-      deployment_name: dawarich
-    entrypoint: web-entrypoint.sh
-    command: ['bin/rails', 'server', '-p', '3000', '-b', '::']
-    networks: [{name: "{{ dawarich_docker_network_name }}"}]
-    ports: "{{ dawarich_app_ports }}"
-    volumes:
-      - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
-      - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
-      - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
-    env: "{{ dawarich_app_env }}"
-    state: healthy
+  name: dawarich-server
+  image: freikin/dawarich:{{ dawarich_version }}
+  restart_policy: unless-stopped
+  interactive: true
+  tty: true
+  healthcheck:
+    test:
+      - "CMD-SHELL"
+      - "wget -qO - http://127.0.0.1:3000/api/v1/health | grep -q 'ok'"
+    interval: 10s
+    retries: 30
+    start_period: 30s
+    timeout: 10s
+  labels:
+    deployment_name: dawarich
+  entrypoint: web-entrypoint.sh
+  command: ['bin/rails', 'server', '-p', '3000', '-b', '::']
+  networks: [{name: "{{ dawarich_docker_network_name }}"}]
+  ports: "{{ dawarich_app_ports }}"
+  volumes:
+    - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
+    - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
+    - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
+  env: "{{ dawarich_app_env }}"
+  state: healthy
 
 dawarich_worker_container:
   name: dawarich-sidekiq
@@ -193,7 +193,7 @@ dawarich_containers: |
   {% if dawarich_deploy_postgis -%}
     {% set additional_containers = [dawarich_postgis_container] + additional_containers -%}
   {% endif -%}
-  {{ additional_containers + dawarich_app_container + dawarich_workers }}
+  {{ additional_containers + [dawarich_app_container] + dawarich_workers }}
 
 dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
 dawarich_photon_data_path_combinations: []
