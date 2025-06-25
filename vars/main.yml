@@ -169,7 +169,7 @@ dawarich_postgis_container:
 
 dawarich_photon_container:
   name: dawarich-photon
-  image: rtuszik/photon-docker:{{ dawarich_photon_version }}
+  image: ghcr.io/rtuszik/photon-docker:{{ dawarich_photon_version }}
   restart_policy: unless-stopped
   healthcheck:
     test:
