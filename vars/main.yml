@@ -175,7 +175,7 @@ dawarich_photon_container:
     deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   ports: ["{{ dawarich_photon_port }}:2322"]
-  volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
+  volumes: ["{{ dawarich_photon_data_path }}:/photon/data"]
   env: "{{ dawarich_photon_env }}"
   state: started
 
