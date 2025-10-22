@@ -7,7 +7,7 @@
         msg: "Testing with Dawarich version '{{ dawarich_version }}'"
 
   roles:
-    - role: ansible-role-dawarich
+    - role: tigattack.dawarich
       vars:
         dawarich_postgis_password: _!CHANGEME!_
         dawarich_encryption_secret_key: 1234567890

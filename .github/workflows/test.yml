@@ -34,11 +34,9 @@ jobs:
 
       - name: Get Molecule tests
         id: tests
-        # with_photon test is disabled for now as as it runs out of space on the runner somehow.
-        # Same goes for with_multi_worker
         run: |
           tests=$(
-            find molecule -type d -maxdepth 1 -mindepth 1 -not -name 'resources' -not -name 'with_photon' -not -name 'with_multi_worker' | \
+            find molecule -type d -maxdepth 1 -mindepth 1 -not -name 'resources' | \
             sed 's/molecule\///' | \
             sort | \
             jq -R -s -c 'split("\n") | map(select(length > 0))'
@@ -53,15 +51,23 @@ jobs:
       fail-fast: false
       matrix:
         test: ${{ fromJSON(needs.gather_tests.outputs.tests) }}
+    defaults:
+      run:
+        working-directory: 'tigattack.dawarich'
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: 'tigattack.dawarich'
+
+      - name: Free disk space
+        run: bash .github/free_space.sh
 
       - uses: actions/cache@v4
         with:
           path: |
             ~/.ansible/roles
             ~/.ansible/collections
-          key: ${{ runner.os }}-ansible-deps-${{ hashFiles('requirements.yml', 'molecule/resources/requirements.yml') }}
+          key: ${{ runner.os }}-ansible-deps-${{ hashFiles('requirements.yml', 'tigattack.dawarich/molecule/resources/requirements.yml') }}
 
       - uses: actions/setup-python@v5
         with:
