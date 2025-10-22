@@ -33,7 +33,9 @@
       register: dawarich_postgis_container_info
 
     - name: Compare versions if container found
-      when: dawarich_postgis_container_info.container
+      when:
+        - dawarich_postgis_container_info.container is defined
+        - dawarich_postgis_container_info.container not in [None, {}]
       block:
         - name: Parse current and target DB major versions
           ansible.builtin.set_fact:
