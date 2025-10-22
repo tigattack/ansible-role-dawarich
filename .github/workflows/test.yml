@@ -41,8 +41,7 @@ jobs:
             sort | \
             jq -R -s -c 'split("\n") | map(select(length > 0))'
           )
-          echo "$tests"
-          echo "tests=$tests" >> $GITHUB_OUTPUT
+          echo "tests=$tests" | tee -a $GITHUB_OUTPUT
 
   molecule_test:
     runs-on: ubuntu-latest
@@ -78,7 +77,7 @@ jobs:
 
       - run: |
           dawarich_version=$(cat min_dawarich_version.txt)
-          echo "DAWARICH_TEST_VERSION=${dawarich_version}" >> $GITHUB_ENV
+          echo "DAWARICH_TEST_VERSION=${dawarich_version}" | tee -a $GITHUB_ENV
 
       - run: molecule -v test -s ${{ matrix.test }}
         env:
