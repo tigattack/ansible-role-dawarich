@@ -26,20 +26,24 @@ declare -a large_dirs=(
   "/opt/hostedtoolcache/CodeQL"
   "/opt/hostedtoolcache/go"
   "microsoft/powershell"
+  "/usr/local/julia*"
 )
-for dir in "${large_dirs[@]}"; do
-  [ -d "$dir" ] && echo "Removing $dir" && fast_delete "$dir"
-done
-echo "::endgroup::"
 
-echo "::group::Clearing /usr/local"
-declare -a locals_to_remove=(
-  "julia*"
-)
-for local in "${locals_to_remove[@]}"; do
-  echo "Removing /usr/local/$local"
-  sudo rm -rf "/usr/local/$local" || :
+pids=()
+for dir in "${large_dirs[@]}"; do
+  if [ -d "$dir" ]; then
+    echo "Starting deletion: $dir"
+    (fast_delete "$dir"; echo "Completed: $dir") &
+    pids+=($!)
+  fi
 done
+
+# Wait for all background deletions to complete
+echo "Waiting for ${#pids[@]} parallel deletions..."
+for pid in "${pids[@]}"; do
+  wait "$pid" 2>/dev/null || :
+done
+echo "All deletions complete"
 echo "::endgroup::"
 
 echo "::group::Disk usage after cleanup"
