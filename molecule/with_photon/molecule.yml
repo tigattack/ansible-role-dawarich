@@ -32,6 +32,6 @@ provisioner:
         dawarich_version: ${DAWARICH_TEST_VERSION:-latest}
         dawarich_deploy_photon: true
         dawarich_photon_api_use_https: false
-        dawarich_photon_country_code: 'fk'
+        dawarich_photon_region: 'andorra'
         dawarich_photon_extra_env:
           LOG_LEVEL: debug

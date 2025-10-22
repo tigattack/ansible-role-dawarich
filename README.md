@@ -347,7 +347,7 @@ Redis port for Dawarich.
 Deploy a Photon instance for reverse geocoding.
 
 > [!NOTE]
-> This requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required), assuming you are not specifying [`dawarich_photon_country_code`](#dawarich_photon_country_code) to limit the downloaded dataset to a single country.
+> This requires well over 120GB of disk space and a significant amount of RAM (16GB is recommended but not always required), assuming you are not specifying [`dawarich_photon_region`](#dawarich_photon_region) to limit the downloaded dataset to a single region.
 
 ### `dawarich_photon_version`
 
@@ -376,17 +376,15 @@ Photon data path on the host.
 
 Photon application port.
 
-### `dawarich_photon_country_code`
+### `dawarich_photon_region`
 
 | Type   | Default |
 |--------|---------|
 | string |         |
 
-Photon reverse geocoding country code.
+Photon reverse geocoding region.
 
-Set to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for a single country, or leave empty to download the full dataset.
-
-You can see available countries at <https://download1.graphhopper.com/public/extracts/by-country-code/> and correlate with the list of codes here <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes#Current_ISO_3166_country_codes>.
+See available regions at: <https://github.com/rtuszik/photon-docker/blob/main/README.md#available-regions>
 
 ### `dawarich_photon_extra_env`
 
@@ -433,9 +431,9 @@ Prune *all* Docker images after deployment if any container has changed.
 ```
 
 > [!WARNING]
-> Photon requires at least 170GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
+> Photon requires well over 120GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
 > 
-> Refer to [`dawarich_photon_country_code`](#dawarich_photon_country_code) to restrict the downloaded dataset to a single country to significantly reduce these requirements.
+> Refer to [`dawarich_photon_region`](#dawarich_photon_region) to restrict the downloaded dataset to a single region to significantly reduce these requirements.
 
 ## License
 
