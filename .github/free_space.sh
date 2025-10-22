@@ -25,9 +25,13 @@ declare -a large_dirs=(
   "/usr/local/lib/android"
   "/opt/hostedtoolcache/CodeQL"
   "/opt/hostedtoolcache/go"
-  "microsoft/powershell"
-  "/usr/local/julia*"
+  "/opt/microsoft/powershell"
 )
+
+julia=$(find /usr/local -maxdepth 1 -type d -name "julia*")
+if [ -n "$julia" ]; then
+  large_dirs+=("$julia")
+fi
 
 pids=()
 for dir in "${large_dirs[@]}"; do
