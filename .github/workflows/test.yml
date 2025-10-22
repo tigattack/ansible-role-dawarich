@@ -41,11 +41,9 @@ jobs:
 
       - name: Get Molecule tests
         id: tests
-        # with_photon test is disabled for now as as it runs out of space on the runner somehow.
-        # Same goes for with_multi_worker
         run: |
           tests=$(
-            find molecule -type d -maxdepth 1 -mindepth 1 -not -name 'resources' -not -name 'with_photon' -not -name 'with_multi_worker' | \
+            find molecule -type d -maxdepth 1 -mindepth 1 -not -name 'resources' | \
             sed 's/molecule\///' | \
             sort | \
             jq -R -s -c 'split("\n") | map(select(length > 0))'
