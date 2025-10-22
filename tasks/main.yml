@@ -45,7 +45,7 @@
 
 - name: Deploy Dawarich containers and await healthy state # noqa args[module]
   community.docker.docker_container: "{{ item }}"
-  loop: "{{ dawarich_containers | from_yaml }}"
+  loop: "{{ dawarich_containers }}"
   loop_control:
     label: "{{ item.name }}"
   notify: Prune Docker images
