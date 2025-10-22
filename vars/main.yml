@@ -171,14 +171,6 @@ dawarich_photon_container:
   name: dawarich-photon
   image: ghcr.io/rtuszik/photon-docker:{{ dawarich_photon_version }}
   restart_policy: unless-stopped
-  healthcheck:
-    test:
-      - "CMD-SHELL"
-      - "curl -Gs 'http://localhost:2322/api' | grep -q 'missing search term'"
-    interval: 10s
-    retries: 5
-    start_period: 30s
-    timeout: 10s
   labels:
     deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
