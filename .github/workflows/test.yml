@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tests: ${{ steps.tests.outputs.tests }}
+      min_version: ${{ steps.version.outputs.min_version }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,6 +44,12 @@ jobs:
           )
           echo "tests=$tests" | tee -a $GITHUB_OUTPUT
 
+      - name: Get minimum supported Dawarich version
+        id: version
+        run: |
+          dawarich_version=$(cat min_dawarich_version.txt)
+          echo "min_version=${dawarich_version}" | tee -a $GITHUB_OUTPUT
+
   molecule_test:
     runs-on: ubuntu-latest
     needs: [gather_tests]
@@ -50,6 +57,9 @@ jobs:
       fail-fast: false
       matrix:
         test: ${{ fromJSON(needs.gather_tests.outputs.tests) }}
+        version:
+          - ${{ needs.gather_tests.outputs.min_version }}
+          - latest
     defaults:
       run:
         working-directory: 'tigattack.dawarich'
@@ -74,10 +84,6 @@ jobs:
           cache: 'pip'
 
       - run: pip install -r requirements.txt
-
-      - run: |
-          dawarich_version=$(cat min_dawarich_version.txt)
-          echo "DAWARICH_TEST_VERSION=${dawarich_version}" | tee -a $GITHUB_ENV
 
       - run: molecule -v test -s ${{ matrix.test }}
         env:
