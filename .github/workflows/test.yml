@@ -11,17 +11,11 @@ on:
   workflow_dispatch:
   workflow_call:
 
-defaults:
-  run:
-    working-directory: 'tigattack.dawarich'
-
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: 'tigattack.dawarich'
 
       - uses: ansible/ansible-lint@v25.6.1
         with:
@@ -35,7 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: 'tigattack.dawarich'
           sparse-checkout: |
             molecule
 
@@ -58,6 +51,9 @@ jobs:
       fail-fast: false
       matrix:
         test: ${{ fromJSON(needs.gather_tests.outputs.tests) }}
+    defaults:
+      run:
+        working-directory: 'tigattack.dawarich'
     steps:
       - uses: actions/checkout@v4
         with:
