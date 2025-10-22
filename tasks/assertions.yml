@@ -75,9 +75,9 @@
 - name: Warn if using removed variables
   ansible.builtin.pause:
     prompt: >-
-      IMPORTANT: The following variable(s) have been set, but have been removed due to recent changes in this role and/or the Dawarich project:
+      IMPORTANT: The following variable(s) have been set, but have been removed due to recent changes:
       {{ removed_vars_used | join(', ') }}.
       Please confirm that you have read the warning above and that you are aware of the changes.
-      If you are unsure, please refer to the documentation for Dawarich and this role, or open an issue on GitHub.
+      If you are unsure, please refer to the documentation or open an issue on GitHub.
       Press enter to continue, Ctrl+C to interrupt
   when: removed_vars_used is defined and removed_vars_used | length > 0
