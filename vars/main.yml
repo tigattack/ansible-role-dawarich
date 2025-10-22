@@ -197,7 +197,4 @@ dawarich_containers: |
   {% endif -%}
   {{ additional_containers + [dawarich_app_container] + dawarich_workers }}
 
-dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
-dawarich_photon_data_path_combinations: []
-
 dawarich_postgis_config_host_path: "{{ [dawarich_data_path, 'postgres.conf'] | path_join }}"

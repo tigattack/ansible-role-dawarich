@@ -50,9 +50,9 @@
     label: "{{ item.name }}"
   notify: Prune Docker images
 
-- name: Include deploy_photon.yml
-  ansible.builtin.include_tasks:
-    file: deploy_photon.yml
+- name: Deploy Photon container # noqa args[module]
+  community.docker.docker_container: "{{ dawarich_photon_container }}"
+  notify: Prune Docker images
   when: dawarich_deploy_photon
 
 - name: Include post_deploy.yml
