@@ -68,8 +68,7 @@ jobs:
         with:
           path: 'tigattack.dawarich'
 
-      - name: Free disk space
-        run: bash .github/free_space.sh
+      - run: bash .github/free_space.sh
 
       - uses: actions/cache@v4
         with:
