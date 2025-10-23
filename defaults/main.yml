@@ -97,9 +97,8 @@ dawarich_photon_version: latest
 dawarich_photon_data_path: "{{ [dawarich_data_path, 'photon'] | path_join }}"
 dawarich_photon_port: 2322
 
-# Set this to an ISO 3166-1 alpha-2 country code if you only need reverse geocoding for a single country.
-# See available countries at https://download1.graphhopper.com/public/extracts/by-country-code/
-dawarich_photon_country_code: ''
+# See available regions at https://github.com/rtuszik/photon-docker/blob/main/README.md#available-regions
+dawarich_photon_region: ''
 
 # Additional env vars to apply to the Photon container
 dawarich_photon_extra_env: {}

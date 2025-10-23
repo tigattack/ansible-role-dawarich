@@ -41,8 +41,8 @@ dawarich_sidekiq_env: |
 
 dawarich_photon_env: |
   {{ ({
-        'COUNTRY_CODE': dawarich_photon_country_code
-      } if dawarich_photon_country_code | length > 0 else {})
+        'REGION': dawarich_photon_region
+      } if dawarich_photon_region | length > 0 else {})
     | combine(dawarich_photon_extra_env)
   }}
 
@@ -171,19 +171,11 @@ dawarich_photon_container:
   name: dawarich-photon
   image: ghcr.io/rtuszik/photon-docker:{{ dawarich_photon_version }}
   restart_policy: unless-stopped
-  healthcheck:
-    test:
-      - "CMD-SHELL"
-      - "curl -Gs 'http://localhost:2322/api' | grep -q 'missing search term'"
-    interval: 10s
-    retries: 5
-    start_period: 30s
-    timeout: 10s
   labels:
     deployment_name: dawarich
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
   ports: ["{{ dawarich_photon_port }}:2322"]
-  volumes: ["{{ dawarich_photon_data_path }}:/photon/photon_data"]
+  volumes: ["{{ dawarich_photon_data_path }}:/photon/data"]
   env: "{{ dawarich_photon_env }}"
   state: started
 
@@ -196,8 +188,5 @@ dawarich_containers: |
     {% set additional_containers = [dawarich_postgis_container] + additional_containers -%}
   {% endif -%}
   {{ additional_containers + [dawarich_app_container] + dawarich_workers }}
-
-dawarich_photon_data_path_segments: "{{ dawarich_photon_data_path | regex_replace('^/', '') | split('/') }}"
-dawarich_photon_data_path_combinations: []
 
 dawarich_postgis_config_host_path: "{{ [dawarich_data_path, 'postgres.conf'] | path_join }}"

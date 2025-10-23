@@ -1,16 +1,33 @@
 ---
 
-- name: Asset dawarich_version is supported
+- name: Assert dawarich_version is supported
   ansible.builtin.assert:
     that: >-
       dawarich_version in ['latest', 'prod', 'rc'] or
-      dawarich_version | split('-') | first >= lookup('ansible.builtin.file', 'min_dawarich_version.txt')
+      dawarich_version | split('-') | first is version(min_dawarich_version, '>=', version_type='semver')
     success_msg: Dawarich version '{{ dawarich_version }}' supported.
     fail_msg: >-
       Dawarich version '{{ dawarich_version }}' is not supported by the current version of this role.
-      Version must be >={{ lookup('ansible.builtin.file', 'min_dawarich_version.txt') }} or a named/text tag (e.g. latest).
+      Version must be >= {{ min_dawarich_version }} or a named/text tag (e.g. latest).
       If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
+  vars:
+    min_dawarich_version: "{{ lookup('ansible.builtin.file', 'min_dawarich_version.txt') }}"
+
+- name: Assert dawarich_photon_version is supported
+  ansible.builtin.assert:
+    that: >-
+      dawarich_photon_version == 'latest' or
+      dawarich_photon_version is version(min_photon_version, '>=', version_type='semver')
+    success_msg: Photon version '{{ dawarich_photon_version }}' supported.
+    fail_msg: >-
+      Photon version '{{ dawarich_photon_version }}' is not supported.
+      Version must be >= '{{ min_photon_version }}' or a named/text tag (e.g. latest).
+      If you think this failure is a false negative, please open an issue on GitHub:
+      https://github.com/tigattack/ansible-role-dawarich
+  when: dawarich_deploy_photon
+  vars:
+    min_photon_version: '1.0.0'
 
 - name: Assert dawarich_workers_count is at least 1
   ansible.builtin.assert:
@@ -70,13 +87,14 @@
     - dawarich_queue_db_username
     - dawarich_queue_db_password
     - dawarich_redis_db_number
+    - dawarich_photon_country_code
 
 - name: Warn if using removed variables
   ansible.builtin.pause:
     prompt: >-
-      IMPORTANT: The following variable(s) have been set, but have been removed due to recent changes in this role and/or the Dawarich project:
+      IMPORTANT: The following variable(s) have been set, but have been removed due to recent changes:
       {{ removed_vars_used | join(', ') }}.
       Please confirm that you have read the warning above and that you are aware of the changes.
-      If you are unsure, please refer to the documentation for Dawarich and this role, or open an issue on GitHub.
+      If you are unsure, please refer to the documentation or open an issue on GitHub.
       Press enter to continue, Ctrl+C to interrupt
   when: removed_vars_used is defined and removed_vars_used | length > 0
