@@ -15,7 +15,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: ansible/ansible-lint@v25.6.1
         with:
@@ -28,7 +28,7 @@ jobs:
       tests: ${{ steps.tests.outputs.tests }}
       min_version: ${{ steps.version.outputs.min_version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           sparse-checkout: |
             molecule
@@ -64,7 +64,7 @@ jobs:
       run:
         working-directory: 'tigattack.dawarich'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: 'tigattack.dawarich'
 
