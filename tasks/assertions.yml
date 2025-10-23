@@ -25,6 +25,7 @@
       Version must be >= '{{ min_photon_version }}' or a named/text tag (e.g. latest).
       If you think this failure is a false negative, please open an issue on GitHub:
       https://github.com/tigattack/ansible-role-dawarich
+  when: dawarich_deploy_photon
   vars:
     min_photon_version: '1.0.0'
 
