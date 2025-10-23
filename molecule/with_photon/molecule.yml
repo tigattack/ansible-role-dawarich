@@ -34,4 +34,4 @@ provisioner:
         dawarich_photon_api_use_https: false
         dawarich_photon_region: 'andorra'
         dawarich_photon_extra_env:
-          LOG_LEVEL: debug
+          LOG_LEVEL: DEBUG
