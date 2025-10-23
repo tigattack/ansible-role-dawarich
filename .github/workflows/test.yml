@@ -76,7 +76,7 @@ jobs:
           path: |
             ~/.ansible/roles
             ~/.ansible/collections
-          key: ${{ runner.os }}-ansible-deps-${{ hashFiles('requirements.yml', 'tigattack.dawarich/molecule/resources/requirements.yml') }}
+          key: ${{ runner.os }}-ansible-deps-${{ hashFiles('requirements.yml', 'requirements.txt', 'tigattack.dawarich/molecule/resources/requirements.yml') }}
 
       - uses: actions/setup-python@v5
         with:
