@@ -14,8 +14,10 @@ fi
 
 pushd "$role_symlink_dir" > /dev/null
 
-molecule "$@"
+molecule "$@" || exit_code=$?
 
 popd > /dev/null
 
 rm "$role_symlink_dir"
+
+exit ${exit_code:-0}
