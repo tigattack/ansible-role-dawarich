@@ -1,6 +1,6 @@
 ---
 
-- name: Asset dawarich_version is supported
+- name: Assert dawarich_version is supported
   ansible.builtin.assert:
     that: >-
       dawarich_version in ['latest', 'prod', 'rc'] or
