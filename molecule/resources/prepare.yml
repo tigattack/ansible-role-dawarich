@@ -2,7 +2,7 @@
 - name: Prepare
   hosts: all
   pre_tasks:
-    - name: Wait for systemd to complete initialization.  # noqa command-instead-of-module
+    - name: Wait for systemd to complete initialisation  # noqa command-instead-of-module
       ansible.builtin.command: systemctl is-system-running
       register: systemctl_status
       until: >
