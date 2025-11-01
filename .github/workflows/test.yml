@@ -110,9 +110,6 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: |
-          molecule -v dependency -s ${{ matrix.test }}
-          molecule -v create -s ${{ matrix.test }}
-          molecule -v prepare -s ${{ matrix.test }}
           DAWARICH_TEST_VERSION=${{ matrix.version }} molecule -v converge -s ${{ matrix.test }}
           molecule -v idempotence -s ${{ matrix.test }}
           molecule -v verify -s ${{ matrix.test }}
