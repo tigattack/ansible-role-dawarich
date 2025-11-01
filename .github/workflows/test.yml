@@ -110,9 +110,10 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: |
-          DAWARICH_TEST_VERSION=${{ matrix.version }} molecule -v converge -s ${{ matrix.test }}
+          molecule -v converge -s ${{ matrix.test }}
           molecule -v idempotence -s ${{ matrix.test }}
           molecule -v verify -s ${{ matrix.test }}
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          DAWARICH_TEST_VERSION: ${{ matrix.version }}
