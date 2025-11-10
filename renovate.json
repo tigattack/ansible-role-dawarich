@@ -5,9 +5,6 @@
     ":configMigration",
     "github>tigattack/repo_utils:renovate_ansible_preset.json5"
   ],
-  "pre-commit": {
-    "enabled": true
-  },
   "packageRules": [
     {
       "matchManagers": ["pip_requirements"],
