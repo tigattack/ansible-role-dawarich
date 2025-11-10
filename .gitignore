@@ -1,11 +1,11 @@
+.DS_Store
 __pycache__
 .cache
-.vscode
 *.pyc
 *.retry
-*.venv
+.venv
+venv
 .ansible
 
 compose.yml
 gen_vars_md.py
-tigattack.dawarich
