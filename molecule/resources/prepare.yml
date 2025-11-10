@@ -28,3 +28,5 @@
     - role: geerlingguy.docker
       vars:
         docker_install_compose_plugin: false
+        docker_daemon_options:
+          storage-driver: overlay2
