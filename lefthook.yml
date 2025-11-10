@@ -1,0 +1,16 @@
+---
+
+pre-push:
+  jobs:
+    - name: supported_version_patch
+      glob: "min_dawarich_version.txt"
+      run: .github/patch_version.sh
+      skip:
+        - merge
+        - rebase
+
+remotes:
+  - git_url: git@github.com:tigattack/repo_utils.git
+    # refetch: true
+    configs:
+      - lefthook_ansible_role.yml
