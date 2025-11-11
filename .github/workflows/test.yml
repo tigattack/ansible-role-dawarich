@@ -5,9 +5,23 @@ on:
     branches: [main]
     tags-ignore:
       - '**'
+    paths:
+      - '*/**.yml'
+      - '*/**.yaml'
+      - '.github/workflows/**'
+      - 'requirements.{yml,yaml,txt}'
+      - 'min_dawarich_version.txt'
+      - '.ansible-lint'
   schedule:
     - cron: "0 5 * * 1"
   pull_request:
+    paths:
+      - '*/**.yml'
+      - '*/**.yaml'
+      - '.github/workflows/**'
+      - 'requirements.{yml,yaml,txt}'
+      - 'min_dawarich_version.txt'
+      - '.ansible-lint'
   workflow_dispatch:
   workflow_call:
     outputs:
