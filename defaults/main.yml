@@ -55,6 +55,22 @@ dawarich_app_extra_env: {}
 # Additional env vars to apply to the dawarich sidekiq container(s)
 dawarich_sidekiq_extra_env: {}
 
+######## Storage config ########
+dawarich_store_geodata: true
+
+######## Logging config ########
+dawarich_log_max_size: 100m
+dawarich_log_max_file: 5
+
+######## Resource limits ########
+# Resource limits for the Dawarich app container
+dawarich_app_cpu_limit: '0.50'
+dawarich_app_memory_limit: 4G
+
+# Resource limits for each Sidekiq worker container
+dawarich_sidekiq_cpu_limit: '0.50'
+dawarich_sidekiq_memory_limit: 4G
+
 ######## PostGIS config ########
 # Only set false if you have your own PostGIS instance running.
 dawarich_deploy_postgis: true
@@ -64,6 +80,7 @@ dawarich_postgis_version: '17-3.5-alpine'
 
 # If you have your own PostGIS instance running, set the following variables according to your dawarich_deployment.
 dawarich_postgis_host: dawarich-db
+dawarich_postgis_port: 5432
 dawarich_postgis_db_name: dawarich
 dawarich_postgis_username: dawarich
 # This must be set by the user.

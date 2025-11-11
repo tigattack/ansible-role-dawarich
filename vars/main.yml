@@ -9,6 +9,7 @@ dawarich_env_shared:
   RAILS_ENV: "{{ dawarich_rails_env }}"
   REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}
   DATABASE_HOST: "{{ dawarich_postgis_host }}"
+  DATABASE_PORT: "{{ dawarich_postgis_port }}"
   DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
   DATABASE_PASSWORD: "{{ dawarich_postgis_password }}"
   DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
@@ -25,6 +26,7 @@ dawarich_env_shared:
   SECRET_KEY_BASE: "{{ dawarich_encryption_secret_key | string }}"
   RAILS_LOG_TO_STDOUT: "true"
   SELF_HOSTED: "true"
+  STORE_GEODATA: "{{ dawarich_store_geodata | string | lower }}"
 
 dawarich_app_env: |
   {{ {
@@ -86,6 +88,12 @@ dawarich_app_container:
     - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
     - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
   env: "{{ dawarich_app_env }}"
+  log_driver: json-file
+  log_options:
+    max-size: "{{ dawarich_log_max_size }}"
+    max-file: "{{ dawarich_log_max_file }}"
+  cpus: "{{ dawarich_app_cpu_limit }}"
+  memory: "{{ dawarich_app_memory_limit }}"
   state: healthy
 
 dawarich_worker_container:
@@ -112,6 +120,12 @@ dawarich_worker_container:
     - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"
     - "{{ [dawarich_data_path, 'storage'] | path_join }}:/var/app/storage"
   env: "{{ dawarich_sidekiq_env }}"
+  log_driver: json-file
+  log_options:
+    max-size: "{{ dawarich_log_max_size }}"
+    max-file: "{{ dawarich_log_max_file }}"
+  cpus: "{{ dawarich_sidekiq_cpu_limit }}"
+  memory: "{{ dawarich_sidekiq_memory_limit }}"
   state: healthy
 
 dawarich_workers: |
