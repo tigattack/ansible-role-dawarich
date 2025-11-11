@@ -251,7 +251,7 @@ Maximum number of Docker log files to keep.
 
 CPU limit for the Dawarich application container (e.g., `0.50` for 50% of one core).
 
-Set to `null` to omit CPU limit.
+Set to `0` to disable CPU limit.
 
 ### `dawarich_app_memory_limit`
 
@@ -261,7 +261,7 @@ Set to `null` to omit CPU limit.
 
 Memory limit for the Dawarich application container.
 
-Set to `null` to omit memory limit.
+Set to `0` to disable memory limit.
 
 ### `dawarich_sidekiq_cpu_limit`
 
@@ -271,7 +271,7 @@ Set to `null` to omit memory limit.
 
 CPU limit for each Dawarich Sidekiq worker container (e.g., `0.50` for 50% of one core).
 
-Set to `null` to omit CPU limit.
+Set to `0` to disable CPU limit.
 
 ### `dawarich_sidekiq_memory_limit`
 
@@ -281,7 +281,7 @@ Set to `null` to omit CPU limit.
 
 Memory limit for each Dawarich Sidekiq worker container.
 
-Set to `null` to omit memory limit.
+Set to `0` to disable memory limit.
 
 ### `dawarich_deploy_postgis`
 

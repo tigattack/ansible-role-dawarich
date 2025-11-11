@@ -64,10 +64,12 @@ dawarich_log_max_file: 5
 
 ######## Resource limits ########
 # Resource limits for the Dawarich app container
+# Set to 0 to disable resource limits
 dawarich_app_cpu_limit: '0.50'
 dawarich_app_memory_limit: 4G
 
 # Resource limits for each Sidekiq worker container
+# Set to 0 to disable resource limits
 dawarich_sidekiq_cpu_limit: '0.50'
 dawarich_sidekiq_memory_limit: 4G
 

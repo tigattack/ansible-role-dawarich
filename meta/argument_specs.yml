@@ -152,22 +152,30 @@ argument_specs:
       dawarich_app_cpu_limit:
         type: str
         default: '0.50'
-        description: CPU limit for the Dawarich application container (e.g., '0.50' for 50% of one core).
+        description:
+          - CPU limit for the Dawarich application container (e.g., '0.50' for 50% of one core).
+          - Set to '0' to disable CPU limit.
 
       dawarich_app_memory_limit:
         type: str
         default: 4G
-        description: Memory limit for the Dawarich application container.
+        description:
+          - Memory limit for the Dawarich application container.
+          - Set to '0' to disable memory limit.
 
       dawarich_sidekiq_cpu_limit:
         type: str
         default: '0.50'
-        description: CPU limit for each Dawarich Sidekiq worker container (e.g., '0.50' for 50% of one core).
+        description:
+          - CPU limit for each Dawarich Sidekiq worker container (e.g., '0.50' for 50% of one core).
+          - Set to '0' to disable CPU limit.
 
       dawarich_sidekiq_memory_limit:
         type: str
         default: 4G
-        description: Memory limit for each Dawarich Sidekiq worker container.
+        description:
+          - Memory limit for each Dawarich Sidekiq worker container.
+          - Set to '0' to disable memory limit.
 
       dawarich_deploy_postgis:
         type: bool
