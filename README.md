@@ -119,6 +119,14 @@ Minimum minutes spent in a city to be counted.
 
 Number of background processing workers per Sidekiq worker.
 
+### `dawarich_store_geodata`
+
+| Type | Default | Required |
+| ---- | ------- | -------- |
+| bool | `true`  | ❌       |
+
+Enable storing of geodata in the Dawarich database.
+
 ### `dawarich_rails_max_threads`
 
 | Type | Default                                                               | Required |
@@ -218,14 +226,6 @@ Additional environment variables for the Dawarich application container.
 | dict | `{}`    | ❌       |
 
 Additional environment variables for the Dawarich Sidekiq worker container(s).
-
-### `dawarich_store_geodata`
-
-| Type | Default | Required |
-| ---- | ------- | -------- |
-| bool | `true`  | ❌       |
-
-Enable storing of geodata in the Dawarich database.
 
 ### `dawarich_log_max_size`
 

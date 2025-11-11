@@ -71,6 +71,11 @@ argument_specs:
         default: 10
         description: Number of background processing workers per Sidekiq worker.
 
+      dawarich_store_geodata:
+        type: bool
+        default: true
+        description: Enable storing of geodata in the Dawarich database.
+
       dawarich_rails_max_threads:
         type: int
         default: 0
@@ -133,11 +138,6 @@ argument_specs:
         type: dict
         default: {}
         description: Additional environment variables for the Dawarich Sidekiq worker container(s).
-
-      dawarich_store_geodata:
-        type: bool
-        default: true
-        description: Enable storing of geodata in the Dawarich database.
 
       dawarich_log_max_size:
         type: str
