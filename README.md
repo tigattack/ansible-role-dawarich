@@ -304,7 +304,7 @@ Set to `false` if using an external PostGIS instance.
 
 | Type   | Default         |
 |--------|-----------------|
-| string | `14-3.5-alpine` |
+| string | `17-3.5-alpine` |
 
 PostGIS Docker image version for Dawarich.
 

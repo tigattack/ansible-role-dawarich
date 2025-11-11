@@ -178,7 +178,7 @@ argument_specs:
 
       dawarich_postgis_version:
         type: str
-        default: 14-3.5-alpine
+        default: 17-3.5-alpine
         description:
           - PostGIS Docker image version for Dawarich.
           - Ignored if 'dawarich_deploy_postgis' is 'false'.
