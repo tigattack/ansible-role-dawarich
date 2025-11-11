@@ -30,7 +30,7 @@ See [Example Playbooks](#example-playbooks) below.
 ### `dawarich_data_path`
 
 | Type | Default         |
-|------|-----------------|
+| ---- | --------------- |
 | path | `/opt/dawarich` |
 
 Dawarich data path on the host.
@@ -38,7 +38,7 @@ Dawarich data path on the host.
 ### `dawarich_docker_network_name`
 
 | Type   | Default    |
-|--------|------------|
+| ------ | ---------- |
 | string | `dawarich` |
 
 Name of the Docker network to connect the Dawarich containers to.
@@ -46,7 +46,7 @@ Name of the Docker network to connect the Dawarich containers to.
 ### `dawarich_version`
 
 | Type   | Default  |
-|--------|----------|
+| ------ | -------- |
 | string | `latest` |
 
 Dawarich application Docker image version (tag).
@@ -54,7 +54,7 @@ Dawarich application Docker image version (tag).
 ### `dawarich_app_hosts`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | None    |
 
 Host of the Dawarich application (e.g. dawarich.example.com).
@@ -67,7 +67,7 @@ Host of the Dawarich application (e.g. dawarich.example.com).
 ### `dawarich_app_protocol`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `http`  |
 
 Protocol for the Dawarich application.
@@ -79,7 +79,7 @@ Must be one of: `http`, `https`.
 ### `dawarich_port`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `3000`  |
 
 Dawarich application port.
@@ -87,7 +87,7 @@ Dawarich application port.
 ### `dawarich_rails_env`
 
 | Type   | Default       |
-|--------|---------------|
+| ------ | ------------- |
 | string | `development` |
 
 Rails environment for the Dawarich application.
@@ -97,7 +97,7 @@ This should ideally be `production`, but some bugs have been observed in product
 ### `dawarich_timezone`
 
 | Type   | Default   |
-|--------|-----------|
+| ------ | --------- |
 | string | `Etc/UTC` |
 
 Timezone for the Dawarich application.
@@ -107,7 +107,7 @@ See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>.
 ### `dawarich_min_minutes_spent_in_city`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `60`    |
 
 Minimum minutes spent in a city to be counted.
@@ -115,16 +115,16 @@ Minimum minutes spent in a city to be counted.
 ### `dawarich_background_processing_concurrency`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `10`    |
 
 Number of background processing workers per Sidekiq worker.
 
 ### `dawarich_rails_max_threads`
 
-| Type | Default |
-|------|---------|
-| int  | `dawarich_workers_count * dawarich_background_processing_concurrency`    |
+| Type | Default                                                               |
+| ---- | --------------------------------------------------------------------- |
+| int  | `dawarich_workers_count * dawarich_background_processing_concurrency` |
 
 Connection pool size for the Dawarich database.
 
@@ -135,7 +135,7 @@ Connection pool size for the Dawarich database.
 ### `dawarich_encryption_secret_key`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | None    |
 
 The Dawarich encryption salt/secret key (Rails' secret_key_base).
@@ -146,7 +146,7 @@ The Dawarich encryption salt/secret key (Rails' secret_key_base).
 ### `dawarich_workers_count`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `1`     |
 
 Number of Sidekiq workers to deploy.
@@ -154,15 +154,15 @@ Number of Sidekiq workers to deploy.
 ### `dawarich_reverse_geocoding_enabled`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Enable reverse geocoding.
 
 ### `dawarich_photon_api_host`
 
-| Type   | Default                                            |
-|--------|----------------------------------------------------|
+| Type   | Default                               |
+| ------ | ------------------------------------- |
 | string | `''` or `dawarich-photon` (see below) |
 
 API host for the Photon reverse geocoding service.
@@ -176,7 +176,7 @@ You will only need to change this if you wish to use a different Photon instance
 ### `dawarich_photon_api_use_https`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Use HTTPS for requests to the Photon API.
@@ -184,7 +184,7 @@ Use HTTPS for requests to the Photon API.
 ### `dawarich_enable_prometheus_metrics`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `false` |
 
 Enable Prometheus metrics endpoint.
@@ -194,7 +194,7 @@ Once enabled, Prometheus metrics will be available at `<host>:9394/metrics` (ass
 ### `dawarich_prometheus_port`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `9394`  |
 
 Prometheus metrics port for Dawarich.
@@ -205,7 +205,7 @@ Prometheus metrics port for Dawarich.
 ### `dawarich_shared_extra_env`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | dict | `{}`    |
 
 Additional environment variables to apply to both the Dawarich application and the Sidekiq worker(s) containers.
@@ -213,7 +213,7 @@ Additional environment variables to apply to both the Dawarich application and t
 ### `dawarich_app_extra_env`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | dict | `{}`    |
 
 Additional environment variables for the Dawarich application container.
@@ -221,7 +221,7 @@ Additional environment variables for the Dawarich application container.
 ### `dawarich_sidekiq_extra_env`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | dict | `{}`    |
 
 Additional environment variables for the Dawarich Sidekiq worker container(s).
@@ -229,7 +229,7 @@ Additional environment variables for the Dawarich Sidekiq worker container(s).
 ### `dawarich_store_geodata`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Enable storing of geodata in the Dawarich database.
@@ -237,7 +237,7 @@ Enable storing of geodata in the Dawarich database.
 ### `dawarich_log_max_size`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `100m`  |
 
 Maximum size of Docker log files before rotation.
@@ -245,7 +245,7 @@ Maximum size of Docker log files before rotation.
 ### `dawarich_log_max_file`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `5`     |
 
 Maximum number of Docker log files to keep.
@@ -253,7 +253,7 @@ Maximum number of Docker log files to keep.
 ### `dawarich_app_cpu_limit`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `0.50`  |
 
 CPU limit for the Dawarich application container (e.g., `0.50` for 50% of one core).
@@ -263,7 +263,7 @@ Set to `null` to omit CPU limit.
 ### `dawarich_app_memory_limit`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `4G`    |
 
 Memory limit for the Dawarich application container.
@@ -273,7 +273,7 @@ Set to `null` to omit memory limit.
 ### `dawarich_sidekiq_cpu_limit`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `0.50`  |
 
 CPU limit for each Dawarich Sidekiq worker container (e.g., `0.50` for 50% of one core).
@@ -283,7 +283,7 @@ Set to `null` to omit CPU limit.
 ### `dawarich_sidekiq_memory_limit`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | `4G`    |
 
 Memory limit for each Dawarich Sidekiq worker container.
@@ -293,7 +293,7 @@ Set to `null` to omit memory limit.
 ### `dawarich_deploy_postgis`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Deploy a PostGIS instance for Dawarich.
@@ -303,7 +303,7 @@ Set to `false` if using an external PostGIS instance.
 ### `dawarich_postgis_version`
 
 | Type   | Default         |
-|--------|-----------------|
+| ------ | --------------- |
 | string | `17-3.5-alpine` |
 
 PostGIS Docker image version for Dawarich.
@@ -314,7 +314,7 @@ PostGIS Docker image version for Dawarich.
 ### `dawarich_postgis_host`
 
 | Type   | Default       |
-|--------|---------------|
+| ------ | ------------- |
 | string | `dawarich-db` |
 
 PostGIS host for Dawarich.
@@ -322,7 +322,7 @@ PostGIS host for Dawarich.
 ### `dawarich_postgis_port`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `5432`  |
 
 PostGIS port for Dawarich.
@@ -330,7 +330,7 @@ PostGIS port for Dawarich.
 ### `dawarich_postgis_db_name`
 
 | Type   | Default    |
-|--------|------------|
+| ------ | ---------- |
 | string | `dawarich` |
 
 PostGIS database name for Dawarich.
@@ -338,7 +338,7 @@ PostGIS database name for Dawarich.
 ### `dawarich_postgis_username`
 
 | Type   | Default    |
-|--------|------------|
+| ------ | ---------- |
 | string | `dawarich` |
 
 PostGIS username for Dawarich.
@@ -346,7 +346,7 @@ PostGIS username for Dawarich.
 ### `dawarich_postgis_password`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string | None    |
 
 PostGIS password for Dawarich.
@@ -357,7 +357,7 @@ PostGIS password for Dawarich.
 ### `dawarich_postgis_use_custom_config`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `false` |
 
 Set to `true` if you want to use a custom config file.
@@ -365,7 +365,7 @@ Set to `true` if you want to use a custom config file.
 ### `dawarich_postgis_conf_file`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string |         |
 
 Path to the PostgreSQL config file on the Ansible controller.
@@ -379,7 +379,7 @@ If left default (empty) and  [`dawarich_postgis_use_custom_config`](#dawarich_po
 ### `dawarich_deploy_redis`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Deploy a Redis instance for Dawarich.
@@ -389,7 +389,7 @@ Set to `false` if using an external Redis instance.
 ### `dawarich_redis_version`
 
 | Type   | Default      |
-|--------|--------------|
+| ------ | ------------ |
 | string | `7.4-alpine` |
 
 Redis Docker image version for Dawarich.
@@ -400,7 +400,7 @@ Redis Docker image version for Dawarich.
 ### `dawarich_redis_host`
 
 | Type   | Default          |
-|--------|------------------|
+| ------ | ---------------- |
 | string | `dawarich-redis` |
 
 Redis host for Dawarich.
@@ -408,7 +408,7 @@ Redis host for Dawarich.
 ### `dawarich_redis_port`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `6379`  |
 
 Redis port for Dawarich.
@@ -416,7 +416,7 @@ Redis port for Dawarich.
 ### `dawarich_deploy_photon`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `false` |
 
 Deploy a Photon instance for reverse geocoding.
@@ -427,7 +427,7 @@ Deploy a Photon instance for reverse geocoding.
 ### `dawarich_photon_version`
 
 | Type   | Default  |
-|--------|----------|
+| ------ | -------- |
 | string | `latest` |
 
 Photon Docker image version for reverse geocoding.
@@ -438,7 +438,7 @@ Photon Docker image version for reverse geocoding.
 ### `dawarich_photon_data_path`
 
 | Type | Default                |
-|------|------------------------|
+| ---- | ---------------------- |
 | path | `/opt/dawarich/photon` |
 
 Photon data path on the host.
@@ -446,7 +446,7 @@ Photon data path on the host.
 ### `dawarich_photon_port`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | int  | `2322`  |
 
 Photon application port.
@@ -454,7 +454,7 @@ Photon application port.
 ### `dawarich_photon_region`
 
 | Type   | Default |
-|--------|---------|
+| ------ | ------- |
 | string |         |
 
 Photon reverse geocoding region.
@@ -464,7 +464,7 @@ See available regions at: <https://github.com/rtuszik/photon-docker/blob/main/RE
 ### `dawarich_photon_extra_env`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | dict | `{}`    |
 
 Additional environment variables for the Photon container.
@@ -472,7 +472,7 @@ Additional environment variables for the Photon container.
 ### `dawarich_prune_docker_images`
 
 | Type | Default |
-|------|---------|
+| ---- | ------- |
 | bool | `true`  |
 
 Prune *all* Docker images after deployment if any container has changed.
