@@ -7,9 +7,9 @@ dawarich_combined_app_hosts: >-
 dawarich_env_shared:
   TIME_ZONE: "{{ dawarich_timezone }}"
   RAILS_ENV: "{{ dawarich_rails_env }}"
-  REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port }}
+  REDIS_URL: redis://{{ dawarich_redis_host }}:{{ dawarich_redis_port | string }}
   DATABASE_HOST: "{{ dawarich_postgis_host }}"
-  DATABASE_PORT: "{{ dawarich_postgis_port }}"
+  DATABASE_PORT: "{{ dawarich_postgis_port | string }}"
   DATABASE_USERNAME: "{{ dawarich_postgis_username }}"
   DATABASE_PASSWORD: "{{ dawarich_postgis_password }}"
   DATABASE_NAME: "{{ dawarich_postgis_db_name }}"
@@ -91,7 +91,7 @@ dawarich_app_container:
   log_driver: json-file
   log_options:
     max-size: "{{ dawarich_log_max_size }}"
-    max-file: "{{ dawarich_log_max_file }}"
+    max-file: "{{ dawarich_log_max_file | string }}"
   cpus: "{{ dawarich_app_cpu_limit }}"
   memory: "{{ dawarich_app_memory_limit }}"
   state: healthy
@@ -123,7 +123,7 @@ dawarich_worker_container:
   log_driver: json-file
   log_options:
     max-size: "{{ dawarich_log_max_size }}"
-    max-file: "{{ dawarich_log_max_file }}"
+    max-file: "{{ dawarich_log_max_file | string }}"
   cpus: "{{ dawarich_sidekiq_cpu_limit }}"
   memory: "{{ dawarich_sidekiq_memory_limit }}"
   state: healthy
