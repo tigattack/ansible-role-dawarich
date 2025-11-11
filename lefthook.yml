@@ -1,8 +1,8 @@
 ---
 
-pre-push:
+pre-commit:
   jobs:
-    - name: supported_version_patch
+    - name: Patch Dawarich version in README
       glob: "min_dawarich_version.txt"
       run: .github/patch_version.sh
       skip:
