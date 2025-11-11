@@ -24,6 +24,9 @@ See [Example Playbooks](#example-playbooks) below.
 > [!TIP]
 > Once installed, you can run `ansible-doc -t role tigattack.dawarich` to see role documentation.
 
+<!-- BEGIN ANSIBLE ROLE VARIABLES -->
+
+
 ### `dawarich_data_path`
 
 | Type | Default         |
@@ -223,6 +226,70 @@ Additional environment variables for the Dawarich application container.
 
 Additional environment variables for the Dawarich Sidekiq worker container(s).
 
+### `dawarich_store_geodata`
+
+| Type | Default |
+|------|---------|
+| bool | `true`  |
+
+Enable storing of geodata in the Dawarich database.
+
+### `dawarich_log_max_size`
+
+| Type   | Default |
+|--------|---------|
+| string | `100m`  |
+
+Maximum size of Docker log files before rotation.
+
+### `dawarich_log_max_file`
+
+| Type | Default |
+|------|---------|
+| int  | `5`     |
+
+Maximum number of Docker log files to keep.
+
+### `dawarich_app_cpu_limit`
+
+| Type   | Default |
+|--------|---------|
+| string | `0.50`  |
+
+CPU limit for the Dawarich application container (e.g., `0.50` for 50% of one core).
+
+Set to `null` to omit CPU limit.
+
+### `dawarich_app_memory_limit`
+
+| Type   | Default |
+|--------|---------|
+| string | `4G`    |
+
+Memory limit for the Dawarich application container.
+
+Set to `null` to omit memory limit.
+
+### `dawarich_sidekiq_cpu_limit`
+
+| Type   | Default |
+|--------|---------|
+| string | `0.50`  |
+
+CPU limit for each Dawarich Sidekiq worker container (e.g., `0.50` for 50% of one core).
+
+Set to `null` to omit CPU limit.
+
+### `dawarich_sidekiq_memory_limit`
+
+| Type   | Default |
+|--------|---------|
+| string | `4G`    |
+
+Memory limit for each Dawarich Sidekiq worker container.
+
+Set to `null` to omit memory limit.
+
 ### `dawarich_deploy_postgis`
 
 | Type | Default |
@@ -251,6 +318,14 @@ PostGIS Docker image version for Dawarich.
 | string | `dawarich-db` |
 
 PostGIS host for Dawarich.
+
+### `dawarich_postgis_port`
+
+| Type | Default |
+|------|---------|
+| int  | `5432`  |
+
+PostGIS port for Dawarich.
 
 ### `dawarich_postgis_db_name`
 
@@ -401,6 +476,8 @@ Additional environment variables for the Photon container.
 | bool | `true`  |
 
 Prune *all* Docker images after deployment if any container has changed.
+
+<!-- END ANSIBLE ROLE VARIABLES -->
 
 ## Example Playbooks
 
