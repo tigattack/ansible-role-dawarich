@@ -59,7 +59,7 @@ argument_specs:
         default: Etc/UTC
         description:
           - Timezone for the Dawarich application.
-          - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List.
+          - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 
       dawarich_min_minutes_spent_in_city:
         type: int
@@ -81,9 +81,7 @@ argument_specs:
       dawarich_encryption_secret_key:
         type: str
         required: true
-        description:
-          - The Dawarich encryption salt/secret key (Rails' secret_key_base).
-          - Must be set by the user.
+        description: The Dawarich encryption salt/secret key (Rails' 'secret_key_base').
 
       dawarich_workers_count:
         type: int
@@ -112,7 +110,9 @@ argument_specs:
       dawarich_enable_prometheus_metrics:
         type: bool
         default: false
-        description: Enable Prometheus metrics endpoint.
+        description:
+          - Enable Prometheus metrics endpoint.
+          - Once enabled, Prometheus metrics will be available at 'localhost:<dawarich_prometheus_port>/metrics'
 
       dawarich_prometheus_port:
         type: int
@@ -179,9 +179,7 @@ argument_specs:
       dawarich_postgis_version:
         type: str
         default: 17-3.5-alpine
-        description:
-          - PostGIS Docker image version for Dawarich.
-          - Ignored if 'dawarich_deploy_postgis' is 'false'.
+        description: PostGIS Docker image version for Dawarich.
 
       dawarich_postgis_host:
         type: str
@@ -206,9 +204,7 @@ argument_specs:
       dawarich_postgis_password:
         type: str
         required: true
-        description:
-          - PostGIS password for Dawarich.
-          - Must be set by the user.
+        description: PostGIS password for Dawarich.
 
       dawarich_postgis_use_custom_config:
         type: bool
@@ -220,8 +216,9 @@ argument_specs:
         default: ''
         description:
           - Path to the PostgreSQL config file on the Ansible controller.
-          - If undefined, config will be downloaded from the Dawarich repository.
-          - Ignored unless 'dawarich_postgis_use_custom_config' is 'true'.
+          - If left default (empty) and 'dawarich_postgis_use_custom_config' is 'true', the example config will be downloaded
+            from the Dawarich repository at https://github.com/Freika/dawarich/blob/master/postgisql.conf.example.
+          - "Note: This is ignored unless 'dawarich_postgis_use_custom_config' is 'true'."
 
       dawarich_deploy_redis:
         type: bool
@@ -233,9 +230,7 @@ argument_specs:
       dawarich_redis_version:
         type: str
         default: 7.4-alpine
-        description:
-          - Redis Docker image version for Dawarich.
-          - Ignored if 'dawarich_deploy_redis' is 'false'.
+        description: Redis Docker image version for Dawarich.
 
       dawarich_redis_host:
         type: str
@@ -252,19 +247,15 @@ argument_specs:
         default: false
         description:
           - Deploy a Photon instance for reverse geocoding.
-          - >-
-            NOTE: This requires at least 170GB of disk space and a significant
-            amount of RAM (16GB is recommended but not always required).
-          - This assumes you are not specifying
-            'dawarich_photon_region' to limit the downloaded dataset to a single region.
-            # TODO: DOES THIS STRING SPLIT OVER LINES WORK?
+          - "NOTE: Assuming you are not specifying 'dawarich_photon_region'
+            to limit the downloaded dataset to a single region, this
+            requires well over 120GB of disk space and a significant amount
+            of RAM (16GB is recommended but not always required)."
 
       dawarich_photon_version:
         type: str
         default: latest
-        description:
-          - Photon Docker image version for reverse geocoding.
-          - Ignored if 'dawarich_deploy_photon' is 'false'.
+        description: Photon Docker image version for reverse geocoding.
 
       dawarich_photon_data_path:
         type: path
