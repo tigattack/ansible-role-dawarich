@@ -54,6 +54,23 @@ See [Example Playbooks](#example-playbooks) below.
 > [!NOTE]
 > Regardless of the user-specified value for `dawarich_app_hosts`, `localhost,::1,127.0.0.1` will always be added to Dawarich's `APPLICATION_HOSTS`. Example: If you set the value as `dawarich.example.com`, it will be set to `dawarich.example.com,localhost,::1,127.0.0.1`. If left default (`None`), Dawarich's `APPLICATION_HOSTS` will be `localhost,::1,127.0.0.1`.
 
+### Authentication & OIDC
+
+Dawarich supports OpenID Connect (OIDC) authentication, allowing you to integrate with identity providers like Authentik, Keycloak, Auth0, and others. When configured, users can log in using your OIDC provider instead of (or in addition to) email/password authentication.
+
+To enable OIDC, you'll need to configure your identity provider and then pass the required environment variables to Dawarich using `dawarich_app_extra_env` or `dawarich_shared_extra_env`.
+
+**Required OIDC environment variables:**
+- `OIDC_CLIENT_ID`: Your OIDC client ID
+- `OIDC_CLIENT_SECRET`: Your OIDC client secret
+- `OIDC_ISSUER`: Your OIDC issuer URL (e.g., `https://authentik.yourdomain.com/application/o/dawarich/`)
+- `OIDC_REDIRECT_URI`: The callback URL for your Dawarich instance (e.g., `https://dawarich.example.com/users/auth/openid_connect/callback`)
+
+**Optional OIDC environment variables:**
+- `OIDC_AUTO_REGISTER`: Automatically register new users on first OIDC login (default: `false`)
+- `OIDC_PROVIDER_NAME`: Custom name for your provider displayed on the login page (default: `OpenID Connect`)
+- `ALLOW_EMAIL_PASSWORD_REGISTRATION`: Allow email/password registration alongside OIDC (default: `true`)
+
 ### Processing Configuration
 
 | Variable | Type | Default | Required |
@@ -231,6 +248,27 @@ See [Example Playbooks](#example-playbooks) below.
 > Photon requires well over 120GB of disk space and a significant amount of RAM (16GB is recommended but not always required).
 > 
 > Refer to [`dawarich_photon_region`](#dawarich_photon_region) to restrict the downloaded dataset to a single region to significantly reduce these requirements.
+
+**With OIDC authentication:**
+
+```yml
+---
+- name: Deploy Dawarich
+  hosts: server
+  roles:
+    - role: tigattack.dawarich
+      vars:
+        dawarich_postgis_password: _!CHANGEME!_
+        dawarich_encryption_secret_key: _!CHANGEME!_
+        dawarich_app_hosts: dawarich.example.com
+        dawarich_app_protocol: https
+        dawarich_app_extra_env:
+          OIDC_CLIENT_ID: your_client_id
+          OIDC_CLIENT_SECRET: your_client_secret
+          OIDC_ISSUER: https://auth.example.com/application/o/dawarich/
+          OIDC_REDIRECT_URI: https://dawarich.example.com/users/auth/openid_connect/callback
+          OIDC_PROVIDER_NAME: Authentik
+```
 
 ## License
 
