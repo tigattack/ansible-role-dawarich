@@ -49,10 +49,8 @@ argument_specs:
 
       dawarich_rails_env:
         type: str
-        default: development
-        description:
-          - Rails environment for the Dawarich application.
-          - This should ideally be 'production', but some bugs have been observed in production mode that are not present in development mode.
+        default: production
+        description: Rails environment for the Dawarich application.
 
       dawarich_timezone:
         type: str
@@ -61,14 +59,9 @@ argument_specs:
           - Timezone for the Dawarich application.
           - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 
-      dawarich_min_minutes_spent_in_city:
-        type: int
-        default: 60
-        description: Minimum minutes spent in a city to be counted.
-
       dawarich_background_processing_concurrency:
         type: int
-        default: 10
+        default: 5
         description: Number of background processing workers per Sidekiq worker.
 
       dawarich_store_geodata:

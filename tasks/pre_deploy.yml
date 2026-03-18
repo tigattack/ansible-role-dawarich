@@ -90,6 +90,7 @@
     - dawarich_queue_db_password
     - dawarich_redis_db_number
     - dawarich_photon_country_code
+    - dawarich_min_minutes_spent_in_city
 
 - name: Warn if using removed variables
   ansible.builtin.pause:

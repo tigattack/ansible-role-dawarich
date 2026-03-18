@@ -10,7 +10,7 @@ Install the role: `ansible-galaxy role install tigattack.dawarich`
 See [Example Playbooks](#example-playbooks) below.
 
 > [!IMPORTANT]
-> **Supported Dawarich version(s):** >=0.28.0  
+> **Supported Dawarich version(s):** >=1.3.3  
 > Older versions of this role are compatible with previous Dawarich versions.
 
 ## Prerequisites
@@ -85,13 +85,11 @@ Dawarich application port.
 
 ### `dawarich_rails_env`
 
-| Type   | Default       | Required |
-| ------ | ------------- | -------- |
-| string | `development` | ❌       |
+| Type   | Default      | Required |
+| ------ | ------------ | -------- |
+| string | `production` | ❌       |
 
 Rails environment for the Dawarich application.
-
-This should ideally be `production`, but some bugs have been observed in production mode that are not present in development mode.
 
 ### `dawarich_timezone`
 
@@ -103,19 +101,11 @@ Timezone for the Dawarich application.
 
 See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>
 
-### `dawarich_min_minutes_spent_in_city`
-
-| Type | Default | Required |
-| ---- | ------- | -------- |
-| int  | `60`    | ❌       |
-
-Minimum minutes spent in a city to be counted.
-
 ### `dawarich_background_processing_concurrency`
 
 | Type | Default | Required |
 | ---- | ------- | -------- |
-| int  | `10`    | ❌       |
+| int  | `5`     | ❌       |
 
 Number of background processing workers per Sidekiq worker.
 
