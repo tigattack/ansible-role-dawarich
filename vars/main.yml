@@ -138,6 +138,11 @@ dawarich_redis_container:
   name: dawarich-redis
   image: redis:{{ dawarich_redis_version }}
   restart_policy: unless-stopped
+  command: >-
+    redis-server
+    --save 900 1
+    --save 300 10
+    --appendonly no
   healthcheck:
     test:
       - "CMD-SHELL"
