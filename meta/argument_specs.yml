@@ -49,10 +49,8 @@ argument_specs:
 
       dawarich_rails_env:
         type: str
-        default: development
-        description:
-          - Rails environment for the Dawarich application.
-          - This should ideally be 'production', but some bugs have been observed in production mode that are not present in development mode.
+        default: production
+        description: Rails environment for the Dawarich application.
 
       dawarich_timezone:
         type: str

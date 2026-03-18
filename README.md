@@ -85,13 +85,11 @@ Dawarich application port.
 
 ### `dawarich_rails_env`
 
-| Type   | Default       | Required |
-| ------ | ------------- | -------- |
-| string | `development` | ❌       |
+| Type   | Default      | Required |
+| ------ | ------------ | -------- |
+| string | `production` | ❌       |
 
 Rails environment for the Dawarich application.
-
-This should ideally be `production`, but some bugs have been observed in production mode that are not present in development mode.
 
 ### `dawarich_timezone`
 
