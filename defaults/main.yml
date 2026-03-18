@@ -18,7 +18,7 @@ dawarich_timezone: 'Etc/UTC' # See https://en.wikipedia.org/wiki/List_of_tz_data
 
 # Workers & background processing preferences
 ## Number of background processing workers per Sidekiq worker
-dawarich_background_processing_concurrency: 10
+dawarich_background_processing_concurrency: 5
 
 # Connection pool size for the Dawarich database
 # If left zero, the pool size will be set to the number of Sidekiq workers multiplied by the concurrency (above).

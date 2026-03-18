@@ -105,7 +105,7 @@ See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>
 
 | Type | Default | Required |
 | ---- | ------- | -------- |
-| int  | `10`    | ❌       |
+| int  | `5`     | ❌       |
 
 Number of background processing workers per Sidekiq worker.
 
