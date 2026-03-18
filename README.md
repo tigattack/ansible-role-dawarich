@@ -103,14 +103,6 @@ Timezone for the Dawarich application.
 
 See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>
 
-### `dawarich_min_minutes_spent_in_city`
-
-| Type | Default | Required |
-| ---- | ------- | -------- |
-| int  | `60`    | ❌       |
-
-Minimum minutes spent in a city to be counted.
-
 ### `dawarich_background_processing_concurrency`
 
 | Type | Default | Required |

@@ -30,7 +30,6 @@ dawarich_env_shared:
 
 dawarich_app_env: |
   {{ {
-        'MIN_MINUTES_SPENT_IN_CITY': dawarich_min_minutes_spent_in_city | string | lower,
         'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
     } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
