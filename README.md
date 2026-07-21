@@ -203,6 +203,10 @@ Once enabled, Prometheus metrics will be available at `localhost:3000/metrics`
 
 Additional environment variables to apply to both the Dawarich application and the Sidekiq worker(s) containers.
 
+For reference, see:
+- https://dawarich.app/docs/self-hosting/environment-variables
+- https://github.com/Freika/dawarich/blob/master/docker/docker-compose.yml
+
 ### `dawarich_app_extra_env`
 
 | Type | Default | Required |
@@ -211,6 +215,10 @@ Additional environment variables to apply to both the Dawarich application and t
 
 Additional environment variables for the Dawarich application container.
 
+For reference, see:
+- https://dawarich.app/docs/self-hosting/environment-variables
+- https://github.com/Freika/dawarich/blob/master/docker/docker-compose.yml
+
 ### `dawarich_sidekiq_extra_env`
 
 | Type | Default | Required |
@@ -218,6 +226,10 @@ Additional environment variables for the Dawarich application container.
 | dict | `{}`    | ❌       |
 
 Additional environment variables for the Dawarich Sidekiq worker container(s).
+
+For reference, see:
+- https://dawarich.app/docs/self-hosting/environment-variables
+- https://github.com/Freika/dawarich/blob/master/docker/docker-compose.yml
 
 ### `dawarich_log_max_size`
 
