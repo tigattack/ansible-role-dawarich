@@ -34,7 +34,9 @@ dawarich_app_env: |
     } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_sidekiq_env: |
-  {{ combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true) }}
+  {{ {
+      'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string,
+    } |combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_photon_env: |
   {{ ({
