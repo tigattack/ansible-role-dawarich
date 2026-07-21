@@ -28,7 +28,9 @@ dawarich_env_shared:
   STORE_GEODATA: "{{ dawarich_store_geodata | string | lower }}"
 
 dawarich_app_env: |
-  {{ combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
+  {{ {
+        'SIDEKIQ_METRICS_URL': 'http://dawarich-sidekiq-1:9394/metrics',
+    } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_sidekiq_env: |
   {{ combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true) }}
