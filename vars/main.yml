@@ -30,6 +30,7 @@ dawarich_env_shared:
 dawarich_app_env: |
   {{ {
         'SIDEKIQ_METRICS_URL': 'http://dawarich-sidekiq-1:9394/metrics',
+        'WEB_CONCURRENCY': dawarich_web_concurrency | string,
     } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_sidekiq_env: |

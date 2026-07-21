@@ -17,6 +17,10 @@ dawarich_rails_env: production
 dawarich_timezone: 'Etc/UTC' # See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 
 # Workers & background processing preferences
+## Number of concurrent web worker threads for the Dawarich app container.
+## One is sufficient for most deployments and helps reduce memory usage. Increase for busier instances.
+dawarich_web_concurrency: 1
+
 ## Number of background processing workers per Sidekiq worker
 dawarich_background_processing_concurrency: 5
 

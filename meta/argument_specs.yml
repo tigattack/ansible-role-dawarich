@@ -59,6 +59,13 @@ argument_specs:
           - Timezone for the Dawarich application.
           - See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 
+      dawarich_web_concurrency:
+        type: int
+        default: 1
+        description:
+          - Number of concurrent web worker threads for the Dawarich app container.
+          - One is sufficient for most deployments and helps reduce memory usage. Increase for busier instances.
+
       dawarich_background_processing_concurrency:
         type: int
         default: 5

@@ -101,6 +101,14 @@ Timezone for the Dawarich application.
 
 See <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List>
 
+### `dawarich_web_concurrency`
+
+| Type | Default | Required |
+| ---- | ------- | -------- |
+| int  | `1`     | ❌       |
+
+One preloaded Puma worker is plenty for a household instance and keeps memory footprint lower. Raise for busier instances.
+
 ### `dawarich_background_processing_concurrency`
 
 | Type | Default | Required |
