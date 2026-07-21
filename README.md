@@ -10,7 +10,7 @@ Install the role: `ansible-galaxy role install tigattack.dawarich`
 See [Example Playbooks](#example-playbooks) below.
 
 > [!IMPORTANT]
-> **Supported Dawarich version(s):** >=1.3.3  
+> **Supported Dawarich version(s):** >=1.10.0  
 > Older versions of this role are compatible with previous Dawarich versions.
 
 ## Prerequisites
