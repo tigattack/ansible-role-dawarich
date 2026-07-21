@@ -16,5 +16,5 @@
     - name: Ensure dawarich-server is configured for Prometheus
       ansible.builtin.assert:
         that:
-          - container_info.container.NetworkSettings.Ports['9394/tcp'][0].HostPort == '9394'
           - "'PROMETHEUS_EXPORTER_ENABLED=true' in container_info.container.Config.Env"
+          - "'SIDEKIQ_METRICS_URL=http://dawarich-sidekiq-1:9394/metrics' in container_info.container.Config.Env"
