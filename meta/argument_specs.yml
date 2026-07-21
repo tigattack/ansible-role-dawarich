@@ -110,12 +110,7 @@ argument_specs:
         default: false
         description:
           - Enable Prometheus metrics endpoint.
-          - Once enabled, Prometheus metrics will be available at 'localhost:<dawarich_prometheus_port>/metrics'
-
-      dawarich_prometheus_port:
-        type: int
-        default: 9394
-        description: Prometheus metrics port for Dawarich.
+          - Once enabled, Prometheus metrics will be available at 'localhost:3000/metrics'
 
       dawarich_shared_extra_env:
         type: dict

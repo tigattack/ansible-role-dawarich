@@ -19,7 +19,6 @@ dawarich_env_shared:
   PHOTON_API_HOST: "{{ dawarich_photon_api_host }}"
   PHOTON_API_USE_HTTPS: "{{ dawarich_photon_api_use_https | string | lower }}"
   PROMETHEUS_EXPORTER_ENABLED: "{{ dawarich_enable_prometheus_metrics | string | lower }}"
-  PROMETHEUS_EXPORTER_PORT: '9394'
   RAILS_MAX_THREADS: >-
     {{ (dawarich_rails_max_threads if dawarich_rails_max_threads | int > 0
         else (dawarich_workers_count * dawarich_background_processing_concurrency)) | string }}
@@ -29,27 +28,16 @@ dawarich_env_shared:
   STORE_GEODATA: "{{ dawarich_store_geodata | string | lower }}"
 
 dawarich_app_env: |
-  {{ {
-        'PROMETHEUS_EXPORTER_HOST': '0.0.0.0',
-    } | combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
+  {{ combine(dawarich_env_shared, dawarich_app_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_sidekiq_env: |
-  {{ {
-        'BACKGROUND_PROCESSING_CONCURRENCY': dawarich_background_processing_concurrency | string | lower,
-        'PROMETHEUS_EXPORTER_HOST': 'dawarich-server',
-    } | combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true)
-  }}
+  {{ combine(dawarich_env_shared, dawarich_sidekiq_extra_env, dawarich_shared_extra_env, recursive=true) }}
 
 dawarich_photon_env: |
   {{ ({
         'REGION': dawarich_photon_region
       } if dawarich_photon_region | length > 0 else {})
     | combine(dawarich_photon_extra_env)
-  }}
-
-dawarich_app_ports: |
-  {{
-    [dawarich_port ~ ':3000'] + ([dawarich_prometheus_port ~ ':9394'] if dawarich_enable_prometheus_metrics else [] )
   }}
 
 dawarich_postgis_host_path: "{{ [dawarich_data_path, 'db'] | path_join }}"
@@ -81,7 +69,7 @@ dawarich_app_container:
   entrypoint: web-entrypoint.sh
   command: ['bin/rails', 'server', '-p', '3000', '-b', '::']
   networks: [{name: "{{ dawarich_docker_network_name }}"}]
-  ports: "{{ dawarich_app_ports }}"
+  ports: "{{ [dawarich_port ~ ':3000'] }}"
   volumes:
     - "{{ [dawarich_data_path, 'public'] | path_join }}:/var/app/public"
     - "{{ [dawarich_data_path, 'watched'] | path_join }}:/var/app/tmp/imports/watched"

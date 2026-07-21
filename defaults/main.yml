@@ -44,7 +44,6 @@ dawarich_photon_api_use_https: true
 
 # Prometheus preferences
 dawarich_enable_prometheus_metrics: false
-dawarich_prometheus_port: 9394
 
 # Additional environment variables to apply to both the dawarich app and sidekiq worker(s) containers
 dawarich_shared_extra_env: {}

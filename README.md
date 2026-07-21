@@ -183,15 +183,7 @@ Use HTTPS for requests to the Photon API.
 
 Enable Prometheus metrics endpoint.
 
-Once enabled, Prometheus metrics will be available at `localhost:<dawarich_prometheus_port>/metrics`
-
-### `dawarich_prometheus_port`
-
-| Type | Default | Required |
-| ---- | ------- | -------- |
-| int  | `9394`  | ❌       |
-
-Prometheus metrics port for Dawarich.
+Once enabled, Prometheus metrics will be available at `localhost:3000/metrics`
 
 ### `dawarich_shared_extra_env`
 
