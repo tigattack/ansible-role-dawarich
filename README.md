@@ -113,9 +113,11 @@ One preloaded Puma worker is plenty for a household instance and keeps memory fo
 
 | Type | Default | Required |
 | ---- | ------- | -------- |
-| int  | `5`     | ❌       |
+| int  | `3`     | ❌       |
 
 Number of background processing workers per Sidekiq worker.
+
+3 job threads keeps idle memory usage and DB connections low. Raise temporarily for large imports.
 
 ### `dawarich_store_geodata`
 

@@ -68,8 +68,10 @@ argument_specs:
 
       dawarich_background_processing_concurrency:
         type: int
-        default: 5
-        description: Number of background processing workers per Sidekiq worker.
+        default: 3
+        description:
+          - Number of background processing workers per Sidekiq worker.
+          - Raise temporarily for large imports.
 
       dawarich_store_geodata:
         type: bool
